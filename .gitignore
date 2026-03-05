@@ -1,0 +1,12 @@
+#Frontend
+node_modules
+
+#Backend
+node_modules
+
+#Database
+db.json
+
+#Logs
+logs
+logs/*
