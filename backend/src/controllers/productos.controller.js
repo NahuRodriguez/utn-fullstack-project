@@ -40,13 +40,13 @@ const modificarProducto = (req, res) => {
 };
 
 const eliminarProducto = (req, res) => {
-const idParam = parseInt(req.params.id);
+    const idParam = parseInt(req.params.id);
     const index = productos.findIndex((p) => p.id === idParam);
 
     if (index === -1) {
         return res
-        .status(404)
-        .json({ mensaje: "Producto no encontrado para eliminar" });
+            .status(404)
+            .json({ mensaje: "Producto no encontrado para eliminar" });
     }
 
     productos.splice(index, 1);

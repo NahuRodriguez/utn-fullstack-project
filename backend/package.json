@@ -7,6 +7,10 @@
     "express": "^5.2.1"
   },
   "devDependencies": {
+    "@stylistic/eslint-plugin": "^5.10.0",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^17.4.0",
     "nodemon": "^3.1.14"
   }
 }
