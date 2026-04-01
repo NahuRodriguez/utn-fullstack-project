@@ -1,12 +1,15 @@
-#Frontend
+# Frontend
 node_modules
 
-#Backend
+# Backend
 node_modules
 
-#Database
+# Database
 db.json
 
-#Logs
+# Environment Variables
+.env
+
+# Logs
 logs
 logs/*
