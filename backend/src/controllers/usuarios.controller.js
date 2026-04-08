@@ -1,55 +1,24 @@
-const usuarios = require("../data/usuarios.data");
-const generarId = require("../utils/array.utils");
+const { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso } = require("../utils/http.utils");
+const userSchema = require("../schemas/user.schema");
 
-const obtenerUsuarios = (req, res) => {
-    res.status(200).json(usuarios);
+const obtenerUsuarios = async (req, res) => {
+    await obtenerRecursos(req, res, userSchema);
 };
 
-const obtenerUsuarioPorId = (req, res) => {
-    const idParam = parseInt(req.params.id);
-    const usuario = usuarios.find((u) => u.id === idParam);
-
-    if (!usuario) {
-        return res.status(404).json({ mensaje: "Usuario no encontrado" });
-    }
-    res.status(200).json(usuario);
+const obtenerUsuarioPorId = async (req, res) => {
+    await obtenerRecursoPorId(req, res, userSchema);
 };
 
-const crearUsuario = (req, res) => {
-    const nuevoUsuario = {
-        id: generarId(usuarios),
-        ...req.body,
-    };
-    usuarios.push(nuevoUsuario);
-    res.status(201).json(nuevoUsuario);
+const crearUsuario = async (req, res) => {
+    await crearRecurso(req, res, userSchema);
 };
 
-const modificarUsuario = (req, res) => {
-    const idParam = parseInt(req.params.id);
-    const index = usuarios.findIndex((u) => u.id === idParam);
-
-    if (index === -1) {
-        return res
-            .status(404)
-            .json({ mensaje: "Usuario no encontrado para actualizar" });
-    }
-
-    usuarios[index] = { id: idParam, ...req.body };
-    res.status(200).json(usuarios[index]);
+const modificarUsuario = async (req, res) => {
+    await modificarRecurso(req, res, userSchema);
 };
 
-const eliminarUsuario = (req, res) => {
-    const idParam = parseInt(req.params.id);
-    const index = usuarios.findIndex((u) => u.id === idParam);
-
-    if (index === -1) {
-        return res
-            .status(404)
-            .json({ mensaje: "Usuario no encontrado para eliminar" });
-    }
-
-    usuarios.splice(index, 1);
-    res.status(200).json({ mensaje: "Usuario eliminado correctamente" });
+const eliminarUsuario = async (req, res) => {
+    await eliminarRecurso(req, res, userSchema);
 };
 
 module.exports = {
