@@ -1,11 +1,22 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "./assets/vite.svg";
-import heroImg from "./assets/hero.png";
-import "./App.css";
+import "./Inicio.css";
+import reactLogo from "./../../assets/react.svg";
+import viteLogo from "./../../assets/vite.svg";
+import heroImg from "./../../assets/hero.png";
 
-function App() {
+const usuario = {
+  nombre: "Juan",
+  apellido: "Perez",
+  edad: 30,
+};
+
+function Inicio() {
   const [count, setCount] = useState(0);
+  const [showUsuario, setShowUsuario] = useState(usuario);
+
+  const sumarelementoaCount = () => {
+    setCount(count + 1);
+  };
 
   return (
     <>
@@ -21,12 +32,35 @@ function App() {
             Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
           </p>
         </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
+        <button className="counter" onClick={sumarelementoaCount}>
+          El coteo es {count}
         </button>
+        <button className="counter" onClick={() => setCount(0)}>
+          reset
+        </button>
+        <div className="showUsuario">
+          <input
+            type="text"
+            value={showUsuario.nombre}
+            onChange={(e) =>
+              setShowUsuario({ ...showUsuario, nombre: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            value={showUsuario.apellido}
+            onChange={(e) =>
+              setShowUsuario({ ...showUsuario, apellido: e.target.value })
+            }
+          />
+          <input
+            type="number"
+            value={showUsuario.edad}
+            onChange={(e) =>
+              setShowUsuario({ ...showUsuario, edad: parseInt(e.target.value) })
+            }
+          />
+        </div>
       </section>
 
       <div className="ticks"></div>
@@ -118,4 +152,4 @@ function App() {
   );
 }
 
-export default App;
+export default Inicio;

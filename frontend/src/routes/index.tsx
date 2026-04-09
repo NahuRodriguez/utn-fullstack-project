@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
+import Inicio from "../pages/Inicio/Inicio";
 
 export const Route = createFileRoute("/")({
   component: Home,
 });
 
 function Home() {
-  return <div className="p-2">Hello from Home!</div>;
+  return <Inicio />;
 }
