@@ -1,10 +1,16 @@
 const mongoose = require("mongoose");
+const validate = require("../utils/validation.utils");
+const productSchema = require("./product.schema");
+const userSchema = require("./user.schema");
+const addressSchema = require("./address.schema");
 
 const orderItemSchema = new mongoose.Schema({
     productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product", required: true },
     quantity: { type: Number, required: true, min: 0 },
     priceAtPurchase: { type: Number, required: true, min: 0 }
 });
+
+orderItemSchema.path("productId").validate(validate.schemaReference(productSchema));
 
 const orderSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -13,5 +19,8 @@ const orderSchema = new mongoose.Schema({
     total: { type: Number, required: true, min: 0 },
     status: { type: String, enum: [ "PENDING", "SHIPPED", "CANCELLED" ], default: "PENDING" }
 }, { timestamps: true });
+
+orderSchema.path("userId").validate(validate.schemaReference(userSchema));
+orderSchema.path("addressId").validate(validate.schemaReference(addressSchema));
 
 module.exports = mongoose.model("Order", orderSchema);
