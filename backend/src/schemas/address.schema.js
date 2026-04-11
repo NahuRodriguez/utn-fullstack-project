@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const validate = require("../utils/validation.utils");
-const userSchema = require("./user.schema");
 
 const addressSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -42,6 +41,8 @@ const addressSchema = new mongoose.Schema({
     addressDetails: { type: String, default: "" }
 }, { timestamps: true });
 
-addressSchema.path("userId").validate(validate.schemaReference(userSchema));
+addressSchema.path("userId").validate(validate.schemaReference("User"));
+
+validate.deleteReferenced(addressSchema, "Order", "addressId");
 
 module.exports = mongoose.model("Address", addressSchema);

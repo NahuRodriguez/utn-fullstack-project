@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 alphanumericHispanicWithSpaces = (value) => {
     return /^[a-zñáéíóú ]+$/gi.test(value);
 }
@@ -20,14 +22,23 @@ postalCode = (value) => {
     return regexCPViejo.test(value) || regexCPNuevo.test(value);
 }
 
-schemaReference = (schema) => {
+schemaReference = (modelName) => {
     return {
-        validator: async (value) => Boolean(await schema.findById(value)),
-        message: `Reference to ${schema.modelName} does not exist`
+        validator: async (value) => Boolean(await mongoose.model(modelName).findById(value)),
+        message: `Reference to ${modelName} does not exist`
     };
 }
 
-
+deleteReferenced = (mainSchema, checkModelName, field) => {
+    mainSchema.pre("findOneAndDelete", async function() {
+        const error = new mongoose.Error.ValidationError(new mongoose.MongooseError());
+        if (await mongoose.model(checkModelName).findOne({ [ field ] : this.getQuery()._id})) {
+            error.errors = { ...error.errors, [ `${checkModelName}` ] : "Document requested for deletion has another document referencing it" }
+        }
+        if (Object.keys(error.errors).length !== 0) throw error;
+        return;
+    })
+}
 
 module.exports = {
     alphanumericHispanic,
@@ -35,5 +46,6 @@ module.exports = {
     email,
     phone,
     postalCode,
-    schemaReference
+    schemaReference,
+    deleteReferenced
 }

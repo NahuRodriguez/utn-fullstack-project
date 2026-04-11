@@ -41,4 +41,8 @@ const userSchema = new mongoose.Schema({
     role: { type: String, enum: [ "USER", "ADMIN" ], default: "USER" }
 }, { timestamps: true });
 
+validate.deleteReferenced(userSchema, "Address", "userId");
+validate.deleteReferenced(userSchema, "Order", "userId");
+validate.deleteReferenced(userSchema, "Product", "createdBy");
+
 module.exports = mongoose.model("User", userSchema);

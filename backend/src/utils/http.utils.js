@@ -65,7 +65,11 @@ const eliminarRecurso = async (req, res, schema) => {
         }
         res.status(200).json({mensaje: `${schema.modelName} eliminado`});
     } catch (error) {
-        send500(res);
+        if (error instanceof mongoose.Error.ValidationError) {
+            res.status(400).json({ errors: error.errors });
+        } else {
+            send500(res);
+        }
     }
 };
 
