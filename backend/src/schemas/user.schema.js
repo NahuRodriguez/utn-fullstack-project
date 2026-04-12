@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 const validate = require("../utils/validation.utils");
 
 const userSchema = new mongoose.Schema({
@@ -40,6 +41,14 @@ const userSchema = new mongoose.Schema({
     isActive: { type: Boolean, default: true },
     role: { type: String, enum: [ "USER", "ADMIN" ], default: "USER" }
 }, { timestamps: true });
+
+// Hashes modified and new passwords
+userSchema.pre([ "save" ], async function() {
+    if (!this.isModified("password")) return;
+
+    this.password = await bcrypt.hash(this.password, 10);
+    return;
+});
 
 validate.deleteReferenced(userSchema, "Address", "userId");
 validate.deleteReferenced(userSchema, "Order", "userId");

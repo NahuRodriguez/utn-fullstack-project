@@ -42,7 +42,10 @@ const crearRecurso = async (req, res, schema) => {
 const modificarRecurso = async (req, res, schema) => {
     const idParam = req.params.id;
     try {
-        const recurso = await schema.findByIdAndUpdate(idParam, req.body, { runValidators: true });
+        oldDoc = await schema.findById(idParam).exec();
+        newAttributes = { ...req.body };
+        newDoc = Object.assign(oldDoc, newAttributes);
+        recurso = await newDoc.save();
         if (!recurso) {
             return res.status(404).json({ mensaje: `${schema.modelName} no encontrado` });
         }
