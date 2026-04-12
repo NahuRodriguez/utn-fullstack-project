@@ -1,56 +1,24 @@
-const productos = require("../data/productos.data");
-const generarId = require("../utils/array.utils");
+const { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso } = require("../utils/http.utils");
+const productSchema = require("../schemas/product.schema");
 
-const obtenerProductos = (req, res) => {
-    res.status(200).json(productos);
+const obtenerProductos = async (req, res) => {
+    await obtenerRecursos(req, res, productSchema);
 };
 
-const obtenerProductoPorId = (req, res) => {
-    const idParam = parseInt(req.params.id);
-    const producto = productos.find((p) => p.id === idParam);
-
-    if (!producto) {
-        return res.status(404).json({ mensaje: "Producto no encontrado" });
-    }
-    res.status(200).json(producto);
+const obtenerProductoPorId = async (req, res) => {
+    await obtenerRecursoPorId(req, res, productSchema);
 };
 
-const crearProducto = (req, res) => {
-    const nuevoProducto = {
-        id: generarId(productos),
-        ...req.body,
-    };
-    productos.push(nuevoProducto);
-    res.status(201).json(nuevoProducto);
+const crearProducto = async (req, res) => {
+    await crearRecurso(req, res, productSchema);
 };
 
-const modificarProducto = (req, res) => {
-    const idParam = parseInt(req.params.id);
-    const index = productos.findIndex((p) => p.id === idParam);
-
-    if (index === -1) {
-        return res
-            .status(404)
-            .json({ mensaje: "Producto no encontrado para actualizar" });
-    }
-
-    // Actualiza el producto manteniendo su ID original
-    productos[index] = { id: idParam, ...req.body };
-    res.status(200).json(productos[index]);
+const modificarProducto = async (req, res) => {
+    await modificarRecurso(req, res, productSchema);
 };
 
-const eliminarProducto = (req, res) => {
-    const idParam = parseInt(req.params.id);
-    const index = productos.findIndex((p) => p.id === idParam);
-
-    if (index === -1) {
-        return res
-            .status(404)
-            .json({ mensaje: "Producto no encontrado para eliminar" });
-    }
-
-    productos.splice(index, 1);
-    res.status(200).json({ mensaje: "Producto eliminado correctamente" });
+const eliminarProducto = async (req, res) => {
+    await eliminarRecurso(req, res, productSchema);
 };
 
 module.exports = {
