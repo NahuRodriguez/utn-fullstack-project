@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
             message: "Phone only allows Numbers and a leading +. No spaces or hyphens."
         }
     },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: false },
     isActive: { type: Boolean, default: true },
     role: { type: String, enum: [ "USER", "ADMIN" ], default: "USER" }
 }, { timestamps: true });
