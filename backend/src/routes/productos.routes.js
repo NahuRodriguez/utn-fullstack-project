@@ -1,3 +1,5 @@
+const { multerImage } = require('../middleware/multer');
+
 const express = require("express");
 const router = express.Router();
 
@@ -11,7 +13,7 @@ const {
 
 router.get("/", obtenerProductos);
 router.get("/:id", obtenerProductoPorId);
-router.post("/", crearProducto);
+router.post("/", multerImage, crearProducto);
 router.put("/:id", modificarProducto);
 router.delete("/:id", eliminarProducto);
 
