@@ -13,7 +13,7 @@ export const linkList = [
     name: "Contacto",
   },
   {
-    url: "/categoria",
-    name: "Categoria",
+    url: "/categorias",
+    name: "Categorias",
   },
 ];
