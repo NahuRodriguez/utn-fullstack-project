@@ -1,4 +1,4 @@
-const { multerImage } = require('../middleware/multer');
+const { multerImage } = require("../middleware/multer");
 
 const express = require("express");
 const router = express.Router();

@@ -28,8 +28,8 @@ const obtenerRecursoPorId = async (req, res, schema) => {
 
 const crearRecurso = async (req, res, schema) => {
     try {
-        await schema.create(req.body);
-        res.status(201).json({mensaje: `${schema.modelName} creado`});
+        const recurso = await schema.create(req.body);
+        res.status(201).json({mensaje: `${schema.modelName} creado`, [`${schema.modelName}`]: recurso});
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(400).json({ errors: error.errors });
@@ -49,7 +49,7 @@ const modificarRecurso = async (req, res, schema) => {
         if (!recurso) {
             return res.status(404).json({ mensaje: `${schema.modelName} no encontrado` });
         }
-        res.status(200).json({mensaje: `${schema.modelName} actualizado`});
+        res.status(200).json({mensaje: `${schema.modelName} actualizado`, [`${schema.modelName}`]: recurso});
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(400).json({ errors: error.errors });
@@ -66,11 +66,12 @@ const eliminarRecurso = async (req, res, schema) => {
         if (!recurso) {
             return res.status(404).json({ mensaje: `${schema.modelName} no encontrado` });
         }
-        res.status(200).json({mensaje: `${schema.modelName} eliminado`});
+        res.status(200).json({mensaje: `${schema.modelName} eliminado`, [`${schema.modelName}`]: recurso});
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(400).json({ errors: error.errors });
         } else {
+            console.log(error);
             send500(res);
         }
     }

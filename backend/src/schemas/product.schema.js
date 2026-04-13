@@ -17,6 +17,6 @@ const productSchema = new mongoose.Schema({
 
 productSchema.path("createdBy").validate(validate.schemaReference("User"));
 
-validate.deleteReferenced(productSchema, "Order", "items");
+validate.deleteReferenced(productSchema, "Order", "items.productId");
 
 module.exports = mongoose.model("Product", productSchema);
