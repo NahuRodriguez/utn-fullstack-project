@@ -2,16 +2,14 @@ const mongoose = require("mongoose");
 const orderSchema = require("../schemas/order.schema");
 
 const crearProductoEnOrden = async (req, res) => {
-    const idParam = req.params.id;
+    const orderId = req.params.orderId;
+    const productId = req.params.productId;
     try {
-        if (!req.body.productId) {
-            return res.status(400).json({mensaje: "Se requiere productId del item a crear"});
-        }
-        const doc = await orderSchema.findById(idParam);
+        const doc = await orderSchema.findById(orderId);
         if (!doc) {
             return res.status(404).json({mensaje: "Order doesn't exist"});
         }
-        if (doc.items.find((item) => item.productId == req.body.productId )) {
+        if (doc.items.find((item) => item.productId == productId )) {
             return res.status(400).json({mensaje: "Product exists in items, try modifying the resource"});
         }
         doc.items.push(req.body);
@@ -21,25 +19,22 @@ const crearProductoEnOrden = async (req, res) => {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(400).json({ errors: error.errors });
         } else {
-            console.log(error);
             res.status(500).json({mensaje: "Internal Server Error"});
         }
     }
 };
 
 const modificarProductoEnOrden = async (req, res) => {
-    const idParam = req.params.id;
+    const orderId = req.params.orderId;
+    const productId = req.params.productId;
     try {
-        if (!req.body.productId) {
-            return res.status(400).json({mensaje: "Se requiere productId del item a modificar"});
-        }
-        const doc = await orderSchema.findById(idParam).exec();
+        const doc = await orderSchema.findById(orderId).exec();
         if (!doc) {
             return res.status(404).json({ mensaje: "Order no encontrado" });
         }
         let relevantItem = null;
         for (item of doc.items) {
-            if (item.productId == req.body.productId) {
+            if (item.productId == productId) {
                 relevantItem = item;
             }
         }
@@ -55,28 +50,22 @@ const modificarProductoEnOrden = async (req, res) => {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(400).json({ errors: error.errors });
         } else {
-            console.log(error);
             res.status(500).json({mensaje: "Internal Server Error"});
         }
     }
 };
 
 const eliminarProductoEnOrden = async (req, res) => {
-    const idParam = req.params.id;
+    const orderId = req.params.orderId;
+    const productId = req.params.productId;
     try {
-        if (!req.body) {
-            return res.status(400).json({mensaje: "Error en la interfaz silla-teclado. Se requiere un cuerpo con el productId de la entrada a borrar"});
-        }
-        if (!req.body.productId) {
-            return res.status(400).json({mensaje: "Se requiere productId del item a eliminar"});
-        }
-        const doc = await orderSchema.findById(idParam).exec();
+        const doc = await orderSchema.findById(orderId).exec();
         if (!doc) {
             return res.status(404).json({ mensaje: "Order no encontrado" });
         }
         let relevantItem = null;
         for (item of doc.items) {
-            if (item.productId == req.body.productId) {
+            if (item.productId == productId) {
                 relevantItem = item;
             }
         }
@@ -90,7 +79,6 @@ const eliminarProductoEnOrden = async (req, res) => {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(400).json({ errors: error.errors });
         } else {
-            console.log(error);
             res.status(500).json({mensaje: "Internal Server Error"});
         }
     }

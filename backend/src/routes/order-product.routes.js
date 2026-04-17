@@ -7,8 +7,8 @@ const {
     eliminarProductoEnOrden
 } = require("../controllers/order-product.controller");
 
-router.post("/:id", crearProductoEnOrden);
-router.put("/:id", modificarProductoEnOrden);
-router.delete("/:id", eliminarProductoEnOrden);
+router.post("/:orderId/:productId", crearProductoEnOrden);
+router.put("/:orderId/:productId", modificarProductoEnOrden);
+router.delete("/:orderId/:productId", eliminarProductoEnOrden);
 
 module.exports = router;
