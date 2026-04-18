@@ -43,12 +43,12 @@ const modificarRecurso = async (req, res, schema) => {
     const idParam = req.params.id;
     try {
         oldDoc = await schema.findById(idParam).exec();
+        if (!oldDoc) {
+            return res.status(404).json({ mensaje: `${schema.modelName} no encontrado` });
+        }
         newAttributes = { ...req.body };
         newDoc = Object.assign(oldDoc, newAttributes);
         recurso = await newDoc.save();
-        if (!recurso) {
-            return res.status(404).json({ mensaje: `${schema.modelName} no encontrado` });
-        }
         res.status(200).json({mensaje: `${schema.modelName} actualizado`, [`${schema.modelName}`]: recurso});
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {

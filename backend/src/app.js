@@ -12,8 +12,8 @@ const app = express();
 app.use(express.json());
 
 // Rutas
-app.use("/api/productos", productosRoutes);
-app.use("/api/usuarios", usuariosRoutes);
+app.use("/api/products", productosRoutes);
+app.use("/api/users", usuariosRoutes);
 app.use("/api/orders", ordersRoutes);
 app.use("/api/payments", paymentRoutes);
 app.use("/api/categories", categoryRoutes);

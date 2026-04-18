@@ -1,5 +1,5 @@
-const cloudinary = require('cloudinary').v2;
-require('dotenv').config();
+const cloudinary = require("cloudinary").v2;
+require("dotenv").config();
 
 const cloudinary_config = {
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
@@ -18,7 +18,7 @@ class Cloudinary {
 
     static deleteImage = async (imgUrl) => {
         try {
-            const parts = imgUrl.split('/');
+            const parts = imgUrl.split("/");
             const file = parts.pop();
             const decoded = decodeURIComponent(file);
             const publicId = decoded.replace(/\.[^/.]+$/, "");
