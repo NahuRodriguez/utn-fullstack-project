@@ -34,6 +34,9 @@ const modificarProductoEnOrden = async (req, res) => {
         if (!doc) {
             return res.status(404).json({ mensaje: "Order no encontrado" });
         }
+        if (req.body.productId) {
+            return res.status(400).json({mensaje: "Modifying the productId in an item is not a valid operation. To reference another object deleting this reference, delete this item and create another one with the new reference"});
+        }
         let relevantItem = null;
         for (item of doc.items) {
             if (item.productId == productId) {
