@@ -71,7 +71,6 @@ const eliminarRecurso = async (req, res, schema) => {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(400).json({ errors: error.errors });
         } else {
-            console.log(error);
             send500(res);
         }
     }
