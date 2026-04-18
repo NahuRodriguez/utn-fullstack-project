@@ -1,0 +1,157 @@
+{
+  "name": "PECEI",
+  "variables": [
+    {
+      "name": "BASE_URL",
+      "value": "localhost",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "NONDESTRUCTIVE_PRODUCT_ID",
+      "value": "",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "DESTRUCTIVE_PRODUCT_ID",
+      "value": "",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "PRODUCTS_API",
+      "value": "/api/products/",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "USERS_API",
+      "value": "/api/users/",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "NONDESTRUCTIVE_USER_ID",
+      "value": "",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "DESTRUCTIVE_USER_ID",
+      "value": "",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "ORDERS_API",
+      "value": "/api/orders/",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "ADDRESSES_API",
+      "value": "/api/addresses/",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "PAYMENTS_API",
+      "value": "/api/payments/",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "CATEGORIES_API",
+      "value": "/api/categories/",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "NONDESTRUCTIVE_ORDER_ID",
+      "value": "",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "NONDESTRUCTIVE_ADDRESS_ID",
+      "value": "",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "NONDESTRUCTIVE_PAYMENT_ID",
+      "value": "",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "NONDESTRUCTIVE_CATEGORIES_ID",
+      "value": "",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "DESTRUCTIVE_ORDER_ID",
+      "value": "",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "DESTRUCTIVE_ADDRESS_ID",
+      "value": "",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "DESTRUCTIVE_PAYMENT_ID",
+      "value": "",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "DESTRUCTIVE_CATEGORIES_ID",
+      "value": "",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "PORT",
+      "value": ":3000",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    },
+    {
+      "name": "PROTOCOL",
+      "value": "http://",
+      "type": "text",
+      "enabled": true,
+      "secret": false
+    }
+  ],
+  "info": {
+    "type": "bruno-environment",
+    "exportedAt": "2026-04-18T00:23:35.475Z",
+    "exportedUsing": "Bruno/v2.0.0"
+  }
+}
