@@ -16,7 +16,7 @@ const crearProductoEnOrden = async (req, res) => {
         }
         doc.items.push(req.body);
         await doc.save();
-        res.status(201).json({mensaje: "Item creado", item: doc});
+        res.status(201).json({mensaje: "Item creado", order: doc});
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(400).json({ errors: error.errors });
@@ -50,7 +50,7 @@ const modificarProductoEnOrden = async (req, res) => {
         const newItem = Object.assign(relevantItem, { ...req.body });
         doc.items.push(newItem);
         await doc.save();
-        res.status(201).json({mensaje: "Item modificado", item: doc});
+        res.status(201).json({mensaje: "Item modificado", order: doc});
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(400).json({ errors: error.errors });
@@ -79,7 +79,7 @@ const eliminarProductoEnOrden = async (req, res) => {
         }
         doc.items.pull(relevantItem);
         await doc.save();
-        res.status(201).json({mensaje: "Item eliminado", item: doc});
+        res.status(201).json({mensaje: "Item eliminado", order: doc});
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(400).json({ errors: error.errors });
