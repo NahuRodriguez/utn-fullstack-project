@@ -3,6 +3,7 @@ import "./Inicio.css";
 import reactLogo from "./../../assets/react.svg";
 import viteLogo from "./../../assets/vite.svg";
 import heroImg from "./../../assets/hero.png";
+import axios from "axios";
 
 const usuario = {
   nombre: "Juan",
@@ -10,9 +11,16 @@ const usuario = {
   edad: 30,
 };
 
+const response = await axios.get(
+  `${import.meta.env.VITE_API_BASE_URL}/api/products/`,
+);
+
 function Inicio() {
   const [count, setCount] = useState(0);
+  const [listaProductos, setListaProductos] = useState(response?.data || "");
   const [showUsuario, setShowUsuario] = useState(usuario);
+
+  console.log("lista", listaProductos);
 
   const sumarelementoaCount = () => {
     setCount(count + 1);
@@ -20,6 +28,7 @@ function Inicio() {
 
   return (
     <>
+      <>{listaProductos[0].name}</>
       <section id="center">
         <div className="hero">
           <img src={heroImg} className="base" width="170" height="179" alt="" />
