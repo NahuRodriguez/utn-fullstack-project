@@ -3,8 +3,9 @@ const orderSchema = require("../schemas/order.schema");
 
 const crearProductoEnOrden = async (req, res) => {
     const orderId = req.params.orderId;
+    const productId = req.body.productId;
     try {
-        if (!req.body.productId) {
+        if (!productId) {
             return res.status(400).json({mensaje: "Se requiere productId del item a crear"});
         }
         const doc = await orderSchema.findById(orderId);
