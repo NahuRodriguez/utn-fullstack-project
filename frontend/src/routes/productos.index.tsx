@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/productos")({
+export const Route = createFileRoute("/productos/")({
   component: Producto,
 });
 
@@ -44,6 +44,11 @@ function Producto() {
           >
             <h3 className="font-semibold text-lg">{producto.name}</h3>
             <p className="text-gray-600">Precio: ${producto.price}</p>
+            <img
+              src={producto.imgUrl || "https://via.placeholder.com/150"}
+              alt={producto.name}
+              className="w-full h-auto"
+            />
           </div>
         ))}
       </div>

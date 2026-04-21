@@ -7,7 +7,7 @@ export const Route = createFileRoute("/productos/$productoID")({
 });
 
 function DetalleProducto() {
-  const { productId } = Route.useParams();
+  const { productoID } = Route.useParams();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ function DetalleProducto() {
     const fetchProductById = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/api/products/${productId}`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/products/${productoID}`,
         );
         setProduct(response.data);
       } catch (err) {
@@ -29,7 +29,7 @@ function DetalleProducto() {
     };
 
     fetchProductById();
-  }, [productId]);
+  }, [productoID]);
 
   if (loading)
     return <div className="p-4">Cargando detalles del producto...</div>;
