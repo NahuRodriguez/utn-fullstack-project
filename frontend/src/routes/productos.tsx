@@ -15,7 +15,7 @@ function Producto() {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/api/productos`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/products/`,
         );
         setProducts(response.data);
       } catch (err) {
@@ -39,11 +39,11 @@ function Producto() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {products.map((producto) => (
           <div
-            key={producto.id}
+            key={producto._id}
             className="border border-gray-300 p-4 rounded shadow"
           >
-            <h3 className="font-semibold text-lg">{producto.nombre}</h3>
-            <p className="text-gray-600">Precio: ${producto.precio}</p>
+            <h3 className="font-semibold text-lg">{producto.name}</h3>
+            <p className="text-gray-600">Precio: ${producto.price}</p>
           </div>
         ))}
       </div>
