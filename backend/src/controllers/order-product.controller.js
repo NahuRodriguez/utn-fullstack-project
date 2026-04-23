@@ -3,8 +3,11 @@ const orderSchema = require("../schemas/order.schema");
 
 const crearProductoEnOrden = async (req, res) => {
     const orderId = req.params.orderId;
-    const productId = req.params.productId;
+    const productId = req.body.productId;
     try {
+        if (!productId) {
+            return res.status(400).json({mensaje: "Se requiere productId del item a crear"});
+        }
         const doc = await orderSchema.findById(orderId);
         if (!doc) {
             return res.status(404).json({mensaje: "Order doesn't exist"});
@@ -14,7 +17,7 @@ const crearProductoEnOrden = async (req, res) => {
         }
         doc.items.push(req.body);
         await doc.save();
-        res.status(201).json({mensaje: "Item creado", item: doc});
+        res.status(201).json({mensaje: "Item creado", order: doc});
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(400).json({ errors: error.errors });
@@ -32,6 +35,9 @@ const modificarProductoEnOrden = async (req, res) => {
         if (!doc) {
             return res.status(404).json({ mensaje: "Order no encontrado" });
         }
+        if (req.body.productId) {
+            return res.status(400).json({mensaje: "Modifying the productId in an item is not a valid operation. To reference another object deleting this reference, delete this item and create another one with the new reference"});
+        }
         let relevantItem = null;
         for (item of doc.items) {
             if (item.productId == productId) {
@@ -45,7 +51,7 @@ const modificarProductoEnOrden = async (req, res) => {
         const newItem = Object.assign(relevantItem, { ...req.body });
         doc.items.push(newItem);
         await doc.save();
-        res.status(201).json({mensaje: "Item modificado", item: doc});
+        res.status(201).json({mensaje: "Item modificado", order: doc});
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(400).json({ errors: error.errors });
@@ -74,7 +80,7 @@ const eliminarProductoEnOrden = async (req, res) => {
         }
         doc.items.pull(relevantItem);
         await doc.save();
-        res.status(201).json({mensaje: "Item eliminado", item: doc});
+        res.status(201).json({mensaje: "Item eliminado", order: doc});
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(400).json({ errors: error.errors });
