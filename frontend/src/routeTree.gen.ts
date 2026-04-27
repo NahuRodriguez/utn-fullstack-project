@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as CategoriasRouteImport } from './routes/categorias'
+import { Route as CarritoRouteImport } from './routes/carrito'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductosIndexRouteImport } from './routes/productos.index'
 import { Route as ProductosProductoIDRouteImport } from './routes/productos.$productoID'
@@ -23,6 +24,11 @@ const ContactoRoute = ContactoRouteImport.update({
 const CategoriasRoute = CategoriasRouteImport.update({
   id: '/categorias',
   path: '/categorias',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CarritoRoute = CarritoRouteImport.update({
+  id: '/carrito',
+  path: '/carrito',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -43,6 +49,7 @@ const ProductosProductoIDRoute = ProductosProductoIDRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/carrito': typeof CarritoRoute
   '/categorias': typeof CategoriasRoute
   '/contacto': typeof ContactoRoute
   '/productos/$productoID': typeof ProductosProductoIDRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/carrito': typeof CarritoRoute
   '/categorias': typeof CategoriasRoute
   '/contacto': typeof ContactoRoute
   '/productos/$productoID': typeof ProductosProductoIDRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/carrito': typeof CarritoRoute
   '/categorias': typeof CategoriasRoute
   '/contacto': typeof ContactoRoute
   '/productos/$productoID': typeof ProductosProductoIDRoute
@@ -67,6 +76,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/carrito'
     | '/categorias'
     | '/contacto'
     | '/productos/$productoID'
@@ -74,6 +84,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/carrito'
     | '/categorias'
     | '/contacto'
     | '/productos/$productoID'
@@ -81,6 +92,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/carrito'
     | '/categorias'
     | '/contacto'
     | '/productos/$productoID'
@@ -89,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CarritoRoute: typeof CarritoRoute
   CategoriasRoute: typeof CategoriasRoute
   ContactoRoute: typeof ContactoRoute
   ProductosProductoIDRoute: typeof ProductosProductoIDRoute
@@ -109,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/categorias'
       fullPath: '/categorias'
       preLoaderRoute: typeof CategoriasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/carrito': {
+      id: '/carrito'
+      path: '/carrito'
+      fullPath: '/carrito'
+      preLoaderRoute: typeof CarritoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -137,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CarritoRoute: CarritoRoute,
   CategoriasRoute: CategoriasRoute,
   ContactoRoute: ContactoRoute,
   ProductosProductoIDRoute: ProductosProductoIDRoute,
