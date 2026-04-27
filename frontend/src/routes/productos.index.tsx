@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { createFileRoute } from "@tanstack/react-router";
+import { ProductCard } from "../components/card/ProductCard";
 
 export const Route = createFileRoute("/productos/")({
   component: Producto,
@@ -34,22 +35,11 @@ function Producto() {
   if (error) return <div className="p-4 text-red-500">{error}</div>;
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Nuestros Productos</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="p-6">
+      <h2 className="text-2xl font-bold mb-6">Nuestros Productos</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((producto) => (
-          <div
-            key={producto._id}
-            className="border border-gray-300 p-4 rounded shadow"
-          >
-            <h3 className="font-semibold text-lg">{producto.name}</h3>
-            <p className="text-gray-600">Precio: ${producto.price}</p>
-            <img
-              src={producto.imgUrl || "https://via.placeholder.com/150"}
-              alt={producto.name}
-              className="w-full h-auto"
-            />
-          </div>
+          <ProductCard key={producto._id} product={producto} />
         ))}
       </div>
     </div>

@@ -7,7 +7,6 @@ export const linkList = [
     url: "/productos",
     name: "Productos",
   },
-
   {
     url: "/contacto",
     name: "Contacto",
@@ -15,5 +14,9 @@ export const linkList = [
   {
     url: "/categorias",
     name: "Categorias",
+  },
+  {
+    url: "/carrito",
+    name: "Mi Carrito",
   },
 ];
