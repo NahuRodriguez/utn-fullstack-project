@@ -1,9 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { useCartStore } from "../../store/cartStore";
+import { AgregarCarritoButton } from "../button/AgregarCarritoButton";
 
 export function ProductCard({ product }) {
-  const { addItem, removeItem, isInCart } = useCartStore();
-  const inCart = isInCart(product._id);
 
   return (
     <Link to={`./${product._id}`}>
@@ -25,16 +23,7 @@ export function ProductCard({ product }) {
         <p className="text-purple-600 dark:text-purple-400 font-bold text-lg mt-auto">
           ${product.price.toFixed(2)}
         </p>
-        <button
-          onClick={() => (inCart ? removeItem(product._id) : addItem(product))}
-          className={`w-full py-2 px-4 rounded-lg text-white font-medium transition-colors cursor-pointer ${
-            inCart
-              ? "bg-red-500 hover:bg-red-600"
-              : "bg-purple-600 hover:bg-purple-700"
-          }`}
-        >
-          {inCart ? "✕ Quitar del carrito" : "+ Agregar al carrito"}
-        </button>
+        <AgregarCarritoButton product={product} />
       </div>
     </div>
     </Link>
