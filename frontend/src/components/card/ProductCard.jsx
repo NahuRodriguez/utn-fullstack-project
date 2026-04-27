@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { useCartStore } from "../../store/cartStore";
 
 export function ProductCard({ product }) {
@@ -5,6 +6,7 @@ export function ProductCard({ product }) {
   const inCart = isInCart(product._id);
 
   return (
+    <Link to={`./${product._id}`}>
     <div className="flex flex-col gap-3 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm overflow-hidden bg-white dark:bg-gray-900 transition-shadow hover:shadow-md">
       <img
         src={product.imgUrl || "https://placehold.co/400x200/e9d5ff/7e22ce?text=Producto"}
@@ -33,5 +35,6 @@ export function ProductCard({ product }) {
         </button>
       </div>
     </div>
+    </Link>
   );
 }
