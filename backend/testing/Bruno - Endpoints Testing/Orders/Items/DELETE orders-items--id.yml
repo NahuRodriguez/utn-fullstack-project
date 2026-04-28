@@ -1,0 +1,18 @@
+info:
+  name: DELETE orders/items/:id
+  type: http
+  seq: 1
+
+http:
+  method: DELETE
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{ORDER_ITEMS_API}}{{DESTRUCTIVE_ORDER_ITEM_ID}}"
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

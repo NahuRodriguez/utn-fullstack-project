@@ -1,0 +1,15 @@
+info:
+  name: GET users
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{USERS_API}}"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

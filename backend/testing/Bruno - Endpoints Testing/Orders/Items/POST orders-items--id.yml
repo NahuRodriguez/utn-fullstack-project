@@ -1,0 +1,23 @@
+info:
+  name: POST orders/items/:id
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{ORDER_ITEMS_API}}{{NONDESTRUCTIVE_ORDER_ITEM_ID}}"
+  body:
+    type: json
+    data: |-
+      {
+        "productId": "69df033530c4f3f935c9165e",
+        "quantity": 16,
+        "priceAtPurchase": 3245
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

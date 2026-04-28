@@ -1,0 +1,21 @@
+info:
+  name: Orders
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit
+
+docs:
+  content: |-
+    ### Order --- A collection of Products with a linked Address and User, that tracks a sale's status.
+
+    <hr/>
+    userId: Reference to User, <u>required</u> <hr/>
+    addressId: Reference to Address, <u>required</u> <hr/>
+    total: Number, <u>required</u>, doesn't allow negative values <hr/>
+    items: Object[], expects: <br/>
+    <li> productId: Reference to Product, <u>required</u> </li>
+    <li> quantity, priceAtPurchase: Number, <u>required</u>, don't allow negative values </li> <hr/>
+    status: String, either "PENDING", "SHIPPED" or "CANCELLED", defaults to "PENDING" <br/>
+  type: text/markdown

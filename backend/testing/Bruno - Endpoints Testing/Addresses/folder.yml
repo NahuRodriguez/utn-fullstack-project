@@ -1,0 +1,19 @@
+info:
+  name: Addresses
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit
+
+docs:
+  content: |-
+    ### Address --- A delivery address of several a User can have.
+
+    <hr/>
+    userId: Reference to User, <u>required</u> <hr/>
+    province, city, streetName: String, <u>required</u>, only allows alphanumeric with hispanic symbols & spaces (Ñ, tildes) <hr/>
+    postalCode: String, <u>required</u>, only allows XXXX and X0000XXX formats (X for uppercase letter, 0 for number) <hr/>
+    buildingNumber: Number, <u>required</u> <hr/>
+    addressDetails: String, meant for a short user-made description <br/>
+  type: text/markdown

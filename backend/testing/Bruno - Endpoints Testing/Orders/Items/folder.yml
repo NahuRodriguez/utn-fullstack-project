@@ -1,0 +1,16 @@
+info:
+  name: Items
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit
+
+docs:
+  content: |
+    ### Order Item --- An entry for a Product in the corresponding Order. A Product's ID is unique in each Order. Embedded in the Order model.
+
+    <hr/>
+    productId: Reference to Product, <u>required</u> <hr/>
+    quantity, priceAtPurchase: Number, <u>required</u>, don't allow negative values <br/>
+  type: text/markdown

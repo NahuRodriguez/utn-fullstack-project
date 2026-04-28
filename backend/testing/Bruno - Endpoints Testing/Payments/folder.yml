@@ -1,0 +1,16 @@
+info:
+  name: Payments
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit
+
+docs:
+  content: |-
+    ### Payment --- The log of a transaction meant to cover part or the entirety of an Order's total price. If a Payment doesn't meet the Order's price, it is expected for the remaining debt to be sated by other Payments.
+
+    <hr/>
+    orderId: Reference to Order, <u>required</u> <hr/>
+    amount: Number, <u>required</u>, doesn't allow negative values <br/>
+  type: text/markdown

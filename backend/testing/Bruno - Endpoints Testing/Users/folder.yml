@@ -1,0 +1,20 @@
+info:
+  name: Users
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit
+
+docs:
+  content: |-
+    ### User --- A User that will be able to place Orders for Products.
+
+    <hr/>
+    firstName, lastName: String, <u>required</u>, only allows alphanumeric with hispanic symbols & spaces (Ñ, tildes) <hr/>
+    email: String, <u>required</u>, expects an e-mail address complying with [user]@[host].[TLD] (TLD is 2 to 4 characters long, every field only allows alphanumeric & dashes, with the exception of user, which also allows periods) <hr/>
+    password: String, <u>required</u>, can be PUT'd and POST'd but won't be in GET responses, expects an unhashed password (it gets hashed by the server) <hr/>
+    phone: String, only allows Numbers & a leading +, no spaces or hyphens <hr/>
+    isActive: Boolean, defaults to true <hr/>
+    role: String, either "USER" or "ADMIN", defaults to "USER" <br/>
+  type: text/markdown
