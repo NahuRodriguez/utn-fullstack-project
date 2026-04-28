@@ -1,0 +1,31 @@
+info:
+  name: DELETE orders/:id
+  type: http
+  seq: 5
+
+http:
+  method: DELETE
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{ORDERS_API}}{{DESTRUCTIVE_ORDER_ID}}"
+  params:
+    - name: name
+      value: i3 9100f
+      type: query
+      disabled: true
+    - name: price
+      value: "95000"
+      type: query
+      disabled: true
+    - name: stock
+      value: "30"
+      type: query
+      disabled: true
+  body:
+    type: json
+    data: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

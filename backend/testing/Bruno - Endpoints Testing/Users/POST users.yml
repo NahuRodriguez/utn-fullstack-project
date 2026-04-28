@@ -1,0 +1,37 @@
+info:
+  name: POST users
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{USERS_API}}"
+  params:
+    - name: name
+      value: i3 9100f
+      type: query
+      disabled: true
+    - name: price
+      value: "95000"
+      type: query
+      disabled: true
+    - name: stock
+      value: "30"
+      type: query
+      disabled: true
+  body:
+    type: json
+    data: |-
+      {
+        "firstName": "Juan",
+        "lastName": "Pérez",
+        "email": "test1@example.com",
+        "password": "hashPending"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
