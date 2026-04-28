@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { createFileRoute } from "@tanstack/react-router";
+import { AgregarCarritoButton } from "../components/button/AgregarCarritoButton";
 
 export const Route = createFileRoute("/productos/$productoID")({
   component: DetalleProducto,
@@ -37,13 +38,21 @@ function DetalleProducto() {
   if (!product) return <div className="p-4">Producto no encontrado.</div>;
 
   return (
-    <div className="p-6">
-      <h2 className="text-3xl font-bold mb-2">{product.name}</h2>
-      <p className="text-xl text-blue-600 mb-4">Precio: ${product.price}</p>
+    <div className="p-6 flex flex-row">
+      <img
+        src={product.imgUrl || "https://placehold.co/400x200/e9d5ff/7e22ce?text=Producto"}
+        alt={product.name}
+        className="w-7x1 h-7x1 object-cover"
+      />
+      <div className="flex flex-col self-stretch justify-between">
+        <h2 className="text-3xl font-bold mb-2">{product.name}</h2>
+        <p className="text-xl text-blue-600 mb-4">Precio: ${product.price}</p>
 
-      <div className="bg-gray-100 p-4 rounded-lg">
-        <h4 className="font-semibold">Descripción del producto:</h4>
-        <p>{product.description || "Sin descripción disponible."}</p>
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <h4 className="font-semibold">Descripción del producto:</h4>
+          <p>{product.description || "Sin descripción disponible."}</p>
+        </div>
+        <AgregarCarritoButton product={ product } />
       </div>
     </div>
   );
