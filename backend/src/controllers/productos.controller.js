@@ -3,11 +3,25 @@ const productSchema = require("../schemas/product.schema");
 const { Cloudinary } = require("../config/cloudinary");
 
 const obtenerProductos = async (req, res) => {
-    await obtenerRecursos(req, res, productSchema);
+    try {
+        const results = await productSchema.find().populate("categories");
+        res.status(200).json(results);
+    } catch (error) {
+        send500(res);
+    }
 };
 
 const obtenerProductoPorId = async (req, res) => {
-    await obtenerRecursoPorId(req, res, productSchema);
+    const idParam = req.params.id;
+    try {
+        const recurso = await productSchema.findById(idParam).populate("categories");
+        if (!recurso) {
+            return res.status(404).json({ mensaje: `${productSchema.modelName} no encontrado` });
+        }
+        res.status(200).json(recurso);
+    } catch (error) {
+        send500(res);
+    }
 };
 
 const crearProducto = async (req, res) => {
