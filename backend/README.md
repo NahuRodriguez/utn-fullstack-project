@@ -30,6 +30,8 @@ Variables esperadas
 ## Testing
 En el subdirectorio testing/ se encuentra una colección de [Bruno](https://www.usebruno.com/) que contiene todos los endpoints a los que responde el servidor. Se pueden modificar los cuerpos JSON para endpoints que requieran un body para la request.
 
+[Documentación de endpoints](./ENDPOINTS.md) (también se encuentra en la colección de Bruno)
+
 ## Evidencia de funcionamiento
 <table>
     <tr>
