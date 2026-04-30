@@ -1,0 +1,15 @@
+info:
+  name: GET payments
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{PAYMENTS_API}}"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

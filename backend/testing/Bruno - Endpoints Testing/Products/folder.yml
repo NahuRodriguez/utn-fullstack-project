@@ -1,0 +1,20 @@
+info:
+  name: Products
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit
+
+docs:
+  content: |-
+    ### Product --- An item to be sold on the front-end store.
+
+    <hr/>
+    name: String, <u>required</u> <hr/>
+    price, stock: Number, <u>required</u>, don't allow negative values <hr/>
+    description: String <hr/>
+    imgUrl: String, expects a Cloudinary image upload URL <hr/>
+    categories: String[], references to Category <hr/>
+    createdBy: Reference to User, to be automated when authentication is added <br/>
+  type: text/markdown

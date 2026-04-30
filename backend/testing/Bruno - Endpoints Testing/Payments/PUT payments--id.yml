@@ -1,0 +1,34 @@
+info:
+  name: PUT payments/:id
+  type: http
+  seq: 4
+
+http:
+  method: PUT
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{PAYMENTS_API}}{{NONDESTRUCTIVE_PAYMENT_ID}}"
+  params:
+    - name: name
+      value: i3 9100f
+      type: query
+      disabled: true
+    - name: price
+      value: "95000"
+      type: query
+      disabled: true
+    - name: stock
+      value: "30"
+      type: query
+      disabled: true
+  body:
+    type: json
+    data: |-
+      {
+        "orderId": "69d5f028e14fa9903bb73bdc"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

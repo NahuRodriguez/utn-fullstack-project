@@ -1,0 +1,16 @@
+info:
+  name: Categories
+  type: folder
+  seq: 1
+
+request:
+  auth: inherit
+
+docs:
+  content: |-
+    ### Category --- A Category for the Products - a many to many relation.
+
+    <hr/>
+    name: String, <u>required</u>, <u>unique</u> <hr/>
+    description: String <br/>
+  type: text/markdown
