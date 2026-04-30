@@ -1,16 +1,55 @@
-# React + Vite
+# Título del Proyecto: Plataforma de E-Commerce para Equipos Informáticos
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Es una plataforma web de comerció electronicó orientada a la venta de computadoras y componentes informáticos.
 
-Currently, two official plugins are available:
+## Instalación y Comenzando
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1 - `Git clone` https://github.com/NahuRodriguez/utn-fullstack-project.git  
+2 - Instalar las dependecias en utn-fullstack-project/frontend  
+3 - `npm install`.  
+4 - `npm run dev`.
 
-## React Compiler
+### Pre-requisitos
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Para que el frontend funcione correctamente se deben verificar:
 
-## Expanding the ESLint configuration
+1 - Node v22.18.0 https://nodejs.org  
+2 - React 19.2.4 https://react.dev/  
+3 - Vite 8.0.7 https://vitejs.dev  
+4 - Tailwindcss 4.2.2 https://tailwindcss.com  
+5 - TanstanckRouter 1.167.12 https://tanstack.com/router/latest  
+6 - Axios 1.15.0 https://axios.rest/  
+7 - Zustand 5.0.12 https://zustand.site/en/
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Creación de un .ENV
+
+Integración del front-back creando el .env
+
+Ejemplo: VITE_API_BASE_URL=http://localhost:3000
+
+## Ejecutando las pruebas
+
+Ejecutando `npm run dev`, para verificar estado.
+
+informatica-app@0.0.0 dev  
+vite
+
+VITE v8.0.7 ready in 1866 ms
+
+➜ Local: http://localhost:5173/  
+➜ Network: use --host to expose  
+➜ press h + enter to show help
+
+## Autores
+
+Organización horizontal - Sin roles particulares
+
+[Giménez Alexis - @alexis19lp](https://github.com/alexis19lp)
+
+[Rodriguez Bartolomé - @brotmitbutter](https://github.com/brotmitbutter)
+
+[Rodriguez Nahuel - @NahuRodriguez](https://github.com/NahuRodriguez)
+
+[Rodriguez Santiago - @SantiagoRodrn](https://github.com/SantiagoRodrn)
+
+[Velzi Cecilia - @ceciliavlz](https://github.com/ceciliavlz)
