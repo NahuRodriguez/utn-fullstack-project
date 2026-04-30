@@ -128,7 +128,7 @@ docs:
     </table>
 
     ### Endpoints
-    Every Model except for Orde Item has 5 endpoints:
+    Every Model except for Order Item has 5 endpoints:
     - **GET /** --- returns whole collection
     - **GET /:id** --- returns Document with matching ID in collection
     - **POST /** --- creates Document using JSON request body
