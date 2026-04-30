@@ -7,6 +7,8 @@ Por consigna de materia universitaria
 ### Back-end
 API con conexión a base de datos
 
+Se consignó un modelo de Carrito, se implementó Orden para carritos confirmados por el usuario y Carrito se maneja sólo en front-end
+
 [Especificación de endpoints de API](./backend/ENDPOINTS.md)
 
 ### Front-end
