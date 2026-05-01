@@ -12,7 +12,7 @@ const cors = require("cors");
 const app = express();
 
 // Indicación al backend para las solicitudes del puerto.
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors());
 
 // Middleware global
 app.use(express.json());
