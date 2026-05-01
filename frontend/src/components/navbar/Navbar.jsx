@@ -3,12 +3,12 @@ import React from "react";
 
 function Navbar({ links }) {
   return (
-    <nav className="bg-gray-800 text-white shadow-md">
-      <div className="p-4 flex gap-6 items-center">
+    <nav className="flex">
+      <div className="" style={{display: 'flex', justifyContent: "center"}} >
         {links.map((item) => (
           <Link
             to={item.url}
-            className="[&.active]:font-bold hover:text-yellow-400 transition-colors"
+            className="nav-link [&.active]:font-bold hover:text-yellow-400 transition-colors"
           >
             {item.name}
           </Link>
