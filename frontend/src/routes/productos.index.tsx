@@ -78,7 +78,7 @@ function Producto() {
             <div className="products-header">
               <div>
                 <h1 className="products-title"> 
-                  {/* selectedCategoryName || 'Todos los productos'*/}
+                  {selectedCategory?.name || 'Todos los productos'}
                 </h1>
                 <p className="products-count">
                   Mostrando <span>{paginatedProducts.length}</span> de{' '}
