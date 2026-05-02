@@ -1,5 +1,5 @@
 import { ShoppingCart, Eye, Package, AlertTriangle } from 'lucide-react';
-// import { useCart } from '../context/CartContext';
+import { useCart } from '../../context/CartContext';
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat('es-AR', {
@@ -11,8 +11,7 @@ const formatPrice = (price) => {
 };
 
 export const ProductCard = ({ product, categories, onViewDetails }) => {
-  // const { addToCart } = useCart();
-  const addToCart = {};
+  const { addToCart } = useCart();
   
   /*
   const categoryName = product.categories[0] 
@@ -25,7 +24,7 @@ export const ProductCard = ({ product, categories, onViewDetails }) => {
 
   const handleAddToCart = (e) => {
     e.stopPropagation();
-    // addToCart(product);
+    addToCart(product);
   };
 
   return (
