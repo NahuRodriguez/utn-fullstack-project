@@ -1,3 +1,5 @@
+import { scrollToTop } from "../utils/utils";
+
 export const CategorySidebar = ({ 
   categories, 
   selectedCategory, 
@@ -5,12 +7,19 @@ export const CategorySidebar = ({
   categoryCounts,
   totalProducts
 }) => {
+
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+    scrollToTop();
+  }
+
   return (
     <aside className="sidebar">
       <h2 className="sidebar-title">Categorías</h2>
       
       <button
-        onClick={() => setSelectedCategory(null)}
+        onClick={ () =>handleCategoryClick(null)}
         className={`sidebar-item ${selectedCategory === null ? 'active' : ''}`}
       >
         <div className="flex items-center gap-2">
@@ -27,7 +36,7 @@ export const CategorySidebar = ({
           return (
             <button
               key={category._id}
-              onClick={() => setSelectedCategory(category._id)}
+              onClick={() =>handleCategoryClick(category)}
               className={`sidebar-item ${isSelected ? 'active' : ''}`}
             >
               <span className="truncate pr-2">{category.name}</span>
