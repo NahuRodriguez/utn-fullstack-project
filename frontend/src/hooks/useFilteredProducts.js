@@ -23,10 +23,8 @@ export const useFilteredProducts = (products, categories) => {
 
 
       result = result.filter(product => 
-        product.categories.find(c => c._id === selectedCategory)
+        product.categories.find(c => c._id === selectedCategory._id)
       );
-
-      console.log(result);
     }
 
     const [sortField, sortOrder] = sortBy.split('-');

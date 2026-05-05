@@ -13,11 +13,7 @@ const formatPrice = (price) => {
 export const ProductCard = ({ product, categories, onViewDetails }) => {
   const { addToCart } = useCart();
   
-  /*
-  const categoryName = product.categories[0] 
-    ? categories.find(c => c._id === product.categories[0])?.name || 'Sin categoría'
-    : 'Sin categoría';
-  */ 
+  const categoryName = categories.find(c => c._id === product.categories[0]._id)?.name ?? 'Sin categoría'
 
   const hasStock = product.stock > 0;
   const isLowStock = product.stock <= 10 && product.stock > 0;
@@ -65,9 +61,7 @@ export const ProductCard = ({ product, categories, onViewDetails }) => {
 
       <div className="product-info">
         {
-          /*
             <span className="product-category">{categoryName}</span>
-          */
         }
         
         <h3 className="product-name">{product.name}</h3>
