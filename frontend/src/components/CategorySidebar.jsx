@@ -1,31 +1,31 @@
 import { scrollToTop } from "../utils/utils";
 
 export const CategorySidebar = ({ 
-  categories, 
-  selectedCategory, 
-  setSelectedCategory, 
-  categoryCounts,
-  totalProducts
-}) => {
+    categories, 
+    selectedCategory, 
+    setSelectedCategory, 
+    categoryCounts,
+    totalProducts
+  }) => {
 
-
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category);
-    scrollToTop();
-  }
+    const handleCategoryClick = (category) => {
+      const selectedCategoryId = category ? category._id : null;
+      setSelectedCategory(selectedCategoryId);
+      scrollToTop();
+    }
 
   return (
     <aside className="sidebar">
       <h2 className="sidebar-title">Categorías</h2>
       
       <button
-        onClick={ () =>handleCategoryClick(null)}
+        onClick={ () => handleCategoryClick(null)}
         className={`sidebar-item ${selectedCategory === null ? 'active' : ''}`}
       >
         <div className="flex items-center gap-2">
           <span>Todos los productos</span>
         </div>
-        <span className="sidebar-count">{totalProducts}</span>
+        {selectedCategory === null && <span className="sidebar-count">{totalProducts}</span>}
       </button>
 
       <div className="mt-4 space-y-1">
@@ -40,7 +40,7 @@ export const CategorySidebar = ({
               className={`sidebar-item ${isSelected ? 'active' : ''}`}
             >
               <span className="truncate pr-2">{category.name}</span>
-              <span className="sidebar-count">{count}</span>
+              {selectedCategory === category._id && <span className="sidebar-count">{categoryCounts}</span>}
             </button>
           );
         })}

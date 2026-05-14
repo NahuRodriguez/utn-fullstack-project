@@ -4,7 +4,6 @@ import Navbar from "../components/navbar/Navbar";
 import { linkList } from "../assets/links";
 import { Header } from "../components/Header";
 import { CartProvider } from "../context/CartContext";
-import axios from "axios";
 
 const RootLayout = () => (
   <>
