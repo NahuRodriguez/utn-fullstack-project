@@ -13,8 +13,17 @@ const obtenerProductos = async (req, res) => {
             filter.categories = req.query.category;
         }
 
+        const sortMap = {
+            "name-asc": { name: 1 },
+            "name-desc": { name: -1 },
+            "price-asc": { price: 1 },
+            "price-desc": { price: -1 },
+            "stock-desc": { stock: -1 },
+        };
+        const sort = sortMap[req.query.sort] || {};
+
         const [results, total] = await Promise.all([
-            productSchema.find(filter).populate("categories").skip(skip).limit(limit),
+            productSchema.find(filter).sort(sort).populate("categories").skip(skip).limit(limit),
             productSchema.countDocuments(filter)
         ]);
 
