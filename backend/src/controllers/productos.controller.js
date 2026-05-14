@@ -12,6 +12,9 @@ const obtenerProductos = async (req, res) => {
         if (req.query.category) {
             filter.categories = req.query.category;
         }
+        if (req.query.search) {
+            filter.name = { $regex: req.query.search, $options: "i" };
+        }
 
         const sortMap = {
             "name-asc": { name: 1 },
