@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
-import { Search, ShoppingCart, X, Plus, Minus, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import { ShoppingCart, X, Plus, Minus, Trash2 } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { SearchBar } from './SearchBar';
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat('es-AR', {
@@ -13,14 +14,7 @@ const formatPrice = (price) => {
 
 export const Header = () => {
   const { cart, cartCount, cartTotal, updateQuantity, removeFromCart } = useCart();
-  const [searchTerm , setSearchTerm] = useState();
   const [cartOpen, setCartOpen] = useState(false);
-  
-  useEffect(() => {
-    // TODO...
-    
-    console.log(searchTerm)
-  }, [searchTerm])
 
   return (
     <>
@@ -39,16 +33,7 @@ export const Header = () => {
           </div>
 
           <div className="search-container">
-            <div className="search-wrapper">
-              <Search className="search-icon" />
-              <input
-                type="text"
-                placeholder="Buscar productos..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input"
-              />
-            </div>
+            <SearchBar />
           </div>
 
           <button 
