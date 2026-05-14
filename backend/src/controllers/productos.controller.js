@@ -51,7 +51,7 @@ const crearProducto = async (req, res) => {
         // 7. Respuesta al cliente
         res.status(201).json({ 
             mensaje: "Producto creado con éxito", 
-            [`${schema.modelName}`]: newProduct 
+            [`${productSchema.modelName}`]: newProduct 
         });
 
     } catch (err) {
