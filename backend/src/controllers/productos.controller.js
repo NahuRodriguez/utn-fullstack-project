@@ -4,8 +4,27 @@ const { Cloudinary } = require("../config/cloudinary");
 
 const obtenerProductos = async (req, res) => {
     try {
-        const results = await productSchema.find().populate("categories");
-        res.status(200).json(results);
+        const page = Math.max(1, parseInt(req.query.page) || 1);
+        const limit = Math.max(1, Math.min(100, parseInt(req.query.limit) || 10));
+        const skip = (page - 1) * limit;
+
+        const filter = {};
+        if (req.query.category) {
+            filter.categories = req.query.category;
+        }
+
+        const [results, total] = await Promise.all([
+            productSchema.find(filter).populate("categories").skip(skip).limit(limit),
+            productSchema.countDocuments(filter)
+        ]);
+
+        res.status(200).json({
+            data: results,
+            total,
+            page,
+            limit,
+            totalPages: Math.ceil(total / limit)
+        });
     } catch (error) {
         send500(res);
     }
