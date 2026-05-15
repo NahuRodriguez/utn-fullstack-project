@@ -13,8 +13,8 @@ docs:
     <hr/>
     name: String, <u>required</u> <hr/>
     price, stock: Number, <u>required</u>, don't allow negative values <hr/>
-    description: String <hr/>
-    imgUrl: String, expects a Cloudinary image upload URL <hr/>
-    categories: String[], references to Category <hr/>
+    description: String, defaults to empty string <hr/>
+    image: Image, <u>required</u>, persisted as imgUrl, a Cloudinary image upload URL. Send through multipart/form-data <hr/>
+    categories: String[], <u>required</u>, references to Category <hr/>
     createdBy: Reference to User, to be automated when authentication is added <br/>
   type: text/markdown
