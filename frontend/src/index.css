@@ -1082,6 +1082,11 @@ body {
   box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
 }
 
+.user-menu-btn.logged-in {
+  border-color: var(--purple);
+  color: var(--purple);
+}
+
 .user-dropdown {
   position: absolute;
   top: calc(100% + 0.625rem);

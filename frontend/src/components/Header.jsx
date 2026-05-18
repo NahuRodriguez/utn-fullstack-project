@@ -110,11 +110,11 @@ export const Header = () => {
 
             <div className="user-menu" ref={menuRef}>
               <button
-                className={`user-menu-btn ${menuOpen ? "open" : ""}`}
+                className={`user-menu-btn ${menuOpen ? "open" : ""} ${loggedIn ? "logged-in" : ""}`}
                 onClick={() => setMenuOpen((prev) => !prev)}
                 aria-label="Menú de usuario"
               >
-                <User size={24} />
+                <User size={24} fill={loggedIn ? "currentColor" : "none"} />
               </button>
 
               {menuOpen && (

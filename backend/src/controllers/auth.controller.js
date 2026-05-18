@@ -49,7 +49,7 @@ const register = async (req, res) => {
         }
 
         // El pre-save hook del schema se encarga del hash del password
-        const usuario = await User.create({ firstName, lastName, email, password, phone });
+        const usuario = await User.create({ firstName, lastName, email, password, ...(phone ? { phone } : {}) });
 
         const payload = { id: usuario._id.toString(), role: usuario.role };
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "3h" });
