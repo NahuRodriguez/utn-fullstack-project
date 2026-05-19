@@ -1,5 +1,5 @@
 import { ShoppingCart, Eye, Package, AlertTriangle } from 'lucide-react';
-import { useCart } from '../../context/CartContext';
+import { useCartStore } from '../../store/cartStore';
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat('es-AR', {
@@ -11,16 +11,17 @@ const formatPrice = (price) => {
 };
 
 export const ProductCard = ({ product, categories, onViewDetails }) => {
-  const { addToCart } = useCart();
-  
+  const { addToCart, removeFromCart, isInCart } = useCartStore();
+  const inCart = isInCart(product._id);
+
   const categoryName = categories.find(c => c._id === product.categories[0]._id)?.name ?? 'Sin categoría'
 
   const hasStock = product.stock > 0;
   const isLowStock = product.stock <= 10 && product.stock > 0;
 
-  const handleAddToCart = (e) => {
+  const handleCartClick = (e) => {
     e.stopPropagation();
-    addToCart(product);
+    inCart ? removeFromCart(product._id) : addToCart(product);
   };
 
   return (
@@ -74,11 +75,12 @@ export const ProductCard = ({ product, categories, onViewDetails }) => {
             <p className="product-stock">{product.stock} unidades</p>
           </div>
           
-          <button 
-            onClick={handleAddToCart}
+          <button
+            onClick={handleCartClick}
             disabled={!hasStock}
             className="add-cart-btn"
-            title={hasStock ? 'Agregar al carrito' : 'Sin stock'}
+            title={hasStock ? (inCart ? 'Quitar del carrito' : 'Agregar al carrito') : 'Sin stock'}
+            style={inCart ? { background: 'var(--error)', boxShadow: '0 4px 15px rgba(239,68,68,0.3)' } : {}}
           >
             <ShoppingCart className="w-5 h-5" />
           </button>
