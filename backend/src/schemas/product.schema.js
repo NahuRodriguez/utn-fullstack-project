@@ -15,6 +15,8 @@ const productSchema = new mongoose.Schema({
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
 }, { timestamps: true });
 
+productSchema.path("categories").validate( { validator: (array) => array.length > 0, message: "Se espera al menos una categoría" } );
+
 productSchema.path("createdBy").validate(validate.schemaReference("User"));
 
 validate.deleteReferenced(productSchema, "Order", "items.productId");

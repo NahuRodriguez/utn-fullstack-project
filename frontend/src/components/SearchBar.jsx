@@ -11,7 +11,7 @@ export const SearchBar = () => {
     const trimmed = value.trim();
     navigate({
       to: "/productos",
-      search: { search: trimmed || undefined, page: 1 },
+      search: (prev) => ({ ...prev, search: trimmed || undefined, page: 1 })
     });
   };
 
