@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ShoppingCart, X, Plus, Minus, Trash2 } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { useCartStore } from '../store/cartStore';
 import { SearchBar } from './SearchBar';
 
 const formatPrice = (price) => {
@@ -13,7 +13,9 @@ const formatPrice = (price) => {
 };
 
 export const Header = () => {
-  const { cart, cartCount, cartTotal, updateQuantity, removeFromCart } = useCart();
+  const { items: cart, updateQuantity, removeFromCart } = useCartStore();
+  const cartCount = cart.reduce((sum, i) => sum + i.quantity, 0);
+  const cartTotal = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
   const [cartOpen, setCartOpen] = useState(false);
 
   return (

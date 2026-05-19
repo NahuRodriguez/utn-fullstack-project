@@ -727,6 +727,17 @@ body {
   cursor: not-allowed;
 }
 
+.modal-add-btn.in-cart {
+  background: var(--error);
+  color: white;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.modal-add-btn.in-cart:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(239, 68, 68, 0.5);
+}
+
 .empty-state {
   display: flex;
   flex-direction: column;
