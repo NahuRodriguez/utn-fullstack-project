@@ -8,7 +8,7 @@ import { CartProvider } from "../context/CartContext";
 const RootLayout = () => (
   <>
     <CartProvider>
-      <Header/>
+      <Header />
       <Navbar links={linkList} />
       <Outlet />
       <TanStackRouterDevtools />
