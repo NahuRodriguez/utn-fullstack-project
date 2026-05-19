@@ -1,106 +1,100 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ProductGrid } from "../components/ProductGrid";
 import { CategorySidebar } from "../components/CategorySidebar";
-import { useFilteredProducts } from "../hooks/useFilteredProducts";
 import { Pagination } from "../components/Pagination";
 import { SortSelect } from "../components/SortSelect";
+import { useProducts } from "../hooks/useProducts";
+
+interface ProductSearch {
+  page?: number;
+  category?: string;
+  sort?: string;
+  search?: string;
+}
 
 export const Route = createFileRoute("/productos/")({
+  validateSearch: (search: Record<string, unknown>): ProductSearch => ({
+    page: Number(search.page) || 1,
+    category: search.category ? String(search.category) : undefined,
+    sort: String(search.sort || "name-asc"),
+    search: search.search ? String(search.search) : undefined,
+  }),
   component: Producto,
 });
 
 function Producto() {
   const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
+  const { page = 1, category: categoryId, sort = "name-asc", search: searchTerm } = Route.useSearch();
 
   const {
-    filteredProducts,
-    paginatedProducts,
-    searchTerm,
-    setSearchTerm,
-    selectedCategory,
-    setSelectedCategory,
-    sortBy,
-    setSortBy,
-    currentPage,
-    setCurrentPage,
-    totalPages,
-    categoryCounts,
-  } = useFilteredProducts(products, categories);
+    products, categories, totalProducts, loading, error,
+    currentPage, totalPages
+  } = useProducts(categoryId || null, page, 12, sort, searchTerm || "");
 
+  const setSelectedCategory = (newCategoryId) => {
+    navigate({ to: "/productos", search: { page: 1, category: newCategoryId || undefined, sort, search: searchTerm } });
+  };
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const productos = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/products/`);
-        const categorias = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/categories/`);
+  const setCurrentPage = (newPage) => {
+    navigate({ to: "/productos", search: { page: newPage, category: categoryId, sort, search: searchTerm } });
+  };
 
-        setProducts(productos.data);
-        setCategories(categorias.data);        
+  const setSortBy = (newSort) => {
+    navigate({ to: "/productos", search: { page: 1, category: categoryId, sort: newSort, search: searchTerm } });
+  };
 
-      } catch (err) {
-        setError("Error al cargar los productos");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+  const selectedCategoryName = categoryId
+    ? categories.find((c) => c._id === categoryId)?.name
+    : null;
 
   const handleViewDetails = (product) => {
     navigate({ to: "/productos/$productoID", params: { productoID: product._id } });
   };
 
-  if (loading) return <div className="p-4 text-gray-600">Cargando productos...</div>;
-
-  if (error) return <div className="p-4 text-red-500">{error}</div>;
-
   return (
     <div className="main-content">
-        <CategorySidebar
-          categories={categories}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          categoryCounts={categoryCounts}
-          totalProducts={products.length}
-        />
+      <CategorySidebar
+        categories={categories}
+        selectedCategory={categoryId || null}
+        setSelectedCategory={setSelectedCategory}
+        categoryCounts={totalProducts}
+        totalProducts={totalProducts}
+      />
 
-      <section className="products-section">
-            <div className="products-header">
-              <div>
-                <h1 className="products-title"> 
-                  {selectedCategory?.name || 'Todos los productos'}
-                </h1>
-                <p className="products-count">
-                  Mostrando <span>{paginatedProducts.length}</span> de{' '}
-                  <span>{filteredProducts.length}</span> productos
-                </p>
-              </div>
-
-              <SortSelect value={sortBy} onChange={setSortBy} /> 
+      {loading ? (
+        <div className="p-4 text-gray-600">Cargando productos...</div>
+      ) : error ? (
+        <div className="p-4 text-red-500">{error}</div>
+      ) : (
+        <section className="products-section">
+          <div className="products-header">
+            <div>
+              <h1 className="products-title">
+                {searchTerm
+                  ? `Resultados para "${searchTerm}"`
+                  : selectedCategoryName || 'Todos los productos'}
+              </h1>
+              <p className="products-count">
+                Mostrando <span>{products.length}</span> de <span>{totalProducts}</span> productos
+              </p>
             </div>
 
-            <ProductGrid
-              products={paginatedProducts}
-              categories={categories}
-              onViewDetails={handleViewDetails}
-            />
+            <SortSelect value={sort} onChange={setSortBy} />
+          </div>
 
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={setCurrentPage}
-            />
-          </section>
+          <ProductGrid
+            products={products}
+            categories={categories}
+            onViewDetails={handleViewDetails}
+          />
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        </section>
+      )}
     </div>
   );
 }

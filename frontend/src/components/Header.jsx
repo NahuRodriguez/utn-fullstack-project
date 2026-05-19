@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import {
-  Search,
   ShoppingCart,
   X,
   Plus,
@@ -12,6 +11,7 @@ import {
 } from "lucide-react";
 import { useCart } from "../context/CartContext";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { SearchBar } from "./SearchBar";
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat("es-AR", {
@@ -28,7 +28,6 @@ export const Header = () => {
   const navigate = useNavigate();
   const routerState = useRouterState();
 
-  const [searchTerm, setSearchTerm] = useState();
   const [cartOpen, setCartOpen] = useState(false);
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -49,10 +48,6 @@ export const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  useEffect(() => {
-    // TODO...
-    console.log(searchTerm);
-  }, [searchTerm]);
 
   function handleLogin() {
     setMenuOpen(false);
@@ -85,16 +80,7 @@ export const Header = () => {
           </div>
 
           <div className="search-container">
-            <div className="search-wrapper">
-              <Search className="search-icon" />
-              <input
-                type="text"
-                placeholder="Buscar productos..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input"
-              />
-            </div>
+            <SearchBar />
           </div>
 
           <div
