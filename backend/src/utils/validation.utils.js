@@ -13,7 +13,7 @@ email = (value) => {
 }
 
 phone = (value) => {
-    return /^\+[0-9]+$/.test(value);
+    return /^\+?[0-9]+$/.test(value);
 }
 
 postalCode = (value) => {
