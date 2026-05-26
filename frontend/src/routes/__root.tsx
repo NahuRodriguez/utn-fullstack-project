@@ -5,12 +5,10 @@ import { linkList } from "../assets/links";
 import { Header } from "../components/Header";
 const RootLayout = () => (
   <>
-    <CartProvider>
-      <Header />
-      <Navbar links={linkList} />
-      <Outlet />
-      <TanStackRouterDevtools />
-    </CartProvider>
+    <Header />
+    <Navbar links={linkList} />
+    <Outlet />
+    <TanStackRouterDevtools />
   </>
 );
 
