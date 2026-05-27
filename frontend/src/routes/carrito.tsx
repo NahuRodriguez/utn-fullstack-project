@@ -6,8 +6,7 @@ export const Route = createFileRoute("/carrito")({
 });
 
 function Carrito() {
-  const { items, removeFromCart, updateQuantity } = useCartStore();
-  const total = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  const { items, removeFromCart, updateQuantity, getCartTotal } = useCartStore();
 
   const formatPrice = (price: number) =>
     new Intl.NumberFormat("es-AR", {
@@ -63,7 +62,7 @@ function Carrito() {
 
       <div style={{ marginTop: "2rem", paddingTop: "1.5rem", borderTop: "1px solid var(--border)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <span style={{ fontSize: "1.1rem", fontWeight: 600 }}>Total</span>
-        <span className="total-price">{formatPrice(total)}</span>
+        <span className="total-price">{formatPrice(getCartTotal())}</span>
       </div>
     </div>
   );

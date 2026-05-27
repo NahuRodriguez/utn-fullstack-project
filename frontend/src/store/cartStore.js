@@ -6,6 +6,13 @@ export const useCartStore = create(
     (set, get) => ({
       items: [],
 
+      getCartTotal: () => get().items.reduce(
+        (total, item) => total + item.price * item.quantity,
+        0
+      ),
+
+      getCartCount: () => get().items.reduce((count, item) => count + item.quantity, 0),
+
       addToCart: (product) => {
         set((state) => {
           const existing = state.items.find((i) => i._id === product._id);

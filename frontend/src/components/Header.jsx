@@ -23,12 +23,9 @@ const formatPrice = (price) => {
 };
 
 export const Header = () => {
-  const { items: cart, updateQuantity, removeFromCart } = useCartStore();
-  const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
-  const cartTotal = cart.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+  const { items: cart, updateQuantity, removeFromCart, getCartCount, getCartTotal } = useCartStore();
+  const cartCount = getCartCount();
+  const cartTotal = getCartTotal();
   const navigate = useNavigate();
   useRouterState();
 
