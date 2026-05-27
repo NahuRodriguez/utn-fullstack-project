@@ -9,7 +9,7 @@ import {
   LogIn,
   LogOut,
 } from "lucide-react";
-import { useCart } from "../context/CartContext";
+import { useCartStore } from "../store/cartStore";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { SearchBar } from "./SearchBar";
 
@@ -23,20 +23,17 @@ const formatPrice = (price) => {
 };
 
 export const Header = () => {
-  const { cart, cartCount, cartTotal, updateQuantity, removeFromCart } =
-    useCart();
+  const { items: cart, updateQuantity, removeFromCart, getCartCount, getCartTotal } = useCartStore();
+  const cartCount = getCartCount();
+  const cartTotal = getCartTotal();
   const navigate = useNavigate();
-  const routerState = useRouterState();
+  useRouterState();
 
   const [cartOpen, setCartOpen] = useState(false);
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const loggedIn = !!localStorage.getItem("token");
   const menuRef = useRef(null);
-
-  useEffect(() => {
-    setLoggedIn(!!localStorage.getItem("token"));
-  }, [routerState.location.pathname]);
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -48,7 +45,6 @@ export const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-
   function handleLogin() {
     setMenuOpen(false);
     navigate({ to: "/login" });
@@ -56,7 +52,6 @@ export const Header = () => {
 
   function handleLogout() {
     localStorage.removeItem("token");
-    setLoggedIn(false);
     setMenuOpen(false);
     navigate({ to: "/" });
   }
