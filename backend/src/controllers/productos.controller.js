@@ -104,10 +104,6 @@ const restaurarProducto = async (req, res) => {
     await restaurarRecurso(req, res, productSchema);
 };
 
-productSchema.updateMany({}, { $unset: { enabled: 1 } })
-    .then(() => console.log("Successfully deleted the \"age\" field"))
-    .catch((err) => console.error("Error deleting \"age\" field:", err));
-
 module.exports = {
     obtenerProductos,
     obtenerProductoPorId,
