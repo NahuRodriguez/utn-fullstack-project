@@ -1,4 +1,4 @@
-const { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso } = require("../utils/http.utils");
+const { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso, restaurarRecurso } = require("../utils/http.utils");
 const productSchema = require("../schemas/product.schema");
 const { Cloudinary } = require("../config/cloudinary");
 
@@ -100,10 +100,19 @@ const eliminarProducto = async (req, res) => {
     await eliminarRecurso(req, res, productSchema);
 };
 
+const restaurarProducto = async (req, res) => {
+    await restaurarRecurso(req, res, productSchema);
+};
+
+productSchema.updateMany({}, { $unset: { enabled: 1 } })
+    .then(() => console.log("Successfully deleted the \"age\" field"))
+    .catch((err) => console.error("Error deleting \"age\" field:", err));
+
 module.exports = {
     obtenerProductos,
     obtenerProductoPorId,
     crearProducto,
     modificarProducto,
-    eliminarProducto
+    eliminarProducto,
+    restaurarProducto
 };

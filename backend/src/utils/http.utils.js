@@ -68,6 +68,19 @@ const eliminarRecurso = async (req, res, schema) => {
         }
         res.status(200).json({mensaje: `${schema.modelName} eliminado`, info: recurso});
     } catch (error) {
+        send500(res);
+    }
+};
+
+const restaurarRecurso = async (req, res, schema) => {
+    const idParam = req.params.id;
+    try {
+        const recurso = await schema.restore({_id: idParam});
+        if (!recurso) {
+            return res.status(404).json({ mensaje: `${schema.modelName} no encontrado` });
+        }
+        res.status(200).json({mensaje: `${schema.modelName} restaurado`, info: recurso});
+    } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(400).json({ errors: error.errors });
         } else {
@@ -76,4 +89,4 @@ const eliminarRecurso = async (req, res, schema) => {
     }
 };
 
-module.exports = { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso }
+module.exports = { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso, restaurarRecurso }

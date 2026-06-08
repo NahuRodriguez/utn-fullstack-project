@@ -21,10 +21,15 @@ const eliminarOrder = async (req, res) => {
     await eliminarRecurso(req, res, orderSchema);
 };
 
+const restaurarOrder = async (req, res) => {
+    await restaurarRecurso(req, res, orderSchema);
+}
+
 module.exports = {
     obtenerOrders,
     obtenerOrderPorId,
     crearOrder,
     modificarOrder,
-    eliminarOrder
+    eliminarOrder,
+    restaurarOrder
 };
