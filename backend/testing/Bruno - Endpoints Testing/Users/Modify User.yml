@@ -1,11 +1,11 @@
 info:
-  name: DELETE addresses/:id
+  name: Modify User
   type: http
-  seq: 5
+  seq: 4
 
 http:
-  method: DELETE
-  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{ADDRESSES_API}}{{DESTRUCTIVE_ADDRESS_ID}}"
+  method: PUT
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{USERS_API}}{{USER_ID}}"
   params:
     - name: name
       value: i3 9100f
@@ -21,7 +21,10 @@ http:
       disabled: true
   body:
     type: json
-    data: ""
+    data: |-
+      {
+        "lastName": "Gómez"
+      }
   auth: inherit
 
 settings:

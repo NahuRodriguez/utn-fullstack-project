@@ -1,5 +1,5 @@
 info:
-  name: GET addresses
+  name: Get Addresses
   type: http
   seq: 1
 

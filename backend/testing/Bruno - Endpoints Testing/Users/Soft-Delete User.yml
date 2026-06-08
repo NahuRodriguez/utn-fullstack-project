@@ -1,11 +1,11 @@
 info:
-  name: POST categories
+  name: Soft-Delete User
   type: http
-  seq: 3
+  seq: 5
 
 http:
-  method: POST
-  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{CATEGORIES_API}}"
+  method: DELETE
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{USERS_API}}{{USER_ID}}"
   params:
     - name: name
       value: i3 9100f
@@ -21,10 +21,7 @@ http:
       disabled: true
   body:
     type: json
-    data: |-
-      {
-        "name": "Processors"
-      }
+    data: ""
   auth: inherit
 
 settings:

@@ -1,11 +1,11 @@
 info:
-  name: POST orders
+  name: Soft-Delete Address
   type: http
-  seq: 3
+  seq: 5
 
 http:
-  method: POST
-  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{ORDERS_API}}"
+  method: DELETE
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{ADDRESSES_API}}{{ADDRESS_ID}}"
   params:
     - name: name
       value: i3 9100f
@@ -21,12 +21,7 @@ http:
       disabled: true
   body:
     type: json
-    data: |-
-      {
-        "userId": "69d5e2b92560d0e45125f1a6",
-        "addressId": "69d5ef1de14fa9903bb73bcf",
-        "total": 0
-      }
+    data: ""
   auth: inherit
 
 settings:

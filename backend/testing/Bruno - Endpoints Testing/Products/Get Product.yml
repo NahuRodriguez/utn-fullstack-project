@@ -1,11 +1,11 @@
 info:
-  name: GET orders/:id
+  name: Get Product
   type: http
   seq: 2
 
 http:
   method: GET
-  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{ORDERS_API}}{{NONDESTRUCTIVE_ORDER_ID}}"
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{PRODUCTS_API}}{{PRODUCT_ID}}"
   auth: inherit
 
 settings:

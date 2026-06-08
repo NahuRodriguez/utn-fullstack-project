@@ -1,11 +1,11 @@
 info:
-  name: PUT addresses/:id
+  name: Soft-Delete Product
   type: http
-  seq: 4
+  seq: 5
 
 http:
-  method: PUT
-  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{ADDRESSES_API}}{{NONDESTRUCTIVE_ADDRESS_ID}}"
+  method: DELETE
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{PRODUCTS_API}}{{PRODUCT_ID}}"
   params:
     - name: name
       value: i3 9100f
@@ -21,10 +21,7 @@ http:
       disabled: true
   body:
     type: json
-    data: |-
-      {
-        "streetName": "Misiones"
-      }
+    data: ""
   auth: inherit
 
 settings:
