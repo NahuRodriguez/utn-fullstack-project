@@ -62,11 +62,11 @@ const modificarRecurso = async (req, res, schema) => {
 const eliminarRecurso = async (req, res, schema) => {
     const idParam = req.params.id;
     try {
-        const recurso = await schema.findByIdAndDelete(idParam, req.body);
+        const recurso = await schema.deleteById(idParam, req.body);
         if (!recurso) {
             return res.status(404).json({ mensaje: `${schema.modelName} no encontrado` });
         }
-        res.status(200).json({mensaje: `${schema.modelName} eliminado`, [`${schema.modelName}`]: recurso});
+        res.status(200).json({mensaje: `${schema.modelName} eliminado`, info: recurso});
     } catch (error) {
         if (error instanceof mongoose.Error.ValidationError) {
             res.status(400).json({ errors: error.errors });

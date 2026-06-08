@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validate = require("../utils/validation.utils");
+const mongooseDelete = require("mongoose-delete");
 
 const addressSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -44,5 +45,7 @@ const addressSchema = new mongoose.Schema({
 addressSchema.path("userId").validate(validate.schemaReference("User"));
 
 validate.deleteReferenced(addressSchema, "Order", "addressId");
+
+addressSchema.plugin(mongooseDelete, { overrideMethods: true, validateBeforeDelete: false });
 
 module.exports = mongoose.model("Address", addressSchema);
