@@ -25,7 +25,7 @@ const obtenerProductos = async (req, res) => {
         };
         const sort = sortMap[req.query.sort] || {};
 
-        const [results, total] = await Promise.all([
+        const [ results, total ] = await Promise.all([
             productSchema.find(filter).sort(sort).populate("categories").skip(skip).limit(limit),
             productSchema.countDocuments(filter)
         ]);
