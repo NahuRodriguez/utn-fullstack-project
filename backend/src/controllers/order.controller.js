@@ -1,4 +1,4 @@
-const { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso } = require("../utils/http.utils");
+const { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso, restaurarRecurso } = require("../utils/http.utils");
 const orderSchema = require("../schemas/order.schema");
 
 const obtenerOrders = async (req, res) => {
