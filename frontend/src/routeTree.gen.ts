@@ -11,11 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as CategoriasRouteImport } from './routes/categorias'
 import { Route as CarritoRouteImport } from './routes/carrito'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductosIndexRouteImport } from './routes/productos.index'
+import { Route as ResetPasswordTokenRouteImport } from './routes/reset-password.$token'
 import { Route as ProductosProductoIDRouteImport } from './routes/productos.$productoID'
 
 const RegisterRoute = RegisterRouteImport.update({
@@ -26,6 +28,11 @@ const RegisterRoute = RegisterRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactoRoute = ContactoRouteImport.update({
@@ -53,6 +60,11 @@ const ProductosIndexRoute = ProductosIndexRouteImport.update({
   path: '/productos/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordTokenRoute = ResetPasswordTokenRouteImport.update({
+  id: '/reset-password/$token',
+  path: '/reset-password/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductosProductoIDRoute = ProductosProductoIDRouteImport.update({
   id: '/productos/$productoID',
   path: '/productos/$productoID',
@@ -64,9 +76,11 @@ export interface FileRoutesByFullPath {
   '/carrito': typeof CarritoRoute
   '/categorias': typeof CategoriasRoute
   '/contacto': typeof ContactoRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/productos/$productoID': typeof ProductosProductoIDRoute
+  '/reset-password/$token': typeof ResetPasswordTokenRoute
   '/productos/': typeof ProductosIndexRoute
 }
 export interface FileRoutesByTo {
@@ -74,9 +88,11 @@ export interface FileRoutesByTo {
   '/carrito': typeof CarritoRoute
   '/categorias': typeof CategoriasRoute
   '/contacto': typeof ContactoRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/productos/$productoID': typeof ProductosProductoIDRoute
+  '/reset-password/$token': typeof ResetPasswordTokenRoute
   '/productos': typeof ProductosIndexRoute
 }
 export interface FileRoutesById {
@@ -85,9 +101,11 @@ export interface FileRoutesById {
   '/carrito': typeof CarritoRoute
   '/categorias': typeof CategoriasRoute
   '/contacto': typeof ContactoRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/productos/$productoID': typeof ProductosProductoIDRoute
+  '/reset-password/$token': typeof ResetPasswordTokenRoute
   '/productos/': typeof ProductosIndexRoute
 }
 export interface FileRouteTypes {
@@ -97,9 +115,11 @@ export interface FileRouteTypes {
     | '/carrito'
     | '/categorias'
     | '/contacto'
+    | '/forgot-password'
     | '/login'
     | '/register'
     | '/productos/$productoID'
+    | '/reset-password/$token'
     | '/productos/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -107,9 +127,11 @@ export interface FileRouteTypes {
     | '/carrito'
     | '/categorias'
     | '/contacto'
+    | '/forgot-password'
     | '/login'
     | '/register'
     | '/productos/$productoID'
+    | '/reset-password/$token'
     | '/productos'
   id:
     | '__root__'
@@ -117,9 +139,11 @@ export interface FileRouteTypes {
     | '/carrito'
     | '/categorias'
     | '/contacto'
+    | '/forgot-password'
     | '/login'
     | '/register'
     | '/productos/$productoID'
+    | '/reset-password/$token'
     | '/productos/'
   fileRoutesById: FileRoutesById
 }
@@ -128,9 +152,11 @@ export interface RootRouteChildren {
   CarritoRoute: typeof CarritoRoute
   CategoriasRoute: typeof CategoriasRoute
   ContactoRoute: typeof ContactoRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   ProductosProductoIDRoute: typeof ProductosProductoIDRoute
+  ResetPasswordTokenRoute: typeof ResetPasswordTokenRoute
   ProductosIndexRoute: typeof ProductosIndexRoute
 }
 
@@ -148,6 +174,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contacto': {
@@ -185,6 +218,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password/$token': {
+      id: '/reset-password/$token'
+      path: '/reset-password/$token'
+      fullPath: '/reset-password/$token'
+      preLoaderRoute: typeof ResetPasswordTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/productos/$productoID': {
       id: '/productos/$productoID'
       path: '/productos/$productoID'
@@ -200,9 +240,11 @@ const rootRouteChildren: RootRouteChildren = {
   CarritoRoute: CarritoRoute,
   CategoriasRoute: CategoriasRoute,
   ContactoRoute: ContactoRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   ProductosProductoIDRoute: ProductosProductoIDRoute,
+  ResetPasswordTokenRoute: ResetPasswordTokenRoute,
   ProductosIndexRoute: ProductosIndexRoute,
 }
 export const routeTree = rootRouteImport
