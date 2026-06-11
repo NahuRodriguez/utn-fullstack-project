@@ -12,5 +12,6 @@ docs:
 
     <hr/>
     name: String, <u>required</u>, <u>unique</u> <hr/>
-    description: String <br/>
+    description: String <hr/>
+    deleted: Boolean, controls soft deletion <br/>
   type: text/markdown

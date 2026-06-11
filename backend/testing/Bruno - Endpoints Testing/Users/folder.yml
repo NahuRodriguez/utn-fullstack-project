@@ -16,5 +16,6 @@ docs:
     password: String, <u>required</u>, can be PUT'd and POST'd but won't be in GET responses, expects an unhashed password (it gets hashed by the server) <hr/>
     phone: String, only allows Numbers & a leading +, no spaces or hyphens <hr/>
     isActive: Boolean, defaults to true <hr/>
-    role: String, either "USER" or "ADMIN", defaults to "USER" <br/>
+    role: String, either "USER" or "ADMIN", defaults to "USER" <hr/>
+    deleted: Boolean, controls soft deletion <br/>
   type: text/markdown

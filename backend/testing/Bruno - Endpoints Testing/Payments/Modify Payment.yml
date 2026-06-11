@@ -1,11 +1,11 @@
 info:
-  name: PUT users/:id
+  name: Modify Payment
   type: http
   seq: 4
 
 http:
   method: PUT
-  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{USERS_API}}{{NONDESTRUCTIVE_USER_ID}}"
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{PAYMENTS_API}}{{PAYMENT_ID}}"
   params:
     - name: name
       value: i3 9100f
@@ -23,7 +23,7 @@ http:
     type: json
     data: |-
       {
-        "lastName": "Gómez"
+        "orderId": "69d5f028e14fa9903bb73bdc"
       }
   auth: inherit
 

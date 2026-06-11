@@ -9,14 +9,7 @@
       "secret": false
     },
     {
-      "name": "NONDESTRUCTIVE_PRODUCT_ID",
-      "value": "",
-      "type": "text",
-      "enabled": true,
-      "secret": false
-    },
-    {
-      "name": "DESTRUCTIVE_PRODUCT_ID",
+      "name": "PRODUCT_ID",
       "value": "",
       "type": "text",
       "enabled": true,
@@ -37,14 +30,7 @@
       "secret": false
     },
     {
-      "name": "NONDESTRUCTIVE_USER_ID",
-      "value": "",
-      "type": "text",
-      "enabled": true,
-      "secret": false
-    },
-    {
-      "name": "DESTRUCTIVE_USER_ID",
+      "name": "USER_ID",
       "value": "",
       "type": "text",
       "enabled": true,
@@ -79,56 +65,28 @@
       "secret": false
     },
     {
-      "name": "NONDESTRUCTIVE_ORDER_ID",
+      "name": "ORDER_ID",
       "value": "",
       "type": "text",
       "enabled": true,
       "secret": false
     },
     {
-      "name": "NONDESTRUCTIVE_ADDRESS_ID",
+      "name": "ADDRESS_ID",
       "value": "",
       "type": "text",
       "enabled": true,
       "secret": false
     },
     {
-      "name": "NONDESTRUCTIVE_PAYMENT_ID",
+      "name": "PAYMENT_ID",
       "value": "",
       "type": "text",
       "enabled": true,
       "secret": false
     },
     {
-      "name": "NONDESTRUCTIVE_CATEGORIES_ID",
-      "value": "",
-      "type": "text",
-      "enabled": true,
-      "secret": false
-    },
-    {
-      "name": "DESTRUCTIVE_ORDER_ID",
-      "value": "",
-      "type": "text",
-      "enabled": true,
-      "secret": false
-    },
-    {
-      "name": "DESTRUCTIVE_ADDRESS_ID",
-      "value": "",
-      "type": "text",
-      "enabled": true,
-      "secret": false
-    },
-    {
-      "name": "DESTRUCTIVE_PAYMENT_ID",
-      "value": "",
-      "type": "text",
-      "enabled": true,
-      "secret": false
-    },
-    {
-      "name": "DESTRUCTIVE_CATEGORIES_ID",
+      "name": "CATEGORY_ID",
       "value": "",
       "type": "text",
       "enabled": true,
@@ -156,14 +114,7 @@
       "secret": false
     },
     {
-      "name": "NONDESTRUCTIVE_ORDER_ITEM_ID",
-      "value": "",
-      "type": "text",
-      "enabled": true,
-      "secret": false
-    },
-    {
-      "name": "DESTRUCTIVE_ORDER_ITEM_ID",
+      "name": "ORDER_ITEM_ID",
       "value": "",
       "type": "text",
       "enabled": true,
@@ -172,7 +123,7 @@
   ],
   "info": {
     "type": "bruno-environment",
-    "exportedAt": "2026-04-28T01:49:06.593Z",
-    "exportedUsing": "Bruno/v3.2.2"
+    "exportedAt": "2026-06-08T06:15:06.309Z",
+    "exportedUsing": "Bruno/v3.3.0"
   }
 }

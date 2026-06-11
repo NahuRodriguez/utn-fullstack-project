@@ -1,11 +1,11 @@
 info:
-  name: POST payments
+  name: Modify Category
   type: http
-  seq: 3
+  seq: 4
 
 http:
-  method: POST
-  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{PAYMENTS_API}}"
+  method: PUT
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{CATEGORIES_API}}{{CATEGORY_ID}}"
   params:
     - name: name
       value: i3 9100f
@@ -23,9 +23,14 @@ http:
     type: json
     data: |-
       {
-        "amount": 100000
+        "name": "GPUs"
       }
   auth: inherit
+
+runtime:
+  variables:
+    - name: NONDESTRUCTIVE_CATEGORY_ID
+      value: 69d5f25be14fa9903bb73bfd
 
 settings:
   encodeUrl: true

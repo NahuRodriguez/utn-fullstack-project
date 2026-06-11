@@ -1,5 +1,5 @@
 info:
-  name: GET users
+  name: Get Users
   type: http
   seq: 1
 

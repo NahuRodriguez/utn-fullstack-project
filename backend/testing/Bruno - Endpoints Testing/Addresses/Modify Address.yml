@@ -1,11 +1,11 @@
 info:
-  name: POST addresses
+  name: Modify Address
   type: http
-  seq: 3
+  seq: 4
 
 http:
-  method: POST
-  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{ADDRESSES_API}}"
+  method: PUT
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{ADDRESSES_API}}{{ADDRESS_ID}}"
   params:
     - name: name
       value: i3 9100f
@@ -23,12 +23,7 @@ http:
     type: json
     data: |-
       {
-        "userId": "69d5e2b92560d0e45125f1a6",
-        "province": "Tucumán",
-        "city": "Ciudad",
-        "postalCode": "1234",
-        "streetName": "Corrientes",
-        "buildingNumber": 276
+        "streetName": "Misiones"
       }
   auth: inherit
 

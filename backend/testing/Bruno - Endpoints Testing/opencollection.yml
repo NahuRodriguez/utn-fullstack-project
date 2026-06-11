@@ -86,7 +86,6 @@ docs:
           email: String, <u>required</u>, <u>unique</u>, expects an e-mail address complying with [user]@[host].[TLD] (TLD is 2 to 4 characters long, every field only allows alphanumeric & dashes, with the exception of user, which also allows periods) <hr/>
           password: String, <u>required</u>, can be PUT'd and POST'd but won't be in GET responses, expects an unhashed password (it gets hashed by the server) <hr/>
           phone: String, only allows Numbers & a leading +, no spaces or hyphens <hr/>
-          isActive: Boolean, defaults to true <hr/>
           role: String, either "USER" or "ADMIN", defaults to "USER" <br/><br/>
         </td>
       </tr>
@@ -127,18 +126,22 @@ docs:
       </tr>
     </table>
 
+    **Address, Category, Product, User, Order & Payment all have**
+    deleted: Boolean, controls soft deletion
+
     ### Endpoints
-    Every Model except for Order Item has 5 endpoints:
+    Every Model except for Order Item has these endpoints:
     - **GET /** --- returns whole collection
     - **GET /:id** --- returns Document with matching ID in collection
     - **POST /** --- creates Document using JSON request body
     - **PUT /:id** --- modifies Document with matching ID using JSON request body
-    - **DELETE /:id** --- deletes Document with matching ID
+    - **DELETE /:id** --- soft-deletes Document with matching ID
+    - **PATCH /restore/:id** --- reverts Document with matching ID's soft-deletion
 
     #### Order Item endpoints
     - **POST /:orderId** --- creates Item in specified Order using JSON request body
     - **PUT /:orderId/:productId** --- modifies Item with matching ID in specified Order using JSON request body
-    - **DELETE /:orderId/:productId** --- deletes Item with matching ID in specified Order
+    - **DELETE /:orderId/:productId** --- hard-deletes Item with matching ID in specified Order
 
     POST & PUT expect request bodies with the explained fields in Models section
 
@@ -314,14 +317,31 @@ docs:
           ✔
         </td>
       </tr>
+      <tr>
+        <th>
+          PATCH /restore/:id
+        </th>
+        <td>
+          ✔
+        </td>
+        <td>
+          ✔
+        </td>
+        <td>
+          ✔
+        </td>
+        <td>
+          ✔
+        </td>
+      </tr>
     </table>
   type: text/markdown
 bundled: false
 extensions:
   bruno:
     ignore:
-    - node_modules
-    - .git
+      - node_modules
+      - .git
     presets:
       request:
         type: http

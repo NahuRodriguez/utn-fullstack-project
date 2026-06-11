@@ -1,4 +1,4 @@
-const { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso } = require("../utils/http.utils");
+const { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso, restaurarRecurso } = require("../utils/http.utils");
 const addressSchema = require("../schemas/address.schema");
 
 const obtenerAddresses = async (req, res) => {
@@ -21,10 +21,15 @@ const eliminarAddress = async (req, res) => {
     await eliminarRecurso(req, res, addressSchema);
 };
 
+const restaurarAddress = async (req, res) => {
+    await restaurarRecurso(req, res, addressSchema);
+}
+
 module.exports = {
     obtenerAddresses,
     obtenerAddressPorId,
     crearAddress,
     modificarAddress,
-    eliminarAddress
+    eliminarAddress,
+    restaurarAddress
 };

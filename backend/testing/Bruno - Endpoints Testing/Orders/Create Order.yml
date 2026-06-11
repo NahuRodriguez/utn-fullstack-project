@@ -1,11 +1,11 @@
 info:
-  name: DELETE payments/:id
+  name: Create Order
   type: http
-  seq: 5
+  seq: 3
 
 http:
-  method: DELETE
-  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{PAYMENTS_API}}{{DESTRUCTIVE_PAYMENT_ID}}"
+  method: POST
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{ORDERS_API}}"
   params:
     - name: name
       value: i3 9100f
@@ -21,7 +21,12 @@ http:
       disabled: true
   body:
     type: json
-    data: ""
+    data: |-
+      {
+        "userId": "69d5e2b92560d0e45125f1a6",
+        "addressId": "69d5ef1de14fa9903bb73bcf",
+        "total": 0
+      }
   auth: inherit
 
 settings:

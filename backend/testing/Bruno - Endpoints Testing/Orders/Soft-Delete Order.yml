@@ -1,11 +1,11 @@
 info:
-  name: PUT categories/:id
+  name: Soft-Delete Order
   type: http
-  seq: 4
+  seq: 5
 
 http:
-  method: PUT
-  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{CATEGORIES_API}}{{NONDESTRUCTIVE_CATEGORY_ID}}"
+  method: DELETE
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{ORDERS_API}}{{ORDER_ID}}"
   params:
     - name: name
       value: i3 9100f
@@ -21,16 +21,8 @@ http:
       disabled: true
   body:
     type: json
-    data: |-
-      {
-        "name": "GPUs"
-      }
+    data: ""
   auth: inherit
-
-runtime:
-  variables:
-    - name: NONDESTRUCTIVE_CATEGORY_ID
-      value: 69d5f25be14fa9903bb73bfd
 
 settings:
   encodeUrl: true

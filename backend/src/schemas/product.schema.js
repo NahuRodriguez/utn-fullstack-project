@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongooseDelete = require("mongoose-delete");
 const validate = require("../utils/validation.utils");
 
 const productSchema = new mongoose.Schema({
@@ -20,5 +21,7 @@ productSchema.path("categories").validate( { validator: (array) => array.length 
 productSchema.path("createdBy").validate(validate.schemaReference("User"));
 
 validate.deleteReferenced(productSchema, "Order", "items.productId");
+
+productSchema.plugin(mongooseDelete, { overrideMethods: true, validateBeforeDelete: false });
 
 module.exports = mongoose.model("Product", productSchema);

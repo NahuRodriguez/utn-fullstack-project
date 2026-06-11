@@ -17,5 +17,6 @@ docs:
     items: Object[], expects: <br/>
     <li> productId: Reference to Product, <u>required</u> </li>
     <li> quantity, priceAtPurchase: Number, <u>required</u>, don't allow negative values </li> <hr/>
-    status: String, either "PENDING", "SHIPPED" or "CANCELLED", defaults to "PENDING" <br/>
+    status: String, either "PENDING", "SHIPPED" or "CANCELLED", defaults to "PENDING" <hr/>
+    deleted: Boolean, controls soft deletion <br/>
   type: text/markdown

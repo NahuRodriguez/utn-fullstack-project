@@ -1,11 +1,11 @@
 info:
-  name: DELETE categories/:id
+  name: Soft-Delete Category
   type: http
   seq: 5
 
 http:
   method: DELETE
-  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{CATEGORIES_API}}{{DESTRUCTIVE_CATEGORY_ID}}"
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{CATEGORIES_API}}{{CATEGORY_ID}}"
   params:
     - name: name
       value: i3 9100f

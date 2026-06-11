@@ -12,5 +12,6 @@ docs:
 
     <hr/>
     orderId: Reference to Order, <u>required</u> <hr/>
-    amount: Number, <u>required</u>, doesn't allow negative values <br/>
+    amount: Number, <u>required</u>, doesn't allow negative values <hr/>
+    deleted: Boolean, controls soft deletion <br/>
   type: text/markdown

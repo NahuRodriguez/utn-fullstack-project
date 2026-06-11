@@ -1,11 +1,11 @@
 info:
-  name: POST products
+  name: Modify Order
   type: http
-  seq: 3
+  seq: 4
 
 http:
-  method: POST
-  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{PRODUCTS_API}}"
+  method: PUT
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{ORDERS_API}}{{ORDER_ID}}"
   params:
     - name: name
       value: i3 9100f
@@ -23,9 +23,7 @@ http:
     type: json
     data: |-
       {
-        "name": "i3 10100f",
-        "price": 95000,
-        "stock": 30
+        "status": "CANCELLED"
       }
   auth: inherit
 
