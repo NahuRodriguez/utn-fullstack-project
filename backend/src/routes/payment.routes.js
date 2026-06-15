@@ -6,7 +6,8 @@ const {
     obtenerPaymentPorId,
     crearPayment,
     modificarPayment,
-    eliminarPayment
+    eliminarPayment,
+    restaurarPayment
 } = require("../controllers/payment.controller");
 
 router.get("/", obtenerPayments);
@@ -14,5 +15,6 @@ router.get("/:id", obtenerPaymentPorId);
 router.post("/", crearPayment);
 router.put("/:id", modificarPayment);
 router.delete("/:id", eliminarPayment);
+router.patch("/restore/:id", restaurarPayment);
 
 module.exports = router;

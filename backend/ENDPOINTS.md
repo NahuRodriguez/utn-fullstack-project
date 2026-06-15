@@ -11,287 +11,307 @@ You are expected to set your own Destructive and Non-Destructive ID Environment 
 - Payment --- The log of a transaction meant to cover part or the entirety of an Order's total price. If a Payment doesn't meet the Order's price, it is expected for the remaining debt to be sated by other Payments.
 
 <table>
-    <tr>
+  <tr>
     <th>
-        Model
+      Model
     </th>
     <th>
-        Fields
+      Fields
     </th>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <td>
-        Address
+      Address
     </td>
     <td>
-        <br/>
-        userId: Reference to User, <u>required</u> <hr/>
-        province, city, streetName: String, <u>required</u>, only allows alphanumeric with hispanic symbols & spaces (Ñ, tildes) <hr/>
-        postalCode: String, <u>required</u>, only allows XXXX and X0000XXX formats (X for uppercase letter, 0 for number) <hr/>
-        buildingNumber: Number, <u>required</u> <hr/>
-        addressDetails: String, meant for a short user-made description <br/><br/>
+      <br/>
+      userId: Reference to User, <u>required</u> <hr/>
+      province, city, streetName: String, <u>required</u>, only allows alphanumeric with hispanic symbols & spaces (Ñ, tildes) <hr/>
+      postalCode: String, <u>required</u>, only allows XXXX and X0000XXX formats (X for uppercase letter, 0 for number) <hr/>
+      buildingNumber: Number, <u>required</u> <hr/>
+      addressDetails: String, meant for a short user-made description <br/><br/>
     </td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <td>
-        Category
-    </td>
-    <td>
-        <br/>
-        name: String, <u>required</u>, <u>unique</u> <hr/>
-        description: String <br/><br/>
-    </td>
-    </tr>
-    <tr>
-    <td>
-        Product
+      Category
     </td>
     <td>
-        <br/>
-        name: String, <u>required</u> <hr/>
-        price, stock: Number, <u>required</u>, don't allow negative values <hr/>
-        description: String, defaults to empty string <hr/>
-        image: Image, <u>required</u>, persisted as imgUrl, a Cloudinary image upload URL. Send through multipart/form-data <hr/>
-        categories: String[], <u>required</u>, references to Category <hr/>
-        createdBy: Reference to User, to be automated when authentication is added <br/><br/>
+      <br/>
+      name: String, <u>required</u>, <u>unique</u> <hr/>
+      description: String <br/><br/>
     </td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <td>
-        User
+      Product
     </td>
     <td>
-        <br/>
-        firstName, lastName: String, <u>required</u>, only allows alphanumeric with hispanic symbols & spaces (Ñ, tildes) <hr/>
-        email: String, <u>required</u>, <u>unique</u>, expects an e-mail address complying with [user]@[host].[TLD] (TLD is 2 to 4 characters long, every field only allows alphanumeric & dashes, with the exception of user, which also allows periods) <hr/>
-        password: String, <u>required</u>, can be PUT'd and POST'd but won't be in GET responses, expects an unhashed password (it gets hashed by the server) <hr/>
-        phone: String, only allows Numbers & a leading +, no spaces or hyphens <hr/>
-        isActive: Boolean, defaults to true <hr/>
-        role: String, either "USER" or "ADMIN", defaults to "USER" <br/><br/>
+      <br/>
+      name: String, <u>required</u> <hr/>
+      price, stock: Number, <u>required</u>, don't allow negative values <hr/>
+      description: String, defaults to empty string <hr/>
+      image: Image, <u>required</u>, persisted as imgUrl, a Cloudinary image upload URL. Send through multipart/form-data <hr/>
+      categories: String[], <u>required</u>, references to Category <hr/>
+      createdBy: Reference to User, to be automated when authentication is added <br/><br/>
     </td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <td>
-        Order
+      User
     </td>
     <td>
-        <br/>
-        userId: Reference to User, <u>required</u> <hr/>
-        addressId: Reference to Address, <u>required</u> <hr/>
-        total: Number, <u>required</u>, doesn't allow negative values <hr/>
-        items: Object[], expects: <br/>
+      <br/>
+      firstName, lastName: String, <u>required</u>, only allows alphanumeric with hispanic symbols & spaces (Ñ, tildes) <hr/>
+      email: String, <u>required</u>, <u>unique</u>, expects an e-mail address complying with [user]@[host].[TLD] (TLD is 2 to 4 characters long, every field only allows alphanumeric & dashes, with the exception of user, which also allows periods) <hr/>
+      password: String, <u>required</u>, can be PUT'd and POST'd but won't be in GET responses, expects an unhashed password (it gets hashed by the server) <hr/>
+      phone: String, only allows Numbers & a leading +, no spaces or hyphens <hr/>
+      role: String, either "USER" or "ADMIN", defaults to "USER" <br/><br/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Order
+    </td>
+    <td>
+      <br/>
+      userId: Reference to User, <u>required</u> <hr/>
+      addressId: Reference to Address, <u>required</u> <hr/>
+      total: Number, <u>required</u>, doesn't allow negative values <hr/>
+      items: Object[], expects: <br/>
         <li> productId: Reference to Product, <u>required</u> </li>
         <li> quantity, priceAtPurchase: Number, <u>required</u>, don't allow negative values </li> <hr/>
-        status: String, either "PENDING", "SHIPPED" or "CANCELLED", defaults to "PENDING" <br/><br/>
+      status: String, either "PENDING", "SHIPPED" or "CANCELLED", defaults to "PENDING" <br/><br/>
     </td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <td>
-        Order Item
+      Order Item
     </td>
     <td>
-        <br/>
+      <br/>
         productId: Reference to Product, <u>required</u>, <u>unique</u> <hr/>
         quantity, priceAtPurchase: Number, <u>required</u>, don't allow negative values <br/><br/>
     </td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <td>
-        Payment
+      Payment
     </td>
     <td>
-        <br/>
-        orderId: Reference to Order, <u>required</u> <hr/>
-        amount: Number, <u>required</u>, doesn't allow negative values <br/><br/>
+      <br/>
+      orderId: Reference to Order, <u>required</u> <hr/>
+      amount: Number, <u>required</u>, doesn't allow negative values <br/><br/>
     </td>
-    </tr>
+  </tr>
 </table>
 
+**Address, Category, Product, User, Order & Payment all have**
+deleted: Boolean, controls soft deletion
+
 ### Endpoints
-Every Model except for Order Item has 5 endpoints:
+Every Model except for Order Item has these endpoints:
 - **GET /** --- returns whole collection
 - **GET /:id** --- returns Document with matching ID in collection
 - **POST /** --- creates Document using JSON request body
 - **PUT /:id** --- modifies Document with matching ID using JSON request body
-- **DELETE /:id** --- deletes Document with matching ID
+- **DELETE /:id** --- soft-deletes Document with matching ID
+- **PATCH /restore/:id** --- reverts Document with matching ID's soft-deletion
 
 #### Order Item endpoints
 - **POST /:orderId** --- creates Item in specified Order using JSON request body
 - **PUT /:orderId/:productId** --- modifies Item with matching ID in specified Order using JSON request body
-- **DELETE /:orderId/:productId** --- deletes Item with matching ID in specified Order
+- **DELETE /:orderId/:productId** --- hard-deletes Item with matching ID in specified Order
 
 POST & PUT expect request bodies with the explained fields in Models section
 
 ### Routes
 <table>
-    <tr>
+  <tr>
     <th>
-        Model
+      Model
     </th>
     <th>
-        Route
+      Route
     </th>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <td>
-        Address
+      Address
     </td>
     <td>
-        /api/addresses
+      /api/addresses
     </td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <td>
-        Category
-    </td>
-    <td>
-        /api/categories
-    </td>
-    </tr>
-    <tr>
-    <td>
-        Product
+      Category
     </td>
     <td>
-        /api/products
+      /api/categories
     </td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <td>
-        User
-    </td>
-    <td>
-        /api/users
-    </td>
-    </tr>
-    <tr>
-    <td>
-        Order
+      Product
     </td>
     <td>
-        /api/orders
+      /api/products
     </td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <td>
-        Order Item
-    </td>
-    <td>
-        /api/orders/items
-    </td>
-    </tr>
-    <tr>
-    <td>
-        Payment
+      User
     </td>
     <td>
-        /api/payments
+      /api/users
     </td>
-    </tr>
+  </tr>
+  <tr>
+    <td>
+      Order
+    </td>
+    <td>
+      /api/orders
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Order Item
+    </td>
+    <td>
+      /api/orders/items
+    </td>
+  </tr>
+  <tr>
+    <td>
+      Payment
+    </td>
+    <td>
+      /api/payments
+    </td>
+  </tr>
 </table>
 
 ### Possible HTTP error codes
 <table>
-    <tr>
+  <tr>
     <th>
-        HTTP Method
+      HTTP Method
     </th>
     <th>
-        200 - On successful request
+      200 - On successful request
     </th>
     <th>
-        400 - On invalid request
+      400 - On invalid request
     </th>
     <th>
-        404 - On document non-existence
+      404 - On document non-existence
     </th>
     <th>
-        500 - On Internal Server Error
+      500 - On Internal Server Error
     </th>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <th>
-        GET /
+      GET /
     </th>
     <td>
-        ✔
+      ✔
     </td>
     <td>
-        ✖
+      ✖
     </td>
     <td>
-        ✖
+      ✖
     </td>
     <td>
-        ✔
+      ✔
     </td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <th>
-        GET /:id
+      GET /:id
     </th>
     <td>
-        ✔
+      ✔
     </td>
     <td>
-        ✖
+      ✖
     </td>
     <td>
-        ✔
+      ✔
     </td>
     <td>
-        ✔
+      ✔
     </td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <th>
-        POST /
+      POST /
     </th>
     <td>
-        201
+      201
     </td>
     <td>
-        ✔
+      ✔
     </td>
     <td>
-        ✖
+      ✖
     </td>
     <td>
-        ✔
+      ✔
     </td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <th>
-        PUT /:id
+      PUT /:id
     </th>
     <td>
-        ✔
+      ✔
     </td>
     <td>
-        ✔
+      ✔
     </td>
     <td>
-        ✔
+      ✔
     </td>
     <td>
-        ✔
+      ✔
     </td>
-    </tr>
-    <tr>
+  </tr>
+  <tr>
     <th>
-        DELETE /:id
+      DELETE /:id
     </th>
     <td>
-        ✔
+      ✔
     </td>
     <td>
-        ✖
+      ✖
     </td>
     <td>
-        ✔
+      ✔
     </td>
     <td>
-        ✔
+      ✔
     </td>
-    </tr>
+  </tr>
+  <tr>
+    <th>
+      PATCH /restore/:id
+    </th>
+    <td>
+      ✔
+    </td>
+    <td>
+      ✔
+    </td>
+    <td>
+      ✔
+    </td>
+    <td>
+      ✔
+    </td>
+  </tr>
 </table>

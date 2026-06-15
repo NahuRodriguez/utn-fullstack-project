@@ -7,7 +7,8 @@ const {
     obtenerOrderPorId,
     crearOrder,
     modificarOrder,
-    eliminarOrder
+    eliminarOrder,
+    restaurarOrder
 } = require("../controllers/order.controller");
 
 router.get("/", obtenerOrders);
@@ -15,6 +16,7 @@ router.get("/:id", obtenerOrderPorId);
 router.post("/", crearOrder);
 router.put("/:id", modificarOrder);
 router.delete("/:id", eliminarOrder);
+router.patch("/restore/:id", restaurarOrder);
 
 router.use("/items", orderItemRoutes);
 

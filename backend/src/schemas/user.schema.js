@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const validate = require("../utils/validation.utils");
+const mongooseDelete = require("mongoose-delete");
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -55,5 +56,7 @@ userSchema.pre([ "save" ], async function() {
 validate.deleteReferenced(userSchema, "Address", "userId");
 validate.deleteReferenced(userSchema, "Order", "userId");
 validate.deleteReferenced(userSchema, "Product", "createdBy");
+
+userSchema.plugin(mongooseDelete, { overrideMethods: true, validateBeforeDelete: false });
 
 module.exports = mongoose.model("User", userSchema);

@@ -21,10 +21,15 @@ const eliminarCategory = async (req, res) => {
     await eliminarRecurso(req, res, categorySchema);
 };
 
+const restaurarCategory = async (req, res) => {
+    await restaurarRecurso(req, res, categorySchema);
+}
+
 module.exports = {
     obtenerCategories,
     obtenerCategoryPorId,
     crearCategory,
     modificarCategory,
-    eliminarCategory
+    eliminarCategory,
+    restaurarCategory
 };

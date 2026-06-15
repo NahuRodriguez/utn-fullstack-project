@@ -1,11 +1,11 @@
 info:
-  name: POST users
+  name: Soft-Delete Payment
   type: http
-  seq: 3
+  seq: 5
 
 http:
-  method: POST
-  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{USERS_API}}"
+  method: DELETE
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{PAYMENTS_API}}{{PAYMENT_ID}}"
   params:
     - name: name
       value: i3 9100f
@@ -21,13 +21,7 @@ http:
       disabled: true
   body:
     type: json
-    data: |-
-      {
-        "firstName": "Juan",
-        "lastName": "Pérez",
-        "email": "test1@example.com",
-        "password": "hashPending"
-      }
+    data: ""
   auth: inherit
 
 settings:

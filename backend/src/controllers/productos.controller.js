@@ -1,4 +1,4 @@
-const { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso } = require("../utils/http.utils");
+const { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso, restaurarRecurso } = require("../utils/http.utils");
 const productSchema = require("../schemas/product.schema");
 const { Cloudinary } = require("../config/cloudinary");
 
@@ -25,7 +25,7 @@ const obtenerProductos = async (req, res) => {
         };
         const sort = sortMap[req.query.sort] || {};
 
-        const [results, total] = await Promise.all([
+        const [ results, total ] = await Promise.all([
             productSchema.find(filter).sort(sort).populate("categories").skip(skip).limit(limit),
             productSchema.countDocuments(filter)
         ]);
@@ -100,10 +100,15 @@ const eliminarProducto = async (req, res) => {
     await eliminarRecurso(req, res, productSchema);
 };
 
+const restaurarProducto = async (req, res) => {
+    await restaurarRecurso(req, res, productSchema);
+};
+
 module.exports = {
     obtenerProductos,
     obtenerProductoPorId,
     crearProducto,
     modificarProducto,
-    eliminarProducto
+    eliminarProducto,
+    restaurarProducto
 };

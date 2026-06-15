@@ -1,4 +1,4 @@
-const { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso } = require("../utils/http.utils");
+const { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso, restaurarRecurso } = require("../utils/http.utils");
 const orderSchema = require("../schemas/order.schema");
 
 const obtenerOrders = async (req, res) => {
@@ -21,10 +21,15 @@ const eliminarOrder = async (req, res) => {
     await eliminarRecurso(req, res, orderSchema);
 };
 
+const restaurarOrder = async (req, res) => {
+    await restaurarRecurso(req, res, orderSchema);
+}
+
 module.exports = {
     obtenerOrders,
     obtenerOrderPorId,
     crearOrder,
     modificarOrder,
-    eliminarOrder
+    eliminarOrder,
+    restaurarOrder
 };

@@ -1,0 +1,15 @@
+info:
+  name: Restore Payment
+  type: http
+  seq: 6
+
+http:
+  method: PATCH
+  url: "{{PROTOCOL}}{{BASE_URL}}{{PORT}}{{PAYMENTS_API}}restore/{{PAYMENT_ID}}"
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

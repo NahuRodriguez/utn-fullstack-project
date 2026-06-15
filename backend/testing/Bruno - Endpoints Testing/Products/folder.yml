@@ -16,5 +16,6 @@ docs:
     description: String, defaults to empty string <hr/>
     image: Image, <u>required</u>, persisted as imgUrl, a Cloudinary image upload URL. Send through multipart/form-data <hr/>
     categories: String[], <u>required</u>, references to Category <hr/>
-    createdBy: Reference to User, to be automated when authentication is added <br/>
+    createdBy: Reference to User, to be automated when authentication is added <hr/>
+    deleted: Boolean, controls soft deletion <br/>
   type: text/markdown

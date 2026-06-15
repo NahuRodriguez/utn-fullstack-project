@@ -1,4 +1,4 @@
-const { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso } = require("../utils/http.utils");
+const { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso, restaurarRecurso } = require("../utils/http.utils");
 const paymentSchema = require("../schemas/payment.schema");
 
 const obtenerPayments = async (req, res) => {
@@ -21,10 +21,15 @@ const eliminarPayment = async (req, res) => {
     await eliminarRecurso(req, res, paymentSchema);
 };
 
+const restaurarPayment = async (req, res) => {
+    await restaurarRecurso(req, res, paymentSchema);
+};
+
 module.exports = {
     obtenerPayments,
     obtenerPaymentPorId,
     crearPayment,
     modificarPayment,
-    eliminarPayment
+    eliminarPayment,
+    restaurarPayment
 };

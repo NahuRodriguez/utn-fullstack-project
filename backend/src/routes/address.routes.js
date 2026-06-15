@@ -6,7 +6,8 @@ const {
     obtenerAddressPorId,
     crearAddress,
     modificarAddress,
-    eliminarAddress
+    eliminarAddress,
+    restaurarAddress
 } = require("../controllers/address.controller");
 
 router.get("/", obtenerAddresses);
@@ -14,5 +15,6 @@ router.get("/:id", obtenerAddressPorId);
 router.post("/", crearAddress);
 router.put("/:id", modificarAddress);
 router.delete("/:id", eliminarAddress);
+router.patch("/restore/:id", restaurarAddress);
 
 module.exports = router;

@@ -8,7 +8,8 @@ const {
     obtenerProductoPorId,
     crearProducto,
     modificarProducto,
-    eliminarProducto
+    eliminarProducto,
+    restaurarProducto
 } = require("../controllers/productos.controller");
 
 router.get("/", obtenerProductos);
@@ -16,5 +17,6 @@ router.get("/:id", obtenerProductoPorId);
 router.post("/", multerImage, crearProducto);
 router.put("/:id", modificarProducto);
 router.delete("/:id", eliminarProducto);
+router.patch("/restore/:id", restaurarProducto);
 
 module.exports = router;
