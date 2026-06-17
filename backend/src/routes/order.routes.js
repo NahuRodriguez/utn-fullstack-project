@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const orderItemRoutes = require("./order-product.routes");
+const { verificarToken } = require("../middleware/auth.middleware");
 
 const {
     obtenerOrders,
@@ -13,7 +14,7 @@ const {
 
 router.get("/", obtenerOrders);
 router.get("/:id", obtenerOrderPorId);
-router.post("/", crearOrder);
+router.post("/",  verificarToken, crearOrder);
 router.put("/:id", modificarOrder);
 router.delete("/:id", eliminarOrder);
 router.patch("/restore/:id", restaurarOrder);
