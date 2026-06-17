@@ -2,14 +2,16 @@ import { useState } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import axios from "axios";
 
-export const Route = createFileRoute("/login")({
-  component: Login,
+export const Route = createFileRoute("/reset-password/$token")({
+  component: ResetPassword,
 });
 
-function Login() {
+function ResetPassword() {
   const navigate = useNavigate();
+  // Token leído desde la URL (/reset-password/:token).
+  const { token } = Route.useParams();
 
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({ password: "", confirm: "" });
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -22,8 +24,12 @@ function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!form.email || !form.password) {
-      setError("Email y contraseña son obligatorios");
+    if (form.password.length < 6) {
+      setError("La contraseña debe tener al menos 6 caracteres");
+      return;
+    }
+    if (form.password !== form.confirm) {
+      setError("Las contraseñas no coinciden");
       return;
     }
 
@@ -31,18 +37,17 @@ function Login() {
     setError(null);
 
     try {
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/auth/login`,
-        form
+      await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/reset-password/${token}`,
+        { password: form.password },
       );
 
-      localStorage.setItem("token", data.token);
       setSuccess(true);
-
-      setTimeout(() => navigate({ to: "/productos" }), 1200);
+      setTimeout(() => navigate({ to: "/login" }), 1500);
     } catch (err: any) {
       const msg =
-        err.response?.data?.error || "Error al iniciar sesión. Intentá de nuevo.";
+        err.response?.data?.error ||
+        "No se pudo actualizar la contraseña. El enlace puede haber expirado.";
       setError(msg);
     } finally {
       setLoading(false);
@@ -52,53 +57,36 @@ function Login() {
   return (
     <div className="auth-wrapper">
       <div className="auth-card">
-
-        {/* Logo */}
         <div className="auth-logo">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
             <path d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
         </div>
 
-        {/* Heading */}
         <div className="auth-heading">
-          <h1 className="auth-title">Iniciar sesión</h1>
-          <p className="auth-subtitle">Ingresá con tu cuenta para continuar</p>
+          <h1 className="auth-title">Nueva contraseña</h1>
+          <p className="auth-subtitle">
+            Ingresá y confirmá tu nueva contraseña.
+          </p>
         </div>
 
-        {/* Alertas */}
-        {error && (
-          <div className="auth-alert auth-alert-error">{error}</div>
-        )}
+        {error && <div className="auth-alert auth-alert-error">{error}</div>}
         {success && (
           <div className="auth-alert auth-alert-success">
-            ¡Sesión iniciada! Redirigiendo...
+            ¡Contraseña actualizada! Redirigiendo al login...
           </div>
         )}
 
-        {/* Formulario */}
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
           <div className="auth-field">
-            <label htmlFor="email" className="auth-label">Email</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="tu@email.com"
-              className="auth-input"
-            />
-          </div>
-
-          <div className="auth-field">
-            <label htmlFor="password" className="auth-label">Contraseña</label>
+            <label htmlFor="password" className="auth-label">
+              Nueva contraseña
+            </label>
             <input
               id="password"
               name="password"
               type="password"
-              autoComplete="current-password"
+              autoComplete="new-password"
               value={form.password}
               onChange={handleChange}
               placeholder="••••••••"
@@ -106,10 +94,20 @@ function Login() {
             />
           </div>
 
-          <div className="auth-field" style={{ textAlign: "right" }}>
-            <Link to="/forgot-password" className="auth-link">
-              ¿Olvidaste tu contraseña?
-            </Link>
+          <div className="auth-field">
+            <label htmlFor="confirm" className="auth-label">
+              Repetir contraseña
+            </label>
+            <input
+              id="confirm"
+              name="confirm"
+              type="password"
+              autoComplete="new-password"
+              value={form.confirm}
+              onChange={handleChange}
+              placeholder="••••••••"
+              className="auth-input"
+            />
           </div>
 
           <button
@@ -117,19 +115,16 @@ function Login() {
             disabled={loading || success}
             className="auth-btn-primary"
           >
-            {loading ? "Ingresando..." : "Iniciar sesión"}
+            {loading ? "Actualizando..." : "Actualizar contraseña"}
           </button>
         </form>
 
-        {/* Ir a registro */}
         <div className="auth-divider">o</div>
         <div className="auth-footer">
-          ¿No tenés cuenta?{" "}
-          <Link to="/register" className="auth-link">
-            Registrate
+          <Link to="/login" className="auth-link">
+            Volver a iniciar sesión
           </Link>
         </div>
-
       </div>
     </div>
   );
