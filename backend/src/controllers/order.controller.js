@@ -8,7 +8,25 @@ const obtenerOrders = async (req, res) => {
 };
 
 const obtenerOrderPorId = async (req, res) => {
-    await obtenerRecursoPorId(req, res, orderSchema);
+    try {
+        const { id: orderId } = req.params;
+        const { id: currentUser, role } = req.user;
+
+        const order = await orderSchema.findById(orderId).populate("items.productId").populate("addressId");
+
+        if (!order) {
+            return res.status(404).send({ error: "Orden no encontrada" });
+        }
+
+        if (currentUser !== order.userId && !(role === "ADMIN")) {
+            return res.status(403).send({ error: "No tienes permiso para acceder a las órdenes de este usuario" });
+        }
+
+        return res.status(200).send(order);
+    } catch (error) {
+        console.error("Error al obtener la orden:", error);
+        return res.status(500).send({ error: "Error interno del servidor" });
+    }
 };
 
 const crearOrder = async (req, res) => {
@@ -94,11 +112,29 @@ const restaurarOrder = async (req, res) => {
     await restaurarRecurso(req, res, orderSchema);
 }
 
+const obtenerOrderPorUsuario = async (req, res) => {
+    const { targetUserId: userId } = req.params;
+    const { id: currentUser, role } = req.user;
+    
+    if (currentUser !== userId && !(role === "ADMIN")) {
+        return res.status(403).send({ error: "No tienes permiso para acceder a las órdenes de este usuario" });
+    }
+
+    try {
+        const orders = await orderSchema.find({ userId });
+        return res.status(200).send(orders);
+    } catch (error) {
+        console.error(`Error al obtener órdenes para el usuario ${userId}:`, error);
+        return res.status(500).send({ error: "Error interno del servidor al obtener las órdenes" });
+    }
+}
+
 module.exports = {
     obtenerOrders,
     obtenerOrderPorId,
     crearOrder,
     modificarOrder,
     eliminarOrder,
-    restaurarOrder
+    restaurarOrder,
+    obtenerOrderPorUsuario
 };
