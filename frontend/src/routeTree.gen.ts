@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as MisComprasRouteImport } from './routes/mis-compras'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as ContactoRouteImport } from './routes/contacto'
@@ -17,12 +18,19 @@ import { Route as CategoriasRouteImport } from './routes/categorias'
 import { Route as CarritoRouteImport } from './routes/carrito'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductosIndexRouteImport } from './routes/productos.index'
+import { Route as MisComprasIndexRouteImport } from './routes/mis-compras.index'
 import { Route as ResetPasswordTokenRouteImport } from './routes/reset-password.$token'
 import { Route as ProductosProductoIDRouteImport } from './routes/productos.$productoID'
+import { Route as MisComprasOrderIdRouteImport } from './routes/mis-compras.$orderId'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MisComprasRoute = MisComprasRouteImport.update({
+  id: '/mis-compras',
+  path: '/mis-compras',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -60,6 +68,11 @@ const ProductosIndexRoute = ProductosIndexRouteImport.update({
   path: '/productos/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MisComprasIndexRoute = MisComprasIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => MisComprasRoute,
+} as any)
 const ResetPasswordTokenRoute = ResetPasswordTokenRouteImport.update({
   id: '/reset-password/$token',
   path: '/reset-password/$token',
@@ -70,6 +83,11 @@ const ProductosProductoIDRoute = ProductosProductoIDRouteImport.update({
   path: '/productos/$productoID',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MisComprasOrderIdRoute = MisComprasOrderIdRouteImport.update({
+  id: '/$orderId',
+  path: '/$orderId',
+  getParentRoute: () => MisComprasRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -78,9 +96,12 @@ export interface FileRoutesByFullPath {
   '/contacto': typeof ContactoRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/mis-compras': typeof MisComprasRouteWithChildren
   '/register': typeof RegisterRoute
+  '/mis-compras/$orderId': typeof MisComprasOrderIdRoute
   '/productos/$productoID': typeof ProductosProductoIDRoute
   '/reset-password/$token': typeof ResetPasswordTokenRoute
+  '/mis-compras/': typeof MisComprasIndexRoute
   '/productos/': typeof ProductosIndexRoute
 }
 export interface FileRoutesByTo {
@@ -91,8 +112,10 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/mis-compras/$orderId': typeof MisComprasOrderIdRoute
   '/productos/$productoID': typeof ProductosProductoIDRoute
   '/reset-password/$token': typeof ResetPasswordTokenRoute
+  '/mis-compras': typeof MisComprasIndexRoute
   '/productos': typeof ProductosIndexRoute
 }
 export interface FileRoutesById {
@@ -103,9 +126,12 @@ export interface FileRoutesById {
   '/contacto': typeof ContactoRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/mis-compras': typeof MisComprasRouteWithChildren
   '/register': typeof RegisterRoute
+  '/mis-compras/$orderId': typeof MisComprasOrderIdRoute
   '/productos/$productoID': typeof ProductosProductoIDRoute
   '/reset-password/$token': typeof ResetPasswordTokenRoute
+  '/mis-compras/': typeof MisComprasIndexRoute
   '/productos/': typeof ProductosIndexRoute
 }
 export interface FileRouteTypes {
@@ -117,9 +143,12 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/forgot-password'
     | '/login'
+    | '/mis-compras'
     | '/register'
+    | '/mis-compras/$orderId'
     | '/productos/$productoID'
     | '/reset-password/$token'
+    | '/mis-compras/'
     | '/productos/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -130,8 +159,10 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/login'
     | '/register'
+    | '/mis-compras/$orderId'
     | '/productos/$productoID'
     | '/reset-password/$token'
+    | '/mis-compras'
     | '/productos'
   id:
     | '__root__'
@@ -141,9 +172,12 @@ export interface FileRouteTypes {
     | '/contacto'
     | '/forgot-password'
     | '/login'
+    | '/mis-compras'
     | '/register'
+    | '/mis-compras/$orderId'
     | '/productos/$productoID'
     | '/reset-password/$token'
+    | '/mis-compras/'
     | '/productos/'
   fileRoutesById: FileRoutesById
 }
@@ -154,6 +188,7 @@ export interface RootRouteChildren {
   ContactoRoute: typeof ContactoRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
+  MisComprasRoute: typeof MisComprasRouteWithChildren
   RegisterRoute: typeof RegisterRoute
   ProductosProductoIDRoute: typeof ProductosProductoIDRoute
   ResetPasswordTokenRoute: typeof ResetPasswordTokenRoute
@@ -167,6 +202,13 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mis-compras': {
+      id: '/mis-compras'
+      path: '/mis-compras'
+      fullPath: '/mis-compras'
+      preLoaderRoute: typeof MisComprasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -218,6 +260,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mis-compras/': {
+      id: '/mis-compras/'
+      path: '/'
+      fullPath: '/mis-compras/'
+      preLoaderRoute: typeof MisComprasIndexRouteImport
+      parentRoute: typeof MisComprasRoute
+    }
     '/reset-password/$token': {
       id: '/reset-password/$token'
       path: '/reset-password/$token'
@@ -232,8 +281,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductosProductoIDRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mis-compras/$orderId': {
+      id: '/mis-compras/$orderId'
+      path: '/$orderId'
+      fullPath: '/mis-compras/$orderId'
+      preLoaderRoute: typeof MisComprasOrderIdRouteImport
+      parentRoute: typeof MisComprasRoute
+    }
   }
 }
+
+interface MisComprasRouteChildren {
+  MisComprasOrderIdRoute: typeof MisComprasOrderIdRoute
+  MisComprasIndexRoute: typeof MisComprasIndexRoute
+}
+
+const MisComprasRouteChildren: MisComprasRouteChildren = {
+  MisComprasOrderIdRoute: MisComprasOrderIdRoute,
+  MisComprasIndexRoute: MisComprasIndexRoute,
+}
+
+const MisComprasRouteWithChildren = MisComprasRoute._addFileChildren(
+  MisComprasRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -242,6 +312,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactoRoute: ContactoRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
+  MisComprasRoute: MisComprasRouteWithChildren,
   RegisterRoute: RegisterRoute,
   ProductosProductoIDRoute: ProductosProductoIDRoute,
   ResetPasswordTokenRoute: ResetPasswordTokenRoute,
