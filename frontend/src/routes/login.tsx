@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useAuth } from "../store/authStore";
 import axios from "axios";
 
 export const Route = createFileRoute("/login")({
@@ -8,6 +9,7 @@ export const Route = createFileRoute("/login")({
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState<string | null>(null);
@@ -36,7 +38,7 @@ function Login() {
         form
       );
 
-      localStorage.setItem("token", data.token);
+      login(data.token);
       setSuccess(true);
 
       setTimeout(() => navigate({ to: "/productos" }), 1200);

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useAuth } from "../store/authStore";
 import axios from "axios";
 
 export const Route = createFileRoute("/register")({
@@ -8,6 +9,7 @@ export const Route = createFileRoute("/register")({
 
 function Register() {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [form, setForm] = useState({
     firstName: "",
@@ -42,7 +44,7 @@ function Register() {
         form
       );
 
-      localStorage.setItem("token", data.token);
+      login(data.token);
       setSuccess(true);
 
       setTimeout(() => navigate({ to: "/productos" }), 1200);

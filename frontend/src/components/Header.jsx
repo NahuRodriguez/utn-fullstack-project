@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ShoppingCart,
+  ShoppingBag,
   X,
   Plus,
   Minus,
@@ -11,6 +12,7 @@ import {
 } from "lucide-react";
 import { useCartStore } from "../store/cartStore";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { useAuth } from "../store/authStore";
 import { SearchBar } from "./SearchBar";
 
 const formatPrice = (price) => {
@@ -24,6 +26,7 @@ const formatPrice = (price) => {
 
 export const Header = () => {
   const { items: cart, updateQuantity, removeFromCart, getCartCount, getCartTotal } = useCartStore();
+  const { isAuthenticated, logout } = useAuth();
   const cartCount = getCartCount();
   const cartTotal = getCartTotal();
   const navigate = useNavigate();
@@ -32,7 +35,6 @@ export const Header = () => {
   const [cartOpen, setCartOpen] = useState(false);
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const loggedIn = !!localStorage.getItem("token");
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -51,9 +53,19 @@ export const Header = () => {
   }
 
   function handleLogout() {
-    localStorage.removeItem("token");
+    logout();
     setMenuOpen(false);
     navigate({ to: "/" });
+  }
+
+  function handleMisCompras() {
+    setMenuOpen(false);
+    navigate({ to: "/mis-compras" });
+  }
+
+  function handleCheckout() {
+    setCartOpen(false);
+    navigate({ to: "/carrito" });
   }
 
   return (
@@ -91,23 +103,33 @@ export const Header = () => {
 
             <div className="user-menu" ref={menuRef}>
               <button
-                className={`user-menu-btn ${menuOpen ? "open" : ""} ${loggedIn ? "logged-in" : ""}`}
+                className={`user-menu-btn ${menuOpen ? "open" : ""} ${isAuthenticated ? "logged-in" : ""}`}
                 onClick={() => setMenuOpen((prev) => !prev)}
                 aria-label="Menú de usuario"
               >
-                <User size={24} fill={loggedIn ? "currentColor" : "none"} />
+                <User size={24} fill={isAuthenticated ? "currentColor" : "none"} />
               </button>
 
               {menuOpen && (
                 <div className="user-dropdown">
-                  {loggedIn ? (
-                    <button
-                      className="user-dropdown-item danger"
-                      onClick={handleLogout}
-                    >
-                      <LogOut size={15} />
-                      Cerrar sesión
-                    </button>
+                  {isAuthenticated ? (
+                    <>
+                      <button
+                        className="user-dropdown-item"
+                        onClick={handleMisCompras}
+                      >
+                        <ShoppingBag size={15} />
+                        Mis compras
+                      </button>
+                      <div className="user-dropdown-divider" />
+                      <button
+                        className="user-dropdown-item danger"
+                        onClick={handleLogout}
+                      >
+                        <LogOut size={15} />
+                        Cerrar sesión
+                      </button>
+                    </>
                   ) : (
                     <button
                       className="user-dropdown-item"
@@ -194,7 +216,9 @@ export const Header = () => {
                       {formatPrice(cartTotal)}
                     </span>
                   </div>
-                  <button className="checkout-btn">Finalizar Compra</button>
+                  <button className="checkout-btn" onClick={handleCheckout}>
+                    Finalizar Compra
+                  </button>
                 </div>
               </>
             )}
