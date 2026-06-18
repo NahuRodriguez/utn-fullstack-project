@@ -168,7 +168,7 @@ export const Header = () => {
               <>
                 <div className="cart-items">
                   {cart.map((item) => (
-                    <div key={item._id} className="cart-item">
+                    <div key={item.id} className="cart-item">
                       <img
                         src={item.imgUrl}
                         alt={item.name}
@@ -184,7 +184,7 @@ export const Header = () => {
                         <div className="quantity-controls">
                           <button
                             onClick={() =>
-                              updateQuantity(item._id, item.quantity - 1)
+                              updateQuantity(item.id, item.quantity - 1)
                             }
                           >
                             <Minus className="w-4 h-4" />
@@ -192,7 +192,7 @@ export const Header = () => {
                           <span>{item.quantity}</span>
                           <button
                             onClick={() =>
-                              updateQuantity(item._id, item.quantity + 1)
+                              updateQuantity(item.id, item.quantity + 1)
                             }
                           >
                             <Plus className="w-4 h-4" />
@@ -200,7 +200,7 @@ export const Header = () => {
                         </div>
                         <button
                           className="remove-btn"
-                          onClick={() => removeFromCart(item._id)}
+                          onClick={() => removeFromCart(item.id)}
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>

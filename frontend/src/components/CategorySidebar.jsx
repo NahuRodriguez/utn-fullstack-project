@@ -9,7 +9,7 @@ export const CategorySidebar = ({
   }) => {
 
     const handleCategoryClick = (category) => {
-      const selectedCategoryId = category ? category._id : null;
+      const selectedCategoryId = category ? category.id : null;
       setSelectedCategory(selectedCategoryId);
       scrollToTop();
     }
@@ -30,17 +30,17 @@ export const CategorySidebar = ({
 
       <div className="mt-4 space-y-1">
         {categories.map((category) => {
-          const isSelected = selectedCategory === category._id;
-          const count = categoryCounts[category._id] || 0;
+          const isSelected = selectedCategory === category.id;
+          const count = categoryCounts[category.id] || 0;
           
           return (
             <button
-              key={category._id}
+              key={category.id}
               onClick={() =>handleCategoryClick(category)}
               className={`sidebar-item ${isSelected ? 'active' : ''}`}
             >
               <span className="truncate pr-2">{category.name}</span>
-              {selectedCategory === category._id && <span className="sidebar-count">{categoryCounts}</span>}
+              {selectedCategory === category.id && <span className="sidebar-count">{categoryCounts}</span>}
             </button>
           );
         })}

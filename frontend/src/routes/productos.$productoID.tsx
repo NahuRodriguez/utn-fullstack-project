@@ -48,10 +48,10 @@ function DetalleProducto() {
 
   const hasStock  = product.stock > 0;
   const isLowStock = product.stock <= 10 && product.stock > 0;
-  const inCart    = isInCart(product._id);
+  const inCart    = isInCart(product.id);
 
   const handleCartClick = () => {
-    inCart ? removeFromCart(product._id) : addToCart(product);
+    inCart ? removeFromCart(product.id) : addToCart(product);
   };
 
   return (

@@ -79,12 +79,12 @@ function Carrito() {
   const loadAddresses = async () => {
     setAddressLoading(true);
     try {
-      const data = await Api.fetchAddresses();
-      const mine = Array.isArray(data) ? data.filter(a => a.userId === user?.id) : [];
-      setAddresses(mine);
-      if (mine.length > 0 && !selectedAddressId) {
-        setSelectedAddressId(mine[0]._id);
+      const addressesData = await Api.fetchUserAddresses(user?.id);
+      setAddresses(addressesData);
+      if (addressesData.length > 0 && !selectedAddressId) {
+        setSelectedAddressId(addressesData[0].id);
       }
+
     } catch {
       setError("Error al cargar direcciones");
     } finally {
@@ -127,7 +127,7 @@ function Carrito() {
       });
       const created = data.Address || data;
       setAddresses(prev => [...prev, created]);
-      setSelectedAddressId(created._id);
+      setSelectedAddressId(created.id);
       setShowAddressForm(false);
       setAddressForm({ province: "", city: "", postalCode: "", streetName: "", buildingNumber: "", addressDetails: "" });
     } catch (err) {
@@ -150,10 +150,10 @@ function Carrito() {
     try {
       const payload = {
         addressId: selectedAddressId,
-        items: items.map(item => ({ productId: item._id, quantity: item.quantity })),
+        items: items.map(item => ({ productId: item.id, quantity: item.quantity })),
       };
       const order = await Api.createOrder(payload);
-      setOrderId(order._id);
+      setOrderId(order.id);
       clearCart();
       setStep(4);
     } catch (err) {
@@ -164,7 +164,7 @@ function Carrito() {
     }
   };
 
-  const selectedAddress = addresses.find(a => a._id === selectedAddressId);
+  const selectedAddress = addresses.find(a => a.id === selectedAddressId);
 
   if (items.length === 0 && step < 4) {
     return (
@@ -185,21 +185,21 @@ function Carrito() {
     <>
       <div className="checkout-items">
         {items.map(item => (
-          <div key={item._id} className="cart-item" style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+          <div key={item.id} className="cart-item" style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
             <img src={item.imgUrl || "https://placehold.co/80x80"} alt={item.name} className="cart-item-image" />
             <div className="cart-item-info" style={{ flex: 1 }}>
               <h3>{item.name}</h3>
               <p className="cart-item-price">{formatPrice(item.price)} c/u</p>
             </div>
             <div className="quantity-controls">
-              <button onClick={() => updateQuantity(item._id, item.quantity - 1)}><Minus size={14} /></button>
+              <button onClick={() => updateQuantity(item.id, item.quantity - 1)}><Minus size={14} /></button>
               <span>{item.quantity}</span>
-              <button onClick={() => updateQuantity(item._id, item.quantity + 1)}><Plus size={14} /></button>
+              <button onClick={() => updateQuantity(item.id, item.quantity + 1)}><Plus size={14} /></button>
             </div>
             <p style={{ width: "6rem", textAlign: "right", fontWeight: 700, color: "var(--cyan)" }}>
               {formatPrice(item.price * item.quantity)}
             </p>
-            <button className="remove-btn" onClick={() => removeFromCart(item._id)}><Trash2 size={16} /></button>
+            <button className="remove-btn" onClick={() => removeFromCart(item.id)}><Trash2 size={16} /></button>
           </div>
         ))}
       </div>
@@ -240,13 +240,13 @@ function Carrito() {
           {addresses.length > 0 && !showAddressForm && (
             <div className="address-list">
               {addresses.map(addr => (
-                <label key={addr._id} className={`address-card ${selectedAddressId === addr._id ? "selected" : ""}`}>
+                <label key={addr.id} className={`address-card ${selectedAddressId === addr.id ? "selected" : ""}`}>
                   <input
                     type="radio"
                     name="addressId"
-                    value={addr._id}
-                    checked={selectedAddressId === addr._id}
-                    onChange={() => setSelectedAddressId(addr._id)}
+                    value={addr.id}
+                    checked={selectedAddressId === addr.id}
+                    onChange={() => setSelectedAddressId(addr.id)}
                   />
                   <div className="address-card-body">
                     <strong>{addr.streetName} {addr.buildingNumber}</strong>
@@ -338,7 +338,7 @@ function Carrito() {
 
         <div className="checkout-items-summary">
           {items.map(item => (
-            <div key={item._id} className="checkout-summary-item">
+            <div key={item.id} className="checkout-summary-item">
               <img src={item.imgUrl || "https://placehold.co/48x48"} alt={item.name} style={{ width: 48, height: 48, borderRadius: 8, objectFit: "cover" }} />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <p style={{ fontWeight: 600, fontSize: "0.9rem" }}>{item.name}</p>

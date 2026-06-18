@@ -12,16 +12,16 @@ const formatPrice = (price) => {
 
 export const ProductCard = ({ product, categories, onViewDetails }) => {
   const { addToCart, removeFromCart, isInCart } = useCartStore();
-  const inCart = isInCart(product._id);
+  const inCart = isInCart(product.id);
 
-  const categoryName = categories.find(c => c._id === product.categories[0]._id)?.name ?? 'Sin categoría'
+  const categoryName = categories.find(c => c.id === product.categories[0].id)?.name ?? 'Sin categoría'
 
   const hasStock = product.stock > 0;
   const isLowStock = product.stock <= 10 && product.stock > 0;
 
   const handleCartClick = (e) => {
     e.stopPropagation();
-    inCart ? removeFromCart(product._id) : addToCart(product);
+    inCart ? removeFromCart(product.id) : addToCart(product);
   };
 
   return (
