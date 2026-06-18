@@ -1,23 +1,25 @@
 const express = require("express");
 const router = express.Router();
-const orderItemRoutes = require("./order-product.routes");
+// const orderItemRoutes = require("./order-product.routes");
+const { verificarToken, soloAdmin } = require("../middleware/auth.middleware");
 
 const {
     obtenerOrders,
     obtenerOrderPorId,
     crearOrder,
-    modificarOrder,
+    // modificarOrder,
     eliminarOrder,
-    restaurarOrder
+    restaurarOrder,
+    obtenerOrderPorUsuario
 } = require("../controllers/order.controller");
 
-router.get("/", obtenerOrders);
-router.get("/:id", obtenerOrderPorId);
-router.post("/", crearOrder);
-router.put("/:id", modificarOrder);
-router.delete("/:id", eliminarOrder);
-router.patch("/restore/:id", restaurarOrder);
-
-router.use("/items", orderItemRoutes);
+router.get("/", [verificarToken, soloAdmin], obtenerOrders);
+router.get("/:id", verificarToken, obtenerOrderPorId);
+router.post("/",  verificarToken, crearOrder);
+// router.put("/:id", modificarOrder); Ver si existe un caso de uso para modificar una orden
+router.delete("/:id", [verificarToken, soloAdmin], eliminarOrder);
+router.patch("/restore/:id", [verificarToken, soloAdmin], restaurarOrder);
+router.get("/user/:targetUserId", verificarToken, obtenerOrderPorUsuario);
+// router.use("/items", orderItemRoutes); Sobreecrito por la nueva estructura de orden con items embebidos, no es necesario un subrouter para los items
 
 module.exports = router;

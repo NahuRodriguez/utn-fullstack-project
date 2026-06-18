@@ -9,7 +9,7 @@ const addressSchema = new mongoose.Schema({
         required: true,
         validate: [
             {
-                validator: validate.alphanumericHispanicWithSpaces,
+                validator: validate.alphaNumHispForAddressNames,
                 message: "Province only allows Alphanumeric and Space characters"
             }
         ]
@@ -18,7 +18,7 @@ const addressSchema = new mongoose.Schema({
         type: String,
         required: true,
         validate: {
-            validator: validate.alphanumericHispanicWithSpaces,
+            validator: validate.alphaNumHispForAddressNames,
             message: "City only allows Alphanumeric and Space characters"
         }
     },
@@ -26,7 +26,7 @@ const addressSchema = new mongoose.Schema({
         type: String,
         required: true,
         validate: {
-            validator: validate.postalCode,
+            validator: validate.alphaNumHispForAddressNames,
             message: "Postal code only allows XXXX and X0000XXX formats (X for uppercase letter, 0 for number)"
         }
     },
@@ -35,7 +35,7 @@ const addressSchema = new mongoose.Schema({
         required: true,
         trim: true,
         validate: {
-            validator: validate.alphanumericHispanicWithSpaces
+            validator: validate.alphaNumHispForAddressNames
         }
     },
     buildingNumber: { type: Number, required: true },
