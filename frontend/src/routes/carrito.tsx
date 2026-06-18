@@ -211,7 +211,7 @@ function Carrito() {
         </div>
       </div>
 
-      <div className="checkout-actions">
+      <div className="checkout-actions" style={{ marginTop: "2rem" }}>
         <Link to="/productos" className="auth-link" style={{ fontSize: "0.9rem" }}>Seguir comprando</Link>
         <button className="auth-btn-primary" style={{ width: "auto", padding: "0.75rem 2rem" }} onClick={() => {
           if (!isAuthenticated) {
