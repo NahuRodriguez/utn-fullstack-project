@@ -1,24 +1,100 @@
 const { obtenerRecursos, obtenerRecursoPorId, crearRecurso, modificarRecurso, eliminarRecurso, restaurarRecurso } = require("../utils/http.utils");
 const addressSchema = require("../schemas/address.schema");
 
+
+
+
 const obtenerAddresses = async (req, res) => {
     await obtenerRecursos(req, res, addressSchema);
 };
 
 const obtenerAddressPorId = async (req, res) => {
-    await obtenerRecursoPorId(req, res, addressSchema);
+    try {
+        const { id: addressId } = req.params;
+        const { id: currentUserId, role } = req.user;
+
+        const address = await addressSchema.findById(addressId);
+
+        if (!address) {
+            return res.status(404).send({ error: "Dirección no encontrada" });
+        }
+
+        if (currentUserId !== address.userId.toString() && !(role === "ADMIN")) {
+            return res.status(403).send({ error: "No tienes permiso para acceder a las direcciones de este usuario" });
+        }
+
+        return res.status(200).send(address);
+    } catch (error) {
+        console.error("Error al obtener la dirección:", error);
+        return res.status(500).send({ error: "Error interno del servidor" });
+    }
 };
 
 const crearAddress = async (req, res) => {
-    await crearRecurso(req, res, addressSchema);
+    try {
+        const { id: userId } = req.user;
+        const { province, city, postalCode, streetName, buildingNumber } = req.body;
+
+        let addressData = {
+            userId,
+            province,
+            city,
+            postalCode,
+            streetName,
+            buildingNumber
+        }
+
+        if (req.body.addressDetails) { 
+            addressData.addressDetails = req.body.addressDetails;
+        }
+
+        const newAddress = await addressSchema.create(addressData);
+        return res.status(201).send(newAddress);
+    } catch (error) {
+        console.error("Error al crear la dirección:", error);
+        return res.status(500).send({ error: "Error interno del servidor" });
+    }
 };
 
-const modificarAddress = async (req, res) => {
-    await modificarRecurso(req, res, addressSchema);
-};
+
+
+const obtenerAddressPorUsuario = async (req, res) => {
+    const { targetUserId: userId } = req.params;
+    const { id: currentUser, role } = req.user;
+    
+    if (currentUser !== userId && !(role === "ADMIN")) {
+        return res.status(403).send({ error: "No tienes permiso para acceder a las direcciones de este usuario" });
+    }
+
+    try {
+        const addresses = await addressSchema.find({ userId });
+        return res.status(200).send(addresses);
+    } catch (error) {
+        console.error(`Error al obtener direcciones para el usuario ${userId}:`, error);
+        return res.status(500).send({ error: "Error interno del servidor al obtener las direcciones" });
+    }
+}
 
 const eliminarAddress = async (req, res) => {
-    await eliminarRecurso(req, res, addressSchema);
+    const { id: currentUserId, role } = req.user;
+    const { id: addressId } = req.params;
+
+    try {
+        const address = await addressSchema.findById(addressId);
+
+        if (!address) {
+            return res.status(404).send({ error: "Dirección no encontrada" });
+        }
+
+        if (currentUserId !== address.userId.toString() && !(role === "ADMIN")) {
+            return res.status(403).send({ error: "No tienes permiso para eliminar las direcciones de este usuario" });
+        }
+
+        await eliminarRecurso(req, res, addressSchema);
+    } catch (error) {
+        console.error("Error al verificar la dirección:", error);
+        return res.status(500).send({ error: "Error interno del servidor" });
+    }
 };
 
 const restaurarAddress = async (req, res) => {
@@ -29,7 +105,7 @@ module.exports = {
     obtenerAddresses,
     obtenerAddressPorId,
     crearAddress,
-    modificarAddress,
     eliminarAddress,
-    restaurarAddress
+    restaurarAddress,
+    obtenerAddressPorUsuario
 };

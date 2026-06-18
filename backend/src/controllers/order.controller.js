@@ -38,15 +38,15 @@ const crearOrder = async (req, res) => {
         const address = await addressSchema.findById(addressId);
         if (!address) {
             console.error(`Dirección con ID ${addressId} no encontrada`);
-            return res.status(404).send({ error: `Dirección no encontrada` });
+            return res.status(404).send({ error: "Dirección no encontrada" });
         }
 
         // 2. Extraer todos los IDs de productos y obtener sus datos en una sola consulta
-        const productIds = items.map(item => item.productId);
-        const dbProducts = await productSchema.find({ _id: { $in: productIds } });
-
+        const productIds = items.map((item) => item.productId);
+        const dbProducts = await productSchema.find({ _id: { $in: productIds } });  
+        
         // Converte el array de la BD en un Mapa (Diccionario) para búsquedas instantáneas
-        const productMap = new Map(dbProducts.map(p => [p._id.toString(), p]));
+        const productMap = new Map(dbProducts.map((p) => [ p._id.toString(), p ]));
 
         const payload = {
             userId,
@@ -62,7 +62,7 @@ const crearOrder = async (req, res) => {
             
             if (!product) {
                 console.error(`Producto con ID ${item.productId} no encontrado en la base de datos`);
-                return res.status(404).send({ error: `Uno de los productos seleccionados no existe` });
+                return res.status(404).send({ error: "Uno de los productos seleccionados no existe" });
             }
 
             // Validar stock disponible
@@ -89,7 +89,7 @@ const crearOrder = async (req, res) => {
 
         // 5. Guardar los cambios de stock de todos los productos en paralelo
         // Promise.all ejecuta los .save() simultáneamente, ahorrando mucho tiempo de espera
-        await Promise.all(dbProducts.map(product => product.save()));
+        await Promise.all(dbProducts.map((product) => product.save()));
 
         // Responder con la orden creada con éxito
         return res.status(201).send(order);
@@ -98,10 +98,6 @@ const crearOrder = async (req, res) => {
         console.error("Error crítico al crear la orden:", error);
         return res.status(500).send({ error: "Error interno del servidor al procesar la orden" });
     }
-};
-
-const modificarOrder = async (req, res) => {
-    await modificarRecurso(req, res, orderSchema);
 };
 
 const eliminarOrder = async (req, res) => {
@@ -133,7 +129,6 @@ module.exports = {
     obtenerOrders,
     obtenerOrderPorId,
     crearOrder,
-    modificarOrder,
     eliminarOrder,
     restaurarOrder,
     obtenerOrderPorUsuario

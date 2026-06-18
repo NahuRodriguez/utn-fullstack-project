@@ -6,14 +6,33 @@ const obtenerUsuarios = async (req, res) => {
 };
 
 const obtenerUsuarioPorId = async (req, res) => {
+    const { id: userId } = req.params;
+    const { id: currentUser, role } = req.user;
+
+    if (currentUser !== userId && !(role === "ADMIN")) {
+        return res.status(403).json({ message: "Acceso denegado" });
+    }
+
     await obtenerRecursoPorId(req, res, userSchema);
 };
 
 const crearUsuario = async (req, res) => {
+    req.body.role = "USER";
     await crearRecurso(req, res, userSchema);
 };
 
 const modificarUsuario = async (req, res) => {
+    const { id: userId } = req.params;
+    const { id: currentUser, role } = req.user;
+
+    if (currentUser !== userId && !(role === "ADMIN")) {
+        return res.status(403).json({ message: "Acceso denegado" });
+    }
+
+    if (req.body.role && role !== "ADMIN") {
+        return res.status(403).json({ message: "Solo los administradores pueden cambiar el rol de un usuario" });
+    }
+
     await modificarRecurso(req, res, userSchema);
 };
 
