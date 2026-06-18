@@ -15,7 +15,7 @@ const {
 
 router.get("/", [ verificarToken, soloAdmin ], obtenerUsuarios);
 router.get("/:id", verificarToken, obtenerUsuarioPorId);
-router.post("/", [verificarToken, soloAdmin, validate(createUserSchema)], crearUsuario);
+router.post("/", [ verificarToken, soloAdmin, validate(createUserSchema) ], crearUsuario);
 router.put("/:id", verificarToken, validate(updateUserSchema), modificarUsuario);
 router.delete("/:id", [ verificarToken, soloAdmin ], eliminarUsuario);
 router.patch("/restore/:id", [ verificarToken, soloAdmin ], restaurarUsuario);
