@@ -68,6 +68,11 @@ export const Header = () => {
     navigate({ to: "/carrito" });
   }
 
+  function handleProfile() {
+    setMenuOpen(false);
+    navigate({ to: "/user-profile" });
+  }
+
   return (
     <>
       <header className="header">
@@ -112,6 +117,13 @@ export const Header = () => {
                 <div className="user-dropdown">
                   {isAuthenticated ? (
                     <>
+                      <button
+                        className="user-dropdown-item"
+                        onClick={handleProfile}
+                      >
+                        <User size={15} />
+                        Mi perfil
+                      </button>
                       <button
                         className="user-dropdown-item"
                         onClick={handleMisCompras}
