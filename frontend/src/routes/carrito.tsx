@@ -96,7 +96,7 @@ function Carrito() {
     setAddressForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const alphanumericHispanicWithSpaces = /^[a-zñáéíóú ]+$/i;
+  const alphanumericHispanicWithSpaces = /^[a-z0-9ñáéíóú. ]+$/i;
 
   const handleCreateAddress = async (e) => {
     e.preventDefault();
@@ -106,7 +106,7 @@ function Carrito() {
       return;
     }
     if (!alphanumericHispanicWithSpaces.test(streetName)) {
-      setAddressError("La calle solo permite letras y espacios (sin números ni puntuación)");
+      setAddressError("Ingrese un nombre de calle válido (letras, números, espacios, punto y -)");
       return;
     }
     if (!alphanumericHispanicWithSpaces.test(city)) {
