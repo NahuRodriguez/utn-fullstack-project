@@ -32,7 +32,7 @@ const login = async (req, res) => {
         }
 
         const payload = { id: usuario._id.toString(), role: usuario.role };
-        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "3h" });
+        const token = jwt.sign(payload, process.env.JWT_SECRET);
 
         return res.json({ token });
     } catch (err) {
@@ -58,7 +58,7 @@ const register = async (req, res) => {
         const usuario = await User.create({ firstName, lastName, email, password, ...(phone ? { phone } : {}) });
 
         const payload = { id: usuario._id.toString(), role: usuario.role };
-        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "3h" });
+        const token = jwt.sign(payload, process.env.JWT_SECRET);
 
         return res.status(201).json({ token });
     } catch (err) {
