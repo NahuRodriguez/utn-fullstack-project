@@ -138,4 +138,39 @@ export class Api {
             throw error;
         }
     }
+
+    static fetchUserProfile = async (userId) => {
+        const token = getToken();
+        if (!token) throw new Error("Not authenticated");
+
+        try {
+            const END_POINT = `${import.meta.env.VITE_API_BASE_URL}/api/users/${userId}`;
+            const response = await axios.get(END_POINT, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error fetching user profile:', error);
+            throw error;
+        }
+    }
+
+    static updateUserProfile = async (userId, data) => {
+        const token = getToken();
+        if (!token) throw new Error("Not authenticated");
+
+        try {
+            const END_POINT = `${import.meta.env.VITE_API_BASE_URL}/api/users/${userId}`;
+            const response = await axios.put(END_POINT, data, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Error updating user profile:', error);
+            throw error;
+        }
+    }
 }
