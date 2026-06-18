@@ -44,11 +44,11 @@ function Producto() {
   };
 
   const selectedCategoryName = categoryId
-    ? categories.find((c) => c._id === categoryId)?.name
+    ? categories.find((c) => c.id === categoryId)?.name
     : null;
 
   const handleViewDetails = (product) => {
-    navigate({ to: "/productos/$productoID", params: { productoID: product._id } });
+    navigate({ to: "/productos/$productoID", params: { productoID: product.id } });
   };
 
   return (

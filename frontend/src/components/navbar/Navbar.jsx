@@ -2,13 +2,14 @@ import { Link } from "@tanstack/react-router";
 
 function Navbar({ links }) {
   return (
-    <nav className="flex">
-      <div style={{ display: "flex", justifyContent: "center" }}>
+    <nav className="navbar">
+      <div className="navbar-inner">
         {links.map((item) => (
           <Link
             key={item.url}
             to={item.url}
-            className="nav-link [&.active]:font-bold hover:text-yellow-400 transition-colors"
+            className="navbar-link"
+            activeProps={{ className: "navbar-link active" }}
           >
             {item.name}
           </Link>

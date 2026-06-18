@@ -99,9 +99,9 @@ function MisCompras() {
             const { date, time } = formatDate(order.createdAt);
             return (
               <Link
-                key={order._id}
+                key={order.id}
                 to="/mis-compras/$orderId"
-                params={{ orderId: order._id }}
+                params={{ orderId: order.id }}
                 className="order-card"
               >
                 <div className="order-card-bar" />
@@ -109,7 +109,7 @@ function MisCompras() {
                 <div className="order-card-id">
                   <Package size={16} className="order-card-id-icon" />
                   <span className="order-card-id-text">
-                    #{order._id.slice(-8).toUpperCase()}
+                    #{order.id.slice(-8).toUpperCase()}
                   </span>
                 </div>
 

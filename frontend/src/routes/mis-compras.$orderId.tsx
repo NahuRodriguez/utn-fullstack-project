@@ -73,7 +73,7 @@ function OrderDetail() {
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
             <Package size={20} />
             <h2 style={{ fontSize: "1.25rem", fontWeight: 700 }}>
-              Orden #{order._id?.slice(-8).toUpperCase()}
+              Orden #{order.id?.slice(-8).toUpperCase()}
             </h2>
           </div>
           <div className="order-card-date">

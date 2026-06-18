@@ -88,6 +88,23 @@ export class Api {
         }
     }
 
+    static fetchUserAddresses = async (userId) => {
+        const token = getToken();
+        if (!token) throw new Error("Not authenticated");
+
+        try {
+            const END_POINT = `${import.meta.env.VITE_API_BASE_URL}/api/addresses/user/${userId}`;
+            const response = await axios.get(END_POINT, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            
+            return response.data;   
+        } catch (error) {
+            console.error('Error fetching addresses:', error);
+            throw error;
+        }
+    }
+
     static fetchOrderById = async (orderId) => {
         const token = getToken();
         if (!token) throw new Error("Not authenticated");

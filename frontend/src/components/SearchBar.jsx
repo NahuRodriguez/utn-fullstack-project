@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 
 export const SearchBar = () => {
   const [value, setValue] = useState("");
@@ -15,6 +15,14 @@ export const SearchBar = () => {
     });
   };
 
+  const handleClear = () => {
+    setValue("");
+    navigate({
+      to: "/productos",
+      search: (prev) => ({ ...prev, search: undefined, page: 1 })
+    });
+  };
+
   return (
     <form onSubmit={handleSubmit} className="search-wrapper">
       <Search className="search-icon" />
@@ -25,6 +33,11 @@ export const SearchBar = () => {
         onChange={(e) => setValue(e.target.value)}
         className="search-input"
       />
+      {value && (
+        <button type="button" onClick={handleClear} className="search-clear">
+          <X size={16} />
+        </button>
+      )}
     </form>
   );
 };

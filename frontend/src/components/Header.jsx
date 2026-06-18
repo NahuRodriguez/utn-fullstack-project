@@ -11,7 +11,7 @@ import {
   LogOut,
 } from "lucide-react";
 import { useCartStore } from "../store/cartStore";
-import { useNavigate, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useAuth } from "../store/authStore";
 import { SearchBar } from "./SearchBar";
 
@@ -72,7 +72,7 @@ export const Header = () => {
     <>
       <header className="header">
         <div className="header-content">
-          <div className="logo-wrapper">
+          <Link to="/" className="logo-wrapper" style={{ textDecoration: "none" }}>
             <div className="logo">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
                 <path d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -84,15 +84,13 @@ export const Header = () => {
                 Plataforma E-Commerce para Equipos Informaticos
               </p>
             </div>
-          </div>
+          </Link>
 
           <div className="search-container">
             <SearchBar />
           </div>
 
-          <div
-            style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}
-          >
+          <div className="header-actions">
             <button className="cart-btn" onClick={() => setCartOpen(true)}>
               <ShoppingCart
                 className="w-6 h-6"
@@ -168,7 +166,7 @@ export const Header = () => {
               <>
                 <div className="cart-items">
                   {cart.map((item) => (
-                    <div key={item._id} className="cart-item">
+                    <div key={item.id} className="cart-item">
                       <img
                         src={item.imgUrl}
                         alt={item.name}
@@ -184,7 +182,7 @@ export const Header = () => {
                         <div className="quantity-controls">
                           <button
                             onClick={() =>
-                              updateQuantity(item._id, item.quantity - 1)
+                              updateQuantity(item.id, item.quantity - 1)
                             }
                           >
                             <Minus className="w-4 h-4" />
@@ -192,7 +190,7 @@ export const Header = () => {
                           <span>{item.quantity}</span>
                           <button
                             onClick={() =>
-                              updateQuantity(item._id, item.quantity + 1)
+                              updateQuantity(item.id, item.quantity + 1)
                             }
                           >
                             <Plus className="w-4 h-4" />
@@ -200,7 +198,7 @@ export const Header = () => {
                         </div>
                         <button
                           className="remove-btn"
-                          onClick={() => removeFromCart(item._id)}
+                          onClick={() => removeFromCart(item.id)}
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
