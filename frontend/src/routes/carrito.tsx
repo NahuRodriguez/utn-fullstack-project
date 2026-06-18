@@ -131,7 +131,9 @@ function Carrito() {
       setShowAddressForm(false);
       setAddressForm({ province: "", city: "", postalCode: "", streetName: "", buildingNumber: "", addressDetails: "" });
     } catch (err) {
-      const msg = err.response?.data?.error || "Error al crear dirección";
+      const errorData = err.response?.data;
+      const msg = errorData?.error || errorData?.mensaje ||
+        (errorData?.errors ? Object.values(errorData.errors).map(e => e.message || e).join(", ") : "Error al crear dirección");
       setAddressError(msg);
     } finally {
       setAddressSubmitting(false);

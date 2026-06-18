@@ -18,7 +18,7 @@ const obtenerOrderPorId = async (req, res) => {
             return res.status(404).send({ error: "Orden no encontrada" });
         }
 
-        if (currentUser !== order.userId && !(role === "ADMIN")) {
+        if (currentUser !== order.userId.toString() && !(role === "ADMIN")) {
             return res.status(403).send({ error: "No tienes permiso para acceder a las órdenes de este usuario" });
         }
 
