@@ -42,6 +42,46 @@ const obtenerProductos = async (req, res) => {
     }
 };
 
+const obtenerProductosEliminados = async (req, res) => {
+    try {
+        const page = Math.max(1, parseInt(req.query.page) || 1);
+        const limit = Math.max(1, Math.min(100, parseInt(req.query.limit) || 10));
+        const skip = (page - 1) * limit;
+
+        const filter = {};
+        if (req.query.category) {
+            filter.categories = req.query.category;
+        }
+        if (req.query.search) {
+            filter.name = { $regex: req.query.search, $options: "i" };
+        }
+
+        const sortMap = {
+            "name-asc": { name: 1 },
+            "name-desc": { name: -1 },
+            "price-asc": { price: 1 },
+            "price-desc": { price: -1 },
+            "stock-desc": { stock: -1 },
+        };
+        const sort = sortMap[req.query.sort] || {};
+
+        const [ results, total ] = await Promise.all([
+            productSchema.findDeleted(filter).sort(sort).populate("categories").skip(skip).limit(limit),
+            productSchema.countDocumentsDeleted(filter)
+        ]);
+
+        res.status(200).json({
+            data: results.map(productDTO),
+            total,
+            page,
+            limit,
+            totalPages: Math.ceil(total / limit)
+        });
+    } catch (error) {
+        res.status(500).json({ mensaje: "Internal Server Error" });
+    }
+};
+
 const obtenerProductoPorId = async (req, res) => {
     const { id } = req.params;
     try {
@@ -127,6 +167,7 @@ const restaurarProducto = async (req, res) => {
 
 module.exports = {
     obtenerProductos,
+    obtenerProductosEliminados,
     obtenerProductoPorId,
     crearProducto,
     modificarProducto,

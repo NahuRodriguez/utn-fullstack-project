@@ -10,6 +10,15 @@ const obtenerUsuarios = async (req, res) => {
     }
 };
 
+const obtenerUsuariosEliminados = async (req, res) => {
+    try {
+        const results = await userSchema.findDeleted();
+        res.status(200).json(results.map(userDTO));
+    } catch (error) {
+        res.status(500).json({ mensaje: "Internal Server Error" });
+    }
+};
+
 const obtenerUsuarioPorId = async (req, res) => {
     const { id: userId } = req.params;
     const { id: currentUser, role } = req.user;
@@ -98,6 +107,7 @@ const restaurarUsuario = async (req, res) => {
 
 module.exports = {
     obtenerUsuarios,
+    obtenerUsuariosEliminados,
     obtenerUsuarioPorId,
     crearUsuario,
     modificarUsuario,

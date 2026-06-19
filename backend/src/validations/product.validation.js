@@ -4,9 +4,12 @@ const { objectId } = require("./validate");
 const createProductSchema = z.object({
     name: z.string({ required_error: "El campo name es obligatorio" }).min(1, "El campo name no puede estar vacío").trim(),
     description: z.string().optional().default(""),
-    price: z.number({ required_error: "El campo price es obligatorio", invalid_type_error: "El campo price debe ser un número" }).min(0, "El precio debe ser mayor o igual a 0"),
-    stock: z.number({ required_error: "El campo stock es obligatorio", invalid_type_error: "El campo stock debe ser un número entero" }).int("El campo stock debe ser un número entero").min(0, "El stock debe ser mayor o igual a 0"),
-    categories: z.array(objectId, { required_error: "El campo categories es obligatorio" }).min(1, "Se espera al menos una categoría"),
+    price: z.coerce.number({ required_error: "El campo price es obligatorio", invalid_type_error: "El campo price debe ser un número" }).min(0, "El precio debe ser mayor o igual a 0"),
+    stock: z.coerce.number({ required_error: "El campo stock es obligatorio", invalid_type_error: "El campo stock debe ser un número entero" }).int("El campo stock debe ser un número entero").min(0, "El stock debe ser mayor o igual a 0"),
+    categories: z.preprocess(
+        (value) => (value === undefined ? value : Array.isArray(value) ? value : [ value ]),
+        z.array(objectId, { required_error: "El campo categories es obligatorio" }).min(1, "Se espera al menos una categoría")
+    ),
     createdBy: objectId.optional()
 });
 
