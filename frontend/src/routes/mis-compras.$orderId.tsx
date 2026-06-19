@@ -3,17 +3,11 @@ import { createFileRoute, useParams, Link } from "@tanstack/react-router";
 import { useAuth } from "../store/authStore";
 import { Api } from "../api/api";
 import { Package, Calendar, MapPin, ChevronLeft, Loader } from "lucide-react";
+import { formatPrice } from "../utils/utils";
 
 export const Route = createFileRoute("/mis-compras/$orderId")({
   component: OrderDetail,
 });
-
-const formatPrice = (price) =>
-  new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    minimumFractionDigits: 0,
-  }).format(price);
 
 function OrderDetail() {
   const { orderId } = useParams({ from: "/mis-compras/$orderId" });

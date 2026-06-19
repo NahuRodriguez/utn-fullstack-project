@@ -3,6 +3,7 @@ import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useCartStore } from "../store/cartStore";
 import { useAuth } from "../store/authStore";
 import { Api } from "../api/api";
+import { formatPrice } from "../utils/utils";
 import {
   ShoppingCart,
   MapPin,
@@ -25,13 +26,6 @@ const STEPS = [
   { num: 2, label: "Dirección", icon: MapPin },
   { num: 3, label: "Confirmar", icon: CheckCircle },
 ];
-
-const formatPrice = (price) =>
-  new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    minimumFractionDigits: 0,
-  }).format(price);
 
 function StepIndicator({ current }) {
   return (

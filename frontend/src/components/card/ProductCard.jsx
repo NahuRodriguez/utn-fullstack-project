@@ -1,14 +1,6 @@
 import { ShoppingCart, Eye, Package, AlertTriangle } from 'lucide-react';
 import { useCartStore } from '../../store/cartStore';
-
-const formatPrice = (price) => {
-  return new Intl.NumberFormat('es-AR', {
-    style: 'currency',
-    currency: 'ARS',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price);
-};
+import { formatPrice } from '../../utils/utils';
 
 export const ProductCard = ({ product, categories, onViewDetails }) => {
   const { addToCart, removeFromCart, isInCart } = useCartStore();
