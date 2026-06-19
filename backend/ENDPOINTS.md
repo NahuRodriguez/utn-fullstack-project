@@ -8,7 +8,7 @@ Autenticación: **Bearer Token** en header `Authorization: Bearer <token>`.
 
 > **Nota**: `USER` puede acceder a sus propios recursos. `ADMIN` puede acceder a todos.
 
-[`Ver hoja de calculo con los detalles de cada enpoint`](https://docs.google.com/spreadsheets/d/1PfpXrSNQFMZg5lG5m0StAFqtWYPPLhrVSqKvpLcLDYY/edit?usp=sharing)
+[`Ver hoja de calculo con los detalles de cada endpoint`](https://docs.google.com/spreadsheets/d/1PfpXrSNQFMZg5lG5m0StAFqtWYPPLhrVSqKvpLcLDYY/edit?usp=sharing)
 ---
 
 ## Índice de Rutas
