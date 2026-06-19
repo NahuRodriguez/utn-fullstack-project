@@ -8,6 +8,7 @@ const router = express.Router();
 
 const {
     obtenerProductos,
+    obtenerProductosEliminados,
     obtenerProductoPorId,
     crearProducto,
     modificarProducto,
@@ -16,6 +17,7 @@ const {
 } = require("../controllers/productos.controller");
 
 router.get("/", obtenerProductos);
+router.get("/deleted", [ verificarToken, soloAdmin ], obtenerProductosEliminados);
 router.get("/:id", obtenerProductoPorId);
 router.post("/", [ multerImage, validate(createProductSchema), verificarToken, soloAdmin ], crearProducto);
 router.put("/:id", [ verificarToken, soloAdmin, validate(updateProductSchema) ], modificarProducto);

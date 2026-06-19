@@ -11,17 +11,11 @@ import {
   Tag,
   Hash,
 } from "lucide-react";
+import { formatPrice } from "../utils/utils";
 
 export const Route = createFileRoute("/mis-compras/")({
   component: MisCompras,
 });
-
-const formatPrice = (price) =>
-  new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    minimumFractionDigits: 0,
-  }).format(price);
 
 const formatDate = (iso) => {
   const d = new Date(iso);

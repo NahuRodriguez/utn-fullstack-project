@@ -6,6 +6,7 @@ const { createUserSchema, updateUserSchema } = require("../validations/user.vali
 
 const {
     obtenerUsuarios,
+    obtenerUsuariosEliminados,
     obtenerUsuarioPorId,
     crearUsuario,
     modificarUsuario,
@@ -14,6 +15,7 @@ const {
 } = require("../controllers/usuarios.controller");
 
 router.get("/", [ verificarToken, soloAdmin ], obtenerUsuarios);
+router.get("/deleted", [ verificarToken, soloAdmin ], obtenerUsuariosEliminados);
 router.get("/:id", verificarToken, obtenerUsuarioPorId);
 router.post("/", [ verificarToken, soloAdmin, validate(createUserSchema) ], crearUsuario);
 router.put("/:id", verificarToken, validate(updateUserSchema), modificarUsuario);

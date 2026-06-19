@@ -9,24 +9,18 @@ import {
   User,
   LogIn,
   LogOut,
+  Shield,
 } from "lucide-react";
 import { useCartStore } from "../store/cartStore";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useAuth } from "../store/authStore";
 import { SearchBar } from "./SearchBar";
-
-const formatPrice = (price) => {
-  return new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price);
-};
+import { formatPrice } from "../utils/utils";
 
 export const Header = () => {
   const { items: cart, updateQuantity, removeFromCart, getCartCount, getCartTotal } = useCartStore();
-  const { isAuthenticated, logout } = useAuth();
+  const { isAuthenticated, logout, user } = useAuth();
+  const isAdmin = user?.role === "ADMIN";
   const cartCount = getCartCount();
   const cartTotal = getCartTotal();
   const navigate = useNavigate();
@@ -71,6 +65,11 @@ export const Header = () => {
   function handleProfile() {
     setMenuOpen(false);
     navigate({ to: "/user-profile" });
+  }
+
+  function handleAdmin() {
+    setMenuOpen(false);
+    navigate({ to: "/admin" });
   }
 
   return (
@@ -131,6 +130,15 @@ export const Header = () => {
                         <ShoppingBag size={15} />
                         Mis compras
                       </button>
+                      {isAdmin && (
+                        <button
+                          className="user-dropdown-item"
+                          onClick={handleAdmin}
+                        >
+                          <Shield size={15} />
+                          Panel admin
+                        </button>
+                      )}
                       <div className="user-dropdown-divider" />
                       <button
                         className="user-dropdown-item danger"

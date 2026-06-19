@@ -13,18 +13,11 @@ import {
   CreditCard,
 } from "lucide-react";
 import { useCartStore } from "../store/cartStore";
+import { formatPrice } from "../utils/utils";
 
 export const Route = createFileRoute("/productos/$productoID")({
   component: DetalleProducto,
 });
-
-const formatPrice = (price) =>
-  new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price);
 
 function DetalleProducto() {
   const { productoID } = Route.useParams();
