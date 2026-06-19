@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 alphanumericHispanicWithSpaces = (value) => {
-    return /^[a-zñáéíóú ]+$/gi.test(value);
+    return /^[a-z0-9ñáéíóú ]+$/gi.test(value);
 }
 
 alphanumericHispanic = (value) => {
-    return /^[a-zñáéíóú]+$/gi.test(value);
+    return /^[a-z0-9ñáéíóú]+$/gi.test(value);
 }
 
 email = (value) => {
@@ -13,7 +13,7 @@ email = (value) => {
 }
 
 phone = (value) => {
-    return /^\+[0-9]+$/.test(value);
+    return /^\+?[0-9]+$/.test(value);
 }
 
 postalCode = (value) => {
@@ -40,6 +40,10 @@ deleteReferenced = (mainSchema, checkModelName, field) => {
     })
 }
 
+alphaNumHispForAddressNames = (value) => {
+    return /^[a-z0-9ñáéíóú. ]+$/gi.test(value);
+}
+
 module.exports = {
     alphanumericHispanic,
     alphanumericHispanicWithSpaces,
@@ -47,5 +51,6 @@ module.exports = {
     phone,
     postalCode,
     schemaReference,
-    deleteReferenced
+    deleteReferenced,
+    alphaNumHispForAddressNames
 }

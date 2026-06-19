@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const validate = require("../utils/validation.utils");
+const mongooseDelete = require("mongoose-delete");
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -38,6 +39,8 @@ const userSchema = new mongoose.Schema({
         }
     },
     password: { type: String, required: true, select: false },
+    resetPasswordToken: { type: String, select: false },
+    resetPasswordExpires: { type: Date, select: false },
     isActive: { type: Boolean, default: true },
     role: { type: String, enum: [ "USER", "ADMIN" ], default: "USER" }
 }, { timestamps: true });
@@ -53,5 +56,7 @@ userSchema.pre([ "save" ], async function() {
 validate.deleteReferenced(userSchema, "Address", "userId");
 validate.deleteReferenced(userSchema, "Order", "userId");
 validate.deleteReferenced(userSchema, "Product", "createdBy");
+
+userSchema.plugin(mongooseDelete, { overrideMethods: true, validateBeforeDelete: false });
 
 module.exports = mongoose.model("User", userSchema);

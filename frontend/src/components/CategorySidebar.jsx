@@ -1,37 +1,46 @@
+import { scrollToTop } from "../utils/utils";
+
 export const CategorySidebar = ({ 
-  categories, 
-  selectedCategory, 
-  setSelectedCategory, 
-  categoryCounts,
-  totalProducts
-}) => {
+    categories, 
+    selectedCategory, 
+    setSelectedCategory, 
+    categoryCounts,
+    totalProducts
+  }) => {
+
+    const handleCategoryClick = (category) => {
+      const selectedCategoryId = category ? category.id : null;
+      setSelectedCategory(selectedCategoryId);
+      scrollToTop();
+    }
+
   return (
     <aside className="sidebar">
       <h2 className="sidebar-title">Categorías</h2>
       
       <button
-        onClick={() => setSelectedCategory(null)}
+        onClick={ () => handleCategoryClick(null)}
         className={`sidebar-item ${selectedCategory === null ? 'active' : ''}`}
       >
         <div className="flex items-center gap-2">
           <span>Todos los productos</span>
         </div>
-        <span className="sidebar-count">{totalProducts}</span>
+        {selectedCategory === null && <span className="sidebar-count">{totalProducts}</span>}
       </button>
 
       <div className="mt-4 space-y-1">
         {categories.map((category) => {
-          const isSelected = selectedCategory === category._id;
-          const count = categoryCounts[category._id] || 0;
+          const isSelected = selectedCategory === category.id;
+          const count = categoryCounts[category.id] || 0;
           
           return (
             <button
-              key={category._id}
-              onClick={() => setSelectedCategory(category._id)}
+              key={category.id}
+              onClick={() =>handleCategoryClick(category)}
               className={`sidebar-item ${isSelected ? 'active' : ''}`}
             >
               <span className="truncate pr-2">{category.name}</span>
-              <span className="sidebar-count">{count}</span>
+              {selectedCategory === category.id && <span className="sidebar-count">{categoryCounts}</span>}
             </button>
           );
         })}

@@ -1,59 +1,42 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { createFileRoute } from "@tanstack/react-router";
-import { AgregarCarritoButton } from "../components/button/AgregarCarritoButton";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import {
+  ShoppingCart,
+  Package,
+  Shield,
+  Truck,
+  ArrowLeft,
+  CheckCircle,
+  AlertTriangle,
+  XCircle,
+  CreditCard,
+} from "lucide-react";
+import { useCartStore } from "../store/cartStore";
+import { formatPrice } from "../utils/utils";
 
 export const Route = createFileRoute("/productos/$productoID")({
   component: DetalleProducto,
 });
 
-import { X, ShoppingCart, Package, Shield, Truck, Check } from 'lucide-react';
-import { useCart } from '../context/CartContext';
-
-const formatPrice = (price: any) => {
-  return new Intl.NumberFormat('es-AR', {
-    style: 'currency',
-    currency: 'ARS',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price);
-};
-
 function DetalleProducto() {
   const { productoID } = Route.useParams();
+  const navigate = useNavigate();
+  const { addToCart, removeFromCart, isInCart } = useCartStore();
 
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const hasStock = product.stock > 0;
-  const isLowStock = product.stock <= 10 && product.stock > 0;
-
-  /*
-  const productCategories = product.categories.map(catId => 
-    categories.find(c => c._id === catId)
-  ).filter(Boolean);
-  
-  */
-
-
-  const { addToCart } = useCart();
-
-
-  const handleAddToCart = () => {
-    addToCart(product);
-  };
 
   useEffect(() => {
     const fetchProductById = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/api/products/${productoID}`,
+          `${import.meta.env.VITE_API_BASE_URL}/api/products/${productoID}`
         );
         setProduct(response.data);
       } catch (err) {
         setError("No se pudo encontrar el producto solicitado");
-        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -62,112 +45,158 @@ function DetalleProducto() {
     fetchProductById();
   }, [productoID]);
 
-  if (loading)
-    return <div className="p-4">Cargando detalles del producto...</div>;
-  if (error) return <div className="p-4 text-red-500">{error}</div>;
-  if (!product) return <div className="p-4">Producto no encontrado.</div>;
+  if (loading) {
+    return (
+      <div className="detail-page">
+        <div className="detail-loading">
+          <div className="detail-spinner" />
+          <p className="detail-loading-text">Cargando producto...</p>
+        </div>
+      </div>
+    );
+  }
 
-  let categoriesString = ">> ";
+  if (error) {
+    return (
+      <div className="detail-page">
+        <div className="detail-empty">
+          <XCircle size={48} />
+          <h2 className="detail-empty-title">Producto no encontrado</h2>
+          <p className="detail-empty-text">{error}</p>
+          <Link to="/productos" className="detail-empty-btn">
+            Volver a productos
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
-  /*
-  for (const category of product.categories) {
-    categoriesString += category.name + " - "
-  }*/
+  if (!product) {
+    return (
+      <div className="detail-page">
+        <div className="detail-empty">
+          <AlertTriangle size={48} />
+          <h2 className="detail-empty-title">Producto no encontrado</h2>
+          <p className="detail-empty-text">
+            El producto que buscás no existe o fue eliminado.
+          </p>
+          <Link to="/productos" className="detail-empty-btn">
+            Volver a productos
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
-  categoriesString = categoriesString.slice(0, -4);
+  const hasStock = product.stock > 0;
+  const isLowStock = product.stock <= 10 && product.stock > 0;
+  const inCart = isInCart(product.id);
+
+  const handleCartClick = () => {
+    inCart ? removeFromCart(product.id) : addToCart(product);
+  };
 
   return (
+    <div className="detail-page">
+      <div className="detail-container">
+        <button className="detail-back" onClick={() => navigate({ to: "/productos" })}>
+          <ArrowLeft size={18} />
+          Volver a productos
+        </button>
 
-<div className="modal-overlay">
-        <div className="modal-grid">
-          <div className="modal-image-section">
-            <img
-              src={product.imgUrl}
-              alt={product.name}
-              className="modal-image"
-            />
+        <div className="detail-grid">
+          <div className="detail-image-section">
+            <div className="detail-image-wrapper">
+              <img
+                src={product.imgUrl}
+                alt={product.name}
+                className="detail-image"
+              />
+            </div>
           </div>
 
-          <div className="modal-details">
-            {/** 
-            <div className="modal-categories">
-              {productCategories.map((cat) => (
-                <span key={cat._id} className="product-category">
-                  {cat.name}
-                </span>
-              ))}
+          <div className="detail-info">
+            <span className="detail-category">
+              {product.categories?.[0]?.name ?? "Sin categoría"}
+            </span>
+
+            <h1 className="detail-name">{product.name}</h1>
+
+            <div className="detail-price-section">
+              <span className="detail-price-label">Precio</span>
+              <span className="detail-price">{formatPrice(product.price)}</span>
+              <span className="detail-installments">
+                <CreditCard size={14} />
+                12 cuotas sin interés de {formatPrice(product.price / 12)}
+              </span>
             </div>
-          */}
-            <h2 className="modal-title">{product.name}</h2>
 
-            <p className="modal-description">{product.description}</p>
+            <p className="detail-description">{product.description}</p>
 
-            <div className="modal-info-list">
-              <div className="modal-info-item">
-                <Package className="w-5 h-5" style={{ color: 'var(--cyan)' }} />
-                <span>
-                  Disponibilidad:{' '}
-                  <span style={{ 
-                    color: hasStock ? (isLowStock ? 'var(--warning)' : 'var(--success)') : 'var(--error)'
-                  }}>
-                    {hasStock 
-                      ? (isLowStock ? `¡Últimas ${product.stock} unidades!` : `${product.stock} en stock`)
-                      : 'Sin stock'}
+            <div className="detail-stock">
+              {!hasStock ? (
+                <span className="detail-stock-badge detail-stock-none">
+                  <XCircle size={16} />
+                  Sin stock
+                </span>
+              ) : isLowStock ? (
+                <span className="detail-stock-badge detail-stock-low">
+                  <AlertTriangle size={16} />
+                  ¡Últimas {product.stock} unidades!
+                </span>
+              ) : (
+                <span className="detail-stock-badge detail-stock-ok">
+                  <CheckCircle size={16} />
+                  {product.stock} en stock
+                </span>
+              )}
+            </div>
+
+            <div className="detail-features">
+              <div className="detail-feature">
+                <Truck size={18} />
+                <div>
+                  <span className="detail-feature-title">Envío rápido</span>
+                  <span className="detail-feature-text">
+                    A todo el país en 24/48hs
                   </span>
-                </span>
+                </div>
               </div>
-              
-              <div className="modal-info-item">
-                <Truck className="w-5 h-5" style={{ color: 'var(--success)' }} />
-                <span>Envío disponible a todo el país</span>
+              <div className="detail-feature">
+                <Shield size={18} />
+                <div>
+                  <span className="detail-feature-title">Garantía</span>
+                  <span className="detail-feature-text">
+                    12 meses de garantía oficial
+                  </span>
+                </div>
               </div>
-
-              <div className="modal-info-item">
-                <Shield className="w-5 h-5" style={{ color: 'var(--purple)' }} />
-                <span>Garantía de 12 meses</span>
+              <div className="detail-feature">
+                <Package size={18} />
+                <div>
+                  <span className="detail-feature-title">Compra segura</span>
+                  <span className="detail-feature-text">
+                    Datos protegidos y pago cifrado
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div className="modal-price-section">
-              <p className="modal-price-label">Precio</p>
-              <p className="modal-price">{formatPrice(product.price)}</p>
-              <p className="modal-price-installments">
-                o 12x {formatPrice(product.price / 12)} sin interés
-              </p>
-            </div>
-
-            <button 
-              className={`modal-add-btn ${hasStock ? 'available' : 'unavailable'}`}
-              onClick={handleAddToCart}
+            <button
+              className={`detail-add-btn ${hasStock ? (inCart ? "in-cart" : "available") : "unavailable"}`}
+              onClick={handleCartClick}
               disabled={!hasStock}
             >
-              <ShoppingCart className="w-6 h-6" />
-              {hasStock ? 'Agregar al carrito' : 'Sin stock'}
+              <ShoppingCart size={20} />
+              {!hasStock
+                ? "Sin stock"
+                : inCart
+                  ? "Quitar del carrito"
+                  : "Agregar al carrito"}
             </button>
           </div>
+        </div>
       </div>
     </div>
   );
-
-    {/**
-      
-      <div className="p-6 flex flex-row gap-7">
-      <img
-      src={product.imgUrl || "https://placehold.co/400x200/e9d5ff/7e22ce?text=Producto"}
-      alt={product.name}
-      className="w-7x1 h-7x1 object-cover"
-      />
-      <div className="flex flex-col grow justify-between">
-      <h2 className="text-3xl font-bold mb-2">{product.name}</h2>
-      <p className="text-0.5 mb-2 self-start"><u>{categoriesString}</u></p>
-      <p className="text-xl text-blue-600 mb-4">Precio: ${product.price}</p>
-      
-      <div className="bg-gray-800 p-4 rounded-lg">
-      <h4 className="font-semibold">Descripción del producto:</h4>
-      <p>{product.description || "Sin descripción disponible."}</p>
-      </div>
-      <AgregarCarritoButton product={ product } />
-      </div>
-      </div>
-      */}
 }

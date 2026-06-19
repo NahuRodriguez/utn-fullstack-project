@@ -8,14 +8,6 @@ export const linkList = [
     name: "Productos",
   },
   {
-    url: "/contacto",
-    name: "Contacto",
-  },
-  {
-    url: "/categorias",
-    name: "Categorias",
-  },
-  {
     url: "/carrito",
     name: "Mi Carrito",
   },

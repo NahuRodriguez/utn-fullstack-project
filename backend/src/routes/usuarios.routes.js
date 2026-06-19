@@ -1,18 +1,25 @@
 const express = require("express");
 const router = express.Router();
+const { verificarToken, soloAdmin } = require("../middleware/auth.middleware");
+const { validate } = require("../validations/validate");
+const { createUserSchema, updateUserSchema } = require("../validations/user.validation");
 
 const {
     obtenerUsuarios,
+    obtenerUsuariosEliminados,
     obtenerUsuarioPorId,
     crearUsuario,
     modificarUsuario,
-    eliminarUsuario
+    eliminarUsuario,
+    restaurarUsuario
 } = require("../controllers/usuarios.controller");
 
-router.get("/", obtenerUsuarios);
-router.get("/:id", obtenerUsuarioPorId);
-router.post("/", crearUsuario);
-router.put("/:id", modificarUsuario);
-router.delete("/:id", eliminarUsuario);
+router.get("/", [ verificarToken, soloAdmin ], obtenerUsuarios);
+router.get("/deleted", [ verificarToken, soloAdmin ], obtenerUsuariosEliminados);
+router.get("/:id", verificarToken, obtenerUsuarioPorId);
+router.post("/", [ verificarToken, soloAdmin, validate(createUserSchema) ], crearUsuario);
+router.put("/:id", verificarToken, validate(updateUserSchema), modificarUsuario);
+router.delete("/:id", [ verificarToken, soloAdmin ], eliminarUsuario);
+router.patch("/restore/:id", [ verificarToken, soloAdmin ], restaurarUsuario);
 
 module.exports = router;

@@ -3,17 +3,14 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import Navbar from "../components/navbar/Navbar";
 import { linkList } from "../assets/links";
 import { Header } from "../components/Header";
-import { CartProvider } from "../context/CartContext";
-import axios from "axios";
-
+import { Footer } from "../components/footer/Footer";
 const RootLayout = () => (
   <>
-    <CartProvider>
-      <Header/>
-      <Navbar links={linkList} />
-      <Outlet />
-      <TanStackRouterDevtools />
-    </CartProvider>
+    <Header />
+    <Navbar links={linkList} />
+    <Outlet />
+    <Footer />
+    <TanStackRouterDevtools />
   </>
 );
 

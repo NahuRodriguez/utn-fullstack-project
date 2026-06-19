@@ -1,4 +1,5 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { scrollToTop } from '../utils/utils';
 
 export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   if (totalPages <= 1) return null;
@@ -17,6 +18,8 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         pages.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
       }
     }
+
+    scrollToTop();
     
     return pages;
   };

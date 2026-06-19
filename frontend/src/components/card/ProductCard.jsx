@@ -1,31 +1,19 @@
 import { ShoppingCart, Eye, Package, AlertTriangle } from 'lucide-react';
-// import { useCart } from '../context/CartContext';
-
-const formatPrice = (price) => {
-  return new Intl.NumberFormat('es-AR', {
-    style: 'currency',
-    currency: 'ARS',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price);
-};
+import { useCartStore } from '../../store/cartStore';
+import { formatPrice } from '../../utils/utils';
 
 export const ProductCard = ({ product, categories, onViewDetails }) => {
-  // const { addToCart } = useCart();
-  const addToCart = {};
-  
-  /*
-  const categoryName = product.categories[0] 
-    ? categories.find(c => c._id === product.categories[0])?.name || 'Sin categoría'
-    : 'Sin categoría';
-  */ 
+  const { addToCart, removeFromCart, isInCart } = useCartStore();
+  const inCart = isInCart(product.id);
+
+  const categoryName = categories.find(c => c.id === product.categories[0].id)?.name ?? 'Sin categoría'
 
   const hasStock = product.stock > 0;
   const isLowStock = product.stock <= 10 && product.stock > 0;
 
-  const handleAddToCart = (e) => {
+  const handleCartClick = (e) => {
     e.stopPropagation();
-    // addToCart(product);
+    inCart ? removeFromCart(product.id) : addToCart(product);
   };
 
   return (
@@ -66,9 +54,7 @@ export const ProductCard = ({ product, categories, onViewDetails }) => {
 
       <div className="product-info">
         {
-          /*
             <span className="product-category">{categoryName}</span>
-          */
         }
         
         <h3 className="product-name">{product.name}</h3>
@@ -81,11 +67,12 @@ export const ProductCard = ({ product, categories, onViewDetails }) => {
             <p className="product-stock">{product.stock} unidades</p>
           </div>
           
-          <button 
-            onClick={handleAddToCart}
+          <button
+            onClick={handleCartClick}
             disabled={!hasStock}
             className="add-cart-btn"
-            title={hasStock ? 'Agregar al carrito' : 'Sin stock'}
+            title={hasStock ? (inCart ? 'Quitar del carrito' : 'Agregar al carrito') : 'Sin stock'}
+            style={inCart ? { background: 'var(--error)', boxShadow: '0 4px 15px rgba(239,68,68,0.3)' } : {}}
           >
             <ShoppingCart className="w-5 h-5" />
           </button>
