@@ -119,23 +119,6 @@ function AdminProductos() {
         )}
       </div>
 
-      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "1.25rem" }}>
-        <button
-          className={`sidebar-item ${view === "active" ? "active" : ""}`}
-          onClick={() => switchView("active")}
-          style={{ width: "auto", flex: "0 0 auto" }}
-        >
-          Activos
-        </button>
-        <button
-          className={`sidebar-item ${view === "deleted" ? "active" : ""}`}
-          onClick={() => switchView("deleted")}
-          style={{ width: "auto", flex: "0 0 auto" }}
-        >
-          Dados de baja
-        </button>
-      </div>
-
       {success && (
         <div className="auth-alert auth-alert-success" style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
           <CheckCircle size={16} /> {success}
