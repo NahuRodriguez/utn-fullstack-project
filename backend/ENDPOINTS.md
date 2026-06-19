@@ -275,6 +275,21 @@ PATCH /api/products/restore/:id
 }
 ```
 
+### 2.7 Obtener productos eliminados
+
+```
+GET /api/products/deleted
+```
+
+**Auth:** `ADMIN` (Bearer token)
+
+**Response `200`**
+```json
+{
+  "data": [ "...formato producto..." ]
+}
+```
+
 ---
 
 ## 3. Usuarios (`/api/users`)
@@ -354,6 +369,21 @@ PATCH /api/users/restore/:id
 ```
 
 **Auth:** `ADMIN`
+
+### 3.7 Obtener usuarios eliminados
+
+```
+GET /api/users/deleted
+```
+
+**Auth:** `ADMIN`
+
+**Response `200`**
+```json
+[
+  { "...formato usuario..." }
+]
+```
 
 ---
 
