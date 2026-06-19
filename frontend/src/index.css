@@ -1330,6 +1330,49 @@ body {
   box-shadow: none;
 }
 
+.admin-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.625rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.admin-btn:hover {
+  color: var(--text);
+  border-color: var(--purple);
+}
+
+.admin-btn-edit:hover {
+  border-color: var(--purple);
+  color: var(--purple);
+}
+
+.admin-btn-danger:hover {
+  border-color: var(--error);
+  color: var(--error);
+}
+
+.admin-btn-restore {
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.admin-btn-restore:hover {
+  background: var(--success);
+  color: white;
+}
+
 .auth-divider {
   display: flex;
   align-items: center;

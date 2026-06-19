@@ -9,20 +9,29 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UserProfileRouteImport } from './routes/user-profile'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as MisComprasRouteImport } from './routes/mis-compras'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
-import { Route as ContactoRouteImport } from './routes/contacto'
-import { Route as CategoriasRouteImport } from './routes/categorias'
 import { Route as CarritoRouteImport } from './routes/carrito'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProductosIndexRouteImport } from './routes/productos.index'
 import { Route as MisComprasIndexRouteImport } from './routes/mis-compras.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ResetPasswordTokenRouteImport } from './routes/reset-password.$token'
 import { Route as ProductosProductoIDRouteImport } from './routes/productos.$productoID'
 import { Route as MisComprasOrderIdRouteImport } from './routes/mis-compras.$orderId'
+import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
+import { Route as AdminProductosRouteImport } from './routes/admin.productos'
+import { Route as AdminOrdenesRouteImport } from './routes/admin.ordenes'
 
+const UserProfileRoute = UserProfileRouteImport.update({
+  id: '/user-profile',
+  path: '/user-profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -43,19 +52,14 @@ const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
   path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ContactoRoute = ContactoRouteImport.update({
-  id: '/contacto',
-  path: '/contacto',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CategoriasRoute = CategoriasRouteImport.update({
-  id: '/categorias',
-  path: '/categorias',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CarritoRoute = CarritoRouteImport.update({
   id: '/carrito',
   path: '/carrito',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -73,6 +77,11 @@ const MisComprasIndexRoute = MisComprasIndexRouteImport.update({
   path: '/',
   getParentRoute: () => MisComprasRoute,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ResetPasswordTokenRoute = ResetPasswordTokenRouteImport.update({
   id: '/reset-password/$token',
   path: '/reset-password/$token',
@@ -88,49 +97,75 @@ const MisComprasOrderIdRoute = MisComprasOrderIdRouteImport.update({
   path: '/$orderId',
   getParentRoute: () => MisComprasRoute,
 } as any)
+const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
+  id: '/usuarios',
+  path: '/usuarios',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminProductosRoute = AdminProductosRouteImport.update({
+  id: '/productos',
+  path: '/productos',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminOrdenesRoute = AdminOrdenesRouteImport.update({
+  id: '/ordenes',
+  path: '/ordenes',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/carrito': typeof CarritoRoute
-  '/categorias': typeof CategoriasRoute
-  '/contacto': typeof ContactoRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/mis-compras': typeof MisComprasRouteWithChildren
   '/register': typeof RegisterRoute
+  '/user-profile': typeof UserProfileRoute
+  '/admin/ordenes': typeof AdminOrdenesRoute
+  '/admin/productos': typeof AdminProductosRoute
+  '/admin/usuarios': typeof AdminUsuariosRoute
   '/mis-compras/$orderId': typeof MisComprasOrderIdRoute
   '/productos/$productoID': typeof ProductosProductoIDRoute
   '/reset-password/$token': typeof ResetPasswordTokenRoute
+  '/admin/': typeof AdminIndexRoute
   '/mis-compras/': typeof MisComprasIndexRoute
   '/productos/': typeof ProductosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/carrito': typeof CarritoRoute
-  '/categorias': typeof CategoriasRoute
-  '/contacto': typeof ContactoRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/user-profile': typeof UserProfileRoute
+  '/admin/ordenes': typeof AdminOrdenesRoute
+  '/admin/productos': typeof AdminProductosRoute
+  '/admin/usuarios': typeof AdminUsuariosRoute
   '/mis-compras/$orderId': typeof MisComprasOrderIdRoute
   '/productos/$productoID': typeof ProductosProductoIDRoute
   '/reset-password/$token': typeof ResetPasswordTokenRoute
+  '/admin': typeof AdminIndexRoute
   '/mis-compras': typeof MisComprasIndexRoute
   '/productos': typeof ProductosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/carrito': typeof CarritoRoute
-  '/categorias': typeof CategoriasRoute
-  '/contacto': typeof ContactoRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/mis-compras': typeof MisComprasRouteWithChildren
   '/register': typeof RegisterRoute
+  '/user-profile': typeof UserProfileRoute
+  '/admin/ordenes': typeof AdminOrdenesRoute
+  '/admin/productos': typeof AdminProductosRoute
+  '/admin/usuarios': typeof AdminUsuariosRoute
   '/mis-compras/$orderId': typeof MisComprasOrderIdRoute
   '/productos/$productoID': typeof ProductosProductoIDRoute
   '/reset-password/$token': typeof ResetPasswordTokenRoute
+  '/admin/': typeof AdminIndexRoute
   '/mis-compras/': typeof MisComprasIndexRoute
   '/productos/': typeof ProductosIndexRoute
 }
@@ -138,58 +173,69 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/carrito'
-    | '/categorias'
-    | '/contacto'
     | '/forgot-password'
     | '/login'
     | '/mis-compras'
     | '/register'
+    | '/user-profile'
+    | '/admin/ordenes'
+    | '/admin/productos'
+    | '/admin/usuarios'
     | '/mis-compras/$orderId'
     | '/productos/$productoID'
     | '/reset-password/$token'
+    | '/admin/'
     | '/mis-compras/'
     | '/productos/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/carrito'
-    | '/categorias'
-    | '/contacto'
     | '/forgot-password'
     | '/login'
     | '/register'
+    | '/user-profile'
+    | '/admin/ordenes'
+    | '/admin/productos'
+    | '/admin/usuarios'
     | '/mis-compras/$orderId'
     | '/productos/$productoID'
     | '/reset-password/$token'
+    | '/admin'
     | '/mis-compras'
     | '/productos'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/carrito'
-    | '/categorias'
-    | '/contacto'
     | '/forgot-password'
     | '/login'
     | '/mis-compras'
     | '/register'
+    | '/user-profile'
+    | '/admin/ordenes'
+    | '/admin/productos'
+    | '/admin/usuarios'
     | '/mis-compras/$orderId'
     | '/productos/$productoID'
     | '/reset-password/$token'
+    | '/admin/'
     | '/mis-compras/'
     | '/productos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   CarritoRoute: typeof CarritoRoute
-  CategoriasRoute: typeof CategoriasRoute
-  ContactoRoute: typeof ContactoRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   MisComprasRoute: typeof MisComprasRouteWithChildren
   RegisterRoute: typeof RegisterRoute
+  UserProfileRoute: typeof UserProfileRoute
   ProductosProductoIDRoute: typeof ProductosProductoIDRoute
   ResetPasswordTokenRoute: typeof ResetPasswordTokenRoute
   ProductosIndexRoute: typeof ProductosIndexRoute
@@ -197,6 +243,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/user-profile': {
+      id: '/user-profile'
+      path: '/user-profile'
+      fullPath: '/user-profile'
+      preLoaderRoute: typeof UserProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
@@ -225,25 +278,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/contacto': {
-      id: '/contacto'
-      path: '/contacto'
-      fullPath: '/contacto'
-      preLoaderRoute: typeof ContactoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/categorias': {
-      id: '/categorias'
-      path: '/categorias'
-      fullPath: '/categorias'
-      preLoaderRoute: typeof CategoriasRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/carrito': {
       id: '/carrito'
       path: '/carrito'
       fullPath: '/carrito'
       preLoaderRoute: typeof CarritoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -267,6 +313,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MisComprasIndexRouteImport
       parentRoute: typeof MisComprasRoute
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/reset-password/$token': {
       id: '/reset-password/$token'
       path: '/reset-password/$token'
@@ -288,8 +341,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MisComprasOrderIdRouteImport
       parentRoute: typeof MisComprasRoute
     }
+    '/admin/usuarios': {
+      id: '/admin/usuarios'
+      path: '/usuarios'
+      fullPath: '/admin/usuarios'
+      preLoaderRoute: typeof AdminUsuariosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/productos': {
+      id: '/admin/productos'
+      path: '/productos'
+      fullPath: '/admin/productos'
+      preLoaderRoute: typeof AdminProductosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/ordenes': {
+      id: '/admin/ordenes'
+      path: '/ordenes'
+      fullPath: '/admin/ordenes'
+      preLoaderRoute: typeof AdminOrdenesRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
+
+interface AdminRouteChildren {
+  AdminOrdenesRoute: typeof AdminOrdenesRoute
+  AdminProductosRoute: typeof AdminProductosRoute
+  AdminUsuariosRoute: typeof AdminUsuariosRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminOrdenesRoute: AdminOrdenesRoute,
+  AdminProductosRoute: AdminProductosRoute,
+  AdminUsuariosRoute: AdminUsuariosRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface MisComprasRouteChildren {
   MisComprasOrderIdRoute: typeof MisComprasOrderIdRoute
@@ -307,13 +397,13 @@ const MisComprasRouteWithChildren = MisComprasRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   CarritoRoute: CarritoRoute,
-  CategoriasRoute: CategoriasRoute,
-  ContactoRoute: ContactoRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   MisComprasRoute: MisComprasRouteWithChildren,
   RegisterRoute: RegisterRoute,
+  UserProfileRoute: UserProfileRoute,
   ProductosProductoIDRoute: ProductosProductoIDRoute,
   ResetPasswordTokenRoute: ResetPasswordTokenRoute,
   ProductosIndexRoute: ProductosIndexRoute,
