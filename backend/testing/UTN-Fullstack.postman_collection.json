@@ -1,0 +1,670 @@
+{
+    "info": {
+        "name": "UTN Fullstack",
+        "description": "Colección completa de endpoints para el proyecto UTN Fullstack. Importar en Postman.\n\nVariables de entorno requeridas:\n- {{base_url}}: http://localhost:3000/api\n- {{token}}: Token JWT obtenido al hacer login/register",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:3000/api",
+            "type": "string"
+        },
+        {
+            "key": "token",
+            "value": "",
+            "type": "string"
+        }
+    ],
+    "item": [
+        {
+            "name": "Auth",
+            "item": [
+                {
+                    "name": "Register",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            { "key": "Content-Type", "value": "application/json" }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"firstName\": \"Juan\",\n    \"lastName\": \"Pérez\",\n    \"email\": \"juan@example.com\",\n    \"password\": \"123456\",\n    \"phone\": \"+541112345678\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/auth/register",
+                            "host": ["{{base_url}}"],
+                            "path": ["auth", "register"]
+                        }
+                    }
+                },
+                {
+                    "name": "Login",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            { "key": "Content-Type", "value": "application/json" }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"juan@example.com\",\n    \"password\": \"123456\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/auth/login",
+                            "host": ["{{base_url}}"],
+                            "path": ["auth", "login"]
+                        }
+                    },
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var json = pm.response.json();",
+                                    "if (json.token) {",
+                                    "    pm.collectionVariables.set('token', json.token);",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Forgot Password",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            { "key": "Content-Type", "value": "application/json" }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"juan@example.com\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/auth/forgot-password",
+                            "host": ["{{base_url}}"],
+                            "path": ["auth", "forgot-password"]
+                        }
+                    }
+                },
+                {
+                    "name": "Reset Password",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            { "key": "Content-Type", "value": "application/json" }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"password\": \"nueva123\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/auth/reset-password/:token",
+                            "host": ["{{base_url}}"],
+                            "path": ["auth", "reset-password", ":token"],
+                            "variable": [
+                                { "key": "token", "value": "TOKEN_RECIBIDO_POR_EMAIL" }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Users",
+            "item": [
+                {
+                    "name": "Get All Users",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users",
+                            "host": ["{{base_url}}"],
+                            "path": ["users"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get User By ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "USER_ID" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create User",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            { "key": "Content-Type", "value": "application/json" }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"firstName\": \"María\",\n    \"lastName\": \"González\",\n    \"email\": \"maria@example.com\",\n    \"password\": \"123456\",\n    \"phone\": \"+5491122334455\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/users",
+                            "host": ["{{base_url}}"],
+                            "path": ["users"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update User",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            { "key": "Content-Type", "value": "application/json" },
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"firstName\": \"María Actualizada\",\n    \"phone\": \"+5499988776655\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/users/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "USER_ID" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete User (soft)",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "USER_ID" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Restore User",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/users/restore/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["users", "restore", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "USER_ID" }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Products",
+            "item": [
+                {
+                    "name": "Get All Products",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/products",
+                            "host": ["{{base_url}}"],
+                            "path": ["products"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Product By ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/products/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["products", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "PRODUCT_ID" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Products with filters",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/products?page=1&limit=10&sort=price-asc&category=CATEGORY_ID&search=zapatilla",
+                            "host": ["{{base_url}}"],
+                            "path": ["products"],
+                            "query": [
+                                { "key": "page", "value": "1" },
+                                { "key": "limit", "value": "10" },
+                                { "key": "sort", "value": "price-asc" },
+                                { "key": "category", "value": "CATEGORY_ID" },
+                                { "key": "search", "value": "zapatilla" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Product (con imagen)",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                { "key": "name", "value": "Zapatilla Deportiva", "type": "text" },
+                                { "key": "description", "value": "Zapatilla cómoda para correr", "type": "text" },
+                                { "key": "price", "value": "25000", "type": "text" },
+                                { "key": "stock", "value": "50", "type": "text" },
+                                { "key": "categories[0]", "value": "CATEGORY_ID", "type": "text" },
+                                { "key": "image", "value": "", "type": "file", "src": "" }
+                            ]
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/products",
+                            "host": ["{{base_url}}"],
+                            "path": ["products"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Product",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            { "key": "Content-Type", "value": "application/json" },
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Zapatilla Deportiva Premium\",\n    \"price\": 32000,\n    \"stock\": 40\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/products/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["products", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "PRODUCT_ID" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Product (soft)",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/products/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["products", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "PRODUCT_ID" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Restore Product",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/products/restore/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["products", "restore", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "PRODUCT_ID" }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Orders",
+            "item": [
+                {
+                    "name": "Get All Orders",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/orders",
+                            "host": ["{{base_url}}"],
+                            "path": ["orders"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Order By ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/orders/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["orders", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "ORDER_ID" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Orders By User",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/orders/user/:targetUserId",
+                            "host": ["{{base_url}}"],
+                            "path": ["orders", "user", ":targetUserId"],
+                            "variable": [
+                                { "key": "targetUserId", "value": "USER_ID" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Order",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            { "key": "Content-Type", "value": "application/json" },
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"addressId\": \"ADDRESS_ID\",\n    \"items\": [\n        {\n            \"productId\": \"PRODUCT_ID\",\n            \"quantity\": 2\n        }\n    ]\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/orders",
+                            "host": ["{{base_url}}"],
+                            "path": ["orders"]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Order (soft)",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/orders/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["orders", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "ORDER_ID" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Restore Order",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/orders/restore/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["orders", "restore", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "ORDER_ID" }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Categories",
+            "item": [
+                {
+                    "name": "Get All Categories",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/categories",
+                            "host": ["{{base_url}}"],
+                            "path": ["categories"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Category By ID",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/categories/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["categories", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "CATEGORY_ID" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Category",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            { "key": "Content-Type", "value": "application/json" },
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Calzado\",\n    \"description\": \"Todo tipo de calzado deportivo y casual\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/categories",
+                            "host": ["{{base_url}}"],
+                            "path": ["categories"]
+                        }
+                    }
+                },
+                {
+                    "name": "Update Category",
+                    "request": {
+                        "method": "PUT",
+                        "header": [
+                            { "key": "Content-Type", "value": "application/json" },
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"name\": \"Calzado Deportivo\",\n    \"description\": \"Categoría actualizada\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/categories/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["categories", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "CATEGORY_ID" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Category (soft)",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/categories/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["categories", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "CATEGORY_ID" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Restore Category",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/categories/restore/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["categories", "restore", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "CATEGORY_ID" }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Addresses",
+            "item": [
+                {
+                    "name": "Get All Addresses",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/addresses",
+                            "host": ["{{base_url}}"],
+                            "path": ["addresses"]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Address By ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/addresses/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["addresses", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "ADDRESS_ID" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Get Addresses By User",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/addresses/user/:targetUserId",
+                            "host": ["{{base_url}}"],
+                            "path": ["addresses", "user", ":targetUserId"],
+                            "variable": [
+                                { "key": "targetUserId", "value": "USER_ID" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Create Address",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            { "key": "Content-Type", "value": "application/json" },
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"province\": \"Buenos Aires\",\n    \"city\": \"La Plata\",\n    \"postalCode\": \"1900\",\n    \"streetName\": \"Calle 50\",\n    \"buildingNumber\": 1234,\n    \"addressDetails\": \"Depto 3B\"\n}"
+                        },
+                        "url": {
+                            "raw": "{{base_url}}/addresses",
+                            "host": ["{{base_url}}"],
+                            "path": ["addresses"]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Address (soft)",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/addresses/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["addresses", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "ADDRESS_ID" }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Restore Address",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            { "key": "Authorization", "value": "Bearer {{token}}" }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/addresses/restore/:id",
+                            "host": ["{{base_url}}"],
+                            "path": ["addresses", "restore", ":id"],
+                            "variable": [
+                                { "key": "id", "value": "ADDRESS_ID" }
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

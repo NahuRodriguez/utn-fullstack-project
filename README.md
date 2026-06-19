@@ -7,12 +7,10 @@ Por consigna de materia universitaria
 ### Back-end
 API con conexión a base de datos
 
-Se consignó un modelo de Carrito, se implementó Orden para carritos confirmados por el usuario y Carrito se maneja sólo en front-end
-
 [Especificación de endpoints de API](./backend/ENDPOINTS.md)
 
 ### Front-end
-Catálogo de productos y página de detalle del producto obteniendo información de la API
+Catálogo de productos, página de detalle del producto, carrito de compra, autenticación, paneles de administrador, registro de órdenes, perfiles de usuario y confirmación de compra obteniendo información de la API
 
 ## Diagrama de Arquitectura
 <img alt="Diagrama de Arquitectura" src="./assets/img/Diagrama de Arquitectura.png"/>
