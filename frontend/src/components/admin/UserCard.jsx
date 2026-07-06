@@ -1,7 +1,21 @@
 import { User as UserIcon, Mail } from "lucide-react";
 import { EditButton, DeactivateButton, RestoreButton } from "../button/AdminActionButtons";
 
-export function UserCard({ user, deleted, onEdit, onDeactivate, onRestore }) {
+export function UserCard({ user, deleted, onEdit, onDeactivate, onRestore, showActions }) {
+  if (showActions != false) showActions = true;
+  const actionButtons = () => {
+    if (!showActions) return;
+    return (<div style={{ display: "flex", gap: "0.5rem", marginTop: "0.75rem" }}>
+      {deleted ? (
+        <RestoreButton onClick={() => onRestore(user)} style={{ flex: "0 0 auto" }} />
+      ) : (
+        <>
+          <EditButton onClick={() => onEdit(user)} style={{ flex: "0 0 auto" }} />
+          <DeactivateButton onClick={() => onDeactivate(user)} style={{ flex: "0 0 auto" }} />
+        </>
+      )}
+    </div>)
+  }
   return (
     <div className="order-card" style={{ cursor: "default" }}>
       <div className="order-card-bar" />
@@ -29,17 +43,8 @@ export function UserCard({ user, deleted, onEdit, onDeactivate, onRestore }) {
         </span>
         {user.phone && <span className="order-card-meta-item">{user.phone}</span>}
       </div>
-
-      <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.75rem" }}>
-        {deleted ? (
-          <RestoreButton onClick={() => onRestore(user)} style={{ flex: "0 0 auto" }} />
-        ) : (
-          <>
-            <EditButton onClick={() => onEdit(user)} style={{ flex: "0 0 auto" }} />
-            <DeactivateButton onClick={() => onDeactivate(user)} style={{ flex: "0 0 auto" }} />
-          </>
-        )}
-      </div>
+      
+      {actionButtons()}
     </div>
   );
 }

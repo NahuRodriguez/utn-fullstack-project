@@ -78,10 +78,17 @@ function MisCompras() {
       ) : (
         <div className="order-list" style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
           {orders.map((order) => (
-            <OrderCard
+            <Link
               key={order.id}
-              order={order}
-            />
+              to="/mis-compras/$orderId"
+              params={{ orderId: order.id }}
+              className="order-card"
+            >
+              <OrderCard
+                key={order.id}
+                order={order}
+              />
+            </Link>
           ))}
         </div>
       )}

@@ -6,17 +6,11 @@ import {
     Tag,
     Hash
 } from "lucide-react";
-import { Link } from "@tanstack/react-router";
 
 export const OrderCard = ({order}) => {
     const { date, time } = formatDate(order.createdAt);
     return (
-        <Link
-            key={order.id}
-            to="/mis-compras/$orderId"
-            params={{ orderId: order.id }}
-            className="order-card"
-        >
+        <>
             <div className="order-card-bar" />
 
             <div className="order-card-id">
@@ -50,6 +44,6 @@ export const OrderCard = ({order}) => {
                     <ChevronRight size={18} className="order-card-arrow" />
                 </div>
             </div>
-        </Link>
+        </>
     );
 }
