@@ -161,6 +161,7 @@ export class Api {
 
         try {
             const END_POINT = `${import.meta.env.VITE_API_BASE_URL}/api/users/${userId}`;
+            if (data.phone?.length === 0) delete data.phone;
             const response = await axios.put(END_POINT, data, {
                 headers: {
                     Authorization: `Bearer ${token}`,
