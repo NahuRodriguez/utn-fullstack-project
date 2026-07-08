@@ -70,9 +70,6 @@ function OrderDetail() {
         key={user.id}
         user={user}
         deleted={false}
-        onEdit={null}
-        onDeactivate={null}
-        onRestore={null}
         showActions={false}
       />
 

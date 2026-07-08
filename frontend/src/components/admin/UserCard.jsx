@@ -1,7 +1,7 @@
 import { User as UserIcon, Mail } from "lucide-react";
 import { EditButton, DeactivateButton, RestoreButton } from "../button/AdminActionButtons";
 
-export function UserCard({ user, deleted, onEdit, onDeactivate, onRestore, showActions }) {
+export function UserCard({ user, deleted, onEdit = null, onDeactivate = null, onRestore = null, showActions = true }) {
   if (showActions != false) showActions = true;
   const actionButtons = () => {
     if (!showActions) return;
