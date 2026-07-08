@@ -69,7 +69,6 @@ function OrderDetail() {
       <UserCard
         key={user.id}
         user={user}
-        deleted={false}
         showActions={false}
       />
 
