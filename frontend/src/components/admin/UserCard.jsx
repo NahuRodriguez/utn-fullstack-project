@@ -1,7 +1,7 @@
 import { User as UserIcon, Mail } from "lucide-react";
 import { EditButton, DeactivateButton, RestoreButton } from "../button/AdminActionButtons";
 
-export function UserCard({ user, deleted, onEdit, onDeactivate, onRestore }) {
+export function UserCard({ user, deleted = false, onEdit = null, onDeactivate = null, onRestore = null, showActions = true }) {
   return (
     <div className="order-card" style={{ cursor: "default" }}>
       <div className="order-card-bar" />
@@ -29,8 +29,9 @@ export function UserCard({ user, deleted, onEdit, onDeactivate, onRestore }) {
         </span>
         {user.phone && <span className="order-card-meta-item">{user.phone}</span>}
       </div>
-
-      <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.75rem" }}>
+      
+      {showActions &&
+      (<div style={{ display: "flex", gap: "0.5rem", marginTop: "0.75rem" }}>
         {deleted ? (
           <RestoreButton onClick={() => onRestore(user)} style={{ flex: "0 0 auto" }} />
         ) : (
@@ -39,7 +40,7 @@ export function UserCard({ user, deleted, onEdit, onDeactivate, onRestore }) {
             <DeactivateButton onClick={() => onDeactivate(user)} style={{ flex: "0 0 auto" }} />
           </>
         )}
-      </div>
+      </div>)}
     </div>
   );
 }

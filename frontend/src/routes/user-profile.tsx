@@ -73,7 +73,7 @@ function RouteComponent() {
       if (!value.trim()) return 'El email es obligatorio';
       if (!email(value)) return 'Email inválido';
     }
-    if (name === 'phone' && value.trim()) {
+    if (name === 'phone' && value?.trim()) {
       if (!phone(value)) return 'Solo números y +';
     }
     return '';

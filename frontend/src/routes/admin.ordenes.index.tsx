@@ -1,18 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Loader, AlertCircle, Package, Clock, ShoppingBag } from "lucide-react";
+import { Loader, AlertCircle, ShoppingBag } from "lucide-react";
 import { Api } from "../api/api";
-import { formatPrice } from "../utils/utils";
+import { OrderCard } from "../components/card/OrderCard";
 
-export const Route = createFileRoute("/admin/ordenes")({
+export const Route = createFileRoute("/admin/ordenes/")({
   component: AdminOrdenes,
 });
-
-const formatDate = (iso) => {
-  if (!iso) return "—";
-  const d = new Date(iso);
-  return d.toLocaleDateString("es-AR", { year: "numeric", month: "short", day: "numeric" });
-};
 
 function AdminOrdenes() {
   const [orders, setOrders] = useState([]);
@@ -67,33 +61,19 @@ function AdminOrdenes() {
         </div>
       ) : (
         <div className="order-list">
-          {orders.map((order) => {
-            const itemCount = (order.items || []).reduce((sum, it) => sum + (it.quantity || 0), 0);
-            return (
-              <div key={order.id} className="order-card" style={{ cursor: "default" }}>
-                <div className="order-card-bar" />
-                <div className="order-card-id">
-                  <Package size={16} className="order-card-id-icon" />
-                  <span className="order-card-id-text">#{order.id.slice(-8).toUpperCase()}</span>
-                </div>
-                <div className="order-card-meta">
-                  <span className="order-card-meta-item">
-                    <Clock size={13} /> {formatDate(order.createdAt)}
-                  </span>
-                  <span className="order-card-meta-item">
-                    {itemCount} {itemCount === 1 ? "artículo" : "artículos"}
-                  </span>
-                  {order.userId && (
-                    <span className="order-card-meta-item">Usuario: {String(order.userId).slice(-8)}</span>
-                  )}
-                </div>
-                <div className="order-card-footer">
-                  <span className="order-card-footer-label">Total</span>
-                  <span className="total-price">{formatPrice(order.total)}</span>
-                </div>
-              </div>
-            );
-          })}
+          {orders.map((order) => (
+            <Link
+              key={order.id}
+              to="/admin/ordenes/$orderId"
+              params={{ orderId: order.id }}
+              className="order-card"
+            >
+              <OrderCard
+                key={order.id}
+                order={order}
+              />
+            </Link>
+          ))}
         </div>
       )}
     </section>
