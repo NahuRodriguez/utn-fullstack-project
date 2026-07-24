@@ -89,76 +89,77 @@ export const Header = () => {
               </p>
             </div>
           </Link>
+          <div className="interaction-component-wrapper">
+            <div className="search-container">
+              <SearchBar />
+            </div>
 
-          <div className="search-container">
-            <SearchBar />
-          </div>
-
-          <div className="header-actions">
-            <button className="cart-btn" onClick={() => setCartOpen(true)}>
-              <ShoppingCart
-                className="w-6 h-6"
-                style={{ color: "var(--text)" }}
-              />
-              {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
-            </button>
-
-            <div className="user-menu" ref={menuRef}>
-              <button
-                className={`user-menu-btn ${menuOpen ? "open" : ""} ${isAuthenticated ? "logged-in" : ""}`}
-                onClick={() => setMenuOpen((prev) => !prev)}
-                aria-label="Menú de usuario"
-              >
-                <User size={24} fill={isAuthenticated ? "currentColor" : "none"} />
+            <div className="header-actions">
+              <button className="cart-btn" onClick={() => setCartOpen(true)}>
+                <ShoppingCart
+                  className="w-6 h-6"
+                  style={{ color: "var(--text)" }}
+                />
+                {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
               </button>
 
-              {menuOpen && (
-                <div className="user-dropdown">
-                  {isAuthenticated ? (
-                    <>
-                      <button
-                        className="user-dropdown-item"
-                        onClick={handleProfile}
-                      >
-                        <User size={15} />
-                        Mi perfil
-                      </button>
-                      <button
-                        className="user-dropdown-item"
-                        onClick={handleMisCompras}
-                      >
-                        <ShoppingBag size={15} />
-                        Mis compras
-                      </button>
-                      {isAdmin && (
+              <div className="user-menu" ref={menuRef}>
+                <button
+                  className={`user-menu-btn ${menuOpen ? "open" : ""} ${isAuthenticated ? "logged-in" : ""}`}
+                  onClick={() => setMenuOpen((prev) => !prev)}
+                  aria-label="Menú de usuario"
+                >
+                  <User size={24} fill={isAuthenticated ? "currentColor" : "none"} />
+                </button>
+
+                {menuOpen && (
+                  <div className="user-dropdown">
+                    {isAuthenticated ? (
+                      <>
                         <button
                           className="user-dropdown-item"
-                          onClick={handleAdmin}
+                          onClick={handleProfile}
                         >
-                          <Shield size={15} />
-                          Panel admin
+                          <User size={15} />
+                          Mi perfil
                         </button>
-                      )}
-                      <div className="user-dropdown-divider" />
+                        <button
+                          className="user-dropdown-item"
+                          onClick={handleMisCompras}
+                        >
+                          <ShoppingBag size={15} />
+                          Mis compras
+                        </button>
+                        {isAdmin && (
+                          <button
+                            className="user-dropdown-item"
+                            onClick={handleAdmin}
+                          >
+                            <Shield size={15} />
+                            Panel admin
+                          </button>
+                        )}
+                        <div className="user-dropdown-divider" />
+                        <button
+                          className="user-dropdown-item danger"
+                          onClick={handleLogout}
+                        >
+                          <LogOut size={15} />
+                          Cerrar sesión
+                        </button>
+                      </>
+                    ) : (
                       <button
-                        className="user-dropdown-item danger"
-                        onClick={handleLogout}
+                        className="user-dropdown-item"
+                        onClick={handleLogin}
                       >
-                        <LogOut size={15} />
-                        Cerrar sesión
+                        <LogIn size={15} />
+                        Iniciar sesión
                       </button>
-                    </>
-                  ) : (
-                    <button
-                      className="user-dropdown-item"
-                      onClick={handleLogin}
-                    >
-                      <LogIn size={15} />
-                      Iniciar sesión
-                    </button>
-                  )}
-                </div>
-              )}
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
