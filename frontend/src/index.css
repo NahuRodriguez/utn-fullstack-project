@@ -1508,6 +1508,16 @@ body {
   gap: 0.5rem;
 }
 
+@media (max-width: 768px) {
+  .checkout-stepper {
+    gap: 0;
+  }
+
+  .step-group {
+    gap: 0.1rem;
+  }
+}
+
 .step-dot {
   width: 2.5rem;
   height: 2.5rem;
