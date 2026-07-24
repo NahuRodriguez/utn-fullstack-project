@@ -2136,9 +2136,11 @@ body {
   }
 }
 
-.detail-image-section {
-  position: sticky;
-  top: 8rem;
+@media (min-width: 768px) {
+  .detail-image-section {
+    position: sticky;
+    top: 8rem;
+  }
 }
 
 .detail-image-wrapper {
