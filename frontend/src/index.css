@@ -1113,8 +1113,12 @@ body {
   transition: all 0.2s ease;
 }
 
-.quantity-controls button:hover {
+.quantity-controls button:enabled:hover {
   background: var(--purple);
+}
+
+.quantity-controls button:disabled {
+  color: var(--muted);
 }
 
 .quantity-controls span {

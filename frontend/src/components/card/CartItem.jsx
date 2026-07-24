@@ -34,6 +34,7 @@ return <div key={item.id} className="cart-item">
                             onClick={() =>
                               updateQuantity(item.id, item.quantity + 1)
                             }
+                            disabled={item.quantity + 1 > item.stock}
                           >
                             <Plus className="w-4 h-4" />
                           </button>
