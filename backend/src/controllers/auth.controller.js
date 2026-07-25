@@ -62,6 +62,9 @@ const register = async (req, res) => {
 
         return res.status(201).json({ token });
     } catch (err) {
+        if (err.name === "ValidationError") {
+            return res.status(400).json({ errors: err.errors });
+        }
         console.error("Error en register", err);
         res.status(500).json({ error: "Error interno" });
     }
