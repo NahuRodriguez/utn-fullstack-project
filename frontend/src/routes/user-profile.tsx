@@ -105,7 +105,7 @@ function RouteComponent() {
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
     } catch (err) {
-      const msg = err.response?.data?.error || 'Error al guardar los cambios. Email ya registrado.';
+      const msg = err.response?.data?.error || 'Error al guardar los cambios.';
       setError(msg);
     } finally {
       setSaving(false);
