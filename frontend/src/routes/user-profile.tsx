@@ -15,11 +15,7 @@ import {
   AlertCircle,
   CheckCircle,
 } from 'lucide-react';
-
-const alphanumericHispanicWithSpaces = (value) => /^[a-z0-9ñáéíóú ]+$/gi.test(value);
-const alphanumericHispanic = (value) => /^[a-z0-9ñáéíóú]+$/gi.test(value);
-const email = (value) => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
-const phone = (value) => /^\+?[0-9]+$/.test(value);
+import { alphanumericHispanicWithSpaces, email, phone } from '../utils/validation';
 
 export const Route = createFileRoute('/user-profile')({
   component: RouteComponent,
