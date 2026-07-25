@@ -1724,6 +1724,9 @@ body {
 @media (max-width: 640px) {
   .address-form-grid {
     grid-template-columns: 1fr;
+    .auth-field {
+      grid-column: span 2;
+    }
   }
   .step-line {
     width: 1.5rem;
