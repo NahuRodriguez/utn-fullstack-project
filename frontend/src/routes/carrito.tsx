@@ -65,6 +65,10 @@ function Carrito() {
   const [addressSubmitting, setAddressSubmitting] = useState(false);
 
   useEffect(() => {
+    scrollToTop();
+  }, [step])
+
+  useEffect(() => {
     if (step === 2 && isAuthenticated) {
       loadAddresses();
     }
@@ -150,9 +154,6 @@ function Carrito() {
       setOrderId(order.id);
       clearCart();
       setStep(4);
-
-      scrollToTop();
-
     } catch (err) {
       const msg = err.response?.data?.error || err.message || "Error al crear la orden";
       setError(msg);
