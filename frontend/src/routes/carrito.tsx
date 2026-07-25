@@ -4,6 +4,7 @@ import { useCartStore } from "../store/cartStore";
 import { useAuth } from "../store/authStore";
 import { Api } from "../api/api";
 import { formatPrice } from "../utils/utils";
+import { scrollToTop } from "../utils/utils";
 import {
   ShoppingCart,
   MapPin,
@@ -149,6 +150,9 @@ function Carrito() {
       setOrderId(order.id);
       clearCart();
       setStep(4);
+
+      scrollToTop();
+
     } catch (err) {
       const msg = err.response?.data?.error || err.message || "Error al crear la orden";
       setError(msg);
@@ -387,7 +391,10 @@ function Carrito() {
 
   return (
     <div className="main-content" style={{ display: "block", maxWidth: "48rem" }}>
-      <h2 className="products-title" style={{ marginBottom: "1.5rem" }}>
+      <h2 className="products-title" style={{ 
+          marginBottom: "1.5rem", 
+          textAlign: step === 4 ? "center" : undefined
+        }}>
         {step === 4 ? "Compra confirmada" : "Checkout"}
       </h2>
 
