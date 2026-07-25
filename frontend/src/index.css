@@ -423,6 +423,14 @@ body {
 .products-section {
   flex: 1;
   min-width: 0;
+  justify-content: center;
+}
+
+.product-loading-wrapper{
+  height: 20vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .products-header {
