@@ -29,10 +29,12 @@ function StepIndicator({ current }) {
     <div className="checkout-stepper">
       {STEPS.map((s, i) => (
         <div key={s.num} className="step-group">
-          <div className={`step-dot ${current === s.num ? "active" : current > s.num ? "completed" : ""}`}>
-            {current > s.num ? <CheckCircle size={18} /> : <s.icon size={18} />}
+          <div className="step-icon-name">
+            <div className={`step-dot ${current === s.num ? "active" : current > s.num ? "completed" : ""}`}>
+              {current > s.num ? <CheckCircle size={18} /> : <s.icon size={18} />}
+            </div>
+            <span className={`step-label ${current === s.num ? "active" : ""}`}>{s.label}</span>
           </div>
-          <span className={`step-label ${current === s.num ? "active" : ""}`}>{s.label}</span>
           {i < STEPS.length - 1 && <div className={`step-line ${current > s.num ? "completed" : ""}`} />}
         </div>
       ))}
