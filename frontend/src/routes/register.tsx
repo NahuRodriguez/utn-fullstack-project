@@ -2,6 +2,7 @@ import { useState } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useAuth } from "../store/authStore";
 import axios from "axios";
+import { phone } from "../utils/validation";
 
 export const Route = createFileRoute("/register")({
   component: Register,
@@ -32,6 +33,11 @@ function Register() {
 
     if (!form.firstName || !form.lastName || !form.email || !form.password) {
       setError("Nombre, apellido, email y contraseña son obligatorios");
+      return;
+    }
+
+    if (!phone(form.phone)) {
+      setError("El número de teléfono sólo admite números y +");
       return;
     }
 
