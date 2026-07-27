@@ -4,6 +4,7 @@ import { CategorySidebar } from "../components/CategorySidebar";
 import { Pagination } from "../components/Pagination";
 import { SortSelect } from "../components/SortSelect";
 import { useProducts } from "../hooks/useProducts";
+import { Loader } from "lucide-react";
 
 interface ProductSearch {
   page?: number;
@@ -62,7 +63,10 @@ function Producto() {
       />
 
       {loading ? (
-        <div className="p-4 text-gray-600">Cargando productos...</div>
+        <div className="products-section product-loading-wrapper">
+          <Loader size={32} className="spin" style={{ color: 'var(--muted)'}} />
+          <p style={{ color: 'var(--muted)', marginTop: '1rem' }}>Cargando productos...</p>
+        </div>
       ) : error ? (
         <div className="p-4 text-red-500">{error}</div>
       ) : (
