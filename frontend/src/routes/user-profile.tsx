@@ -15,11 +15,7 @@ import {
   AlertCircle,
   CheckCircle,
 } from 'lucide-react';
-
-const alphanumericHispanicWithSpaces = (value) => /^[a-z0-9ñáéíóú ]+$/gi.test(value);
-const alphanumericHispanic = (value) => /^[a-z0-9ñáéíóú]+$/gi.test(value);
-const email = (value) => /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
-const phone = (value) => /^\+?[0-9]+$/.test(value);
+import { alphanumericHispanicWithSpaces, email, phone } from '../utils/validation';
 
 export const Route = createFileRoute('/user-profile')({
   component: RouteComponent,
@@ -109,7 +105,7 @@ function RouteComponent() {
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
     } catch (err) {
-      const msg = err.response?.data?.error || 'Error al guardar los cambios. Email ya registrado.';
+      const msg = err.response?.data?.error || 'Error al guardar los cambios.';
       setError(msg);
     } finally {
       setSaving(false);

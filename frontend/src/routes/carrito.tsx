@@ -4,18 +4,16 @@ import { useCartStore } from "../store/cartStore";
 import { useAuth } from "../store/authStore";
 import { Api } from "../api/api";
 import { formatPrice } from "../utils/utils";
+import { scrollToTop } from "../utils/utils";
 import {
   ShoppingCart,
   MapPin,
   CheckCircle,
   ChevronRight,
   ChevronLeft,
-  Plus,
-  Minus,
-  Trash2,
-  Loader,
-  AlertCircle,
+  Loader
 } from "lucide-react";
+import { CartItem } from "../components/card/CartItem";
 
 export const Route = createFileRoute("/carrito")({
   component: Carrito,
@@ -32,10 +30,12 @@ function StepIndicator({ current }) {
     <div className="checkout-stepper">
       {STEPS.map((s, i) => (
         <div key={s.num} className="step-group">
-          <div className={`step-dot ${current === s.num ? "active" : current > s.num ? "completed" : ""}`}>
-            {current > s.num ? <CheckCircle size={18} /> : <s.icon size={18} />}
+          <div className="step-icon-name">
+            <div className={`step-dot ${current === s.num ? "active" : current > s.num ? "completed" : ""}`}>
+              {current > s.num ? <CheckCircle size={18} /> : <s.icon size={18} />}
+            </div>
+            <span className={`step-label ${current === s.num ? "active" : ""}`}>{s.label}</span>
           </div>
-          <span className={`step-label ${current === s.num ? "active" : ""}`}>{s.label}</span>
           {i < STEPS.length - 1 && <div className={`step-line ${current > s.num ? "completed" : ""}`} />}
         </div>
       ))}
@@ -45,7 +45,7 @@ function StepIndicator({ current }) {
 
 function Carrito() {
   const navigate = useNavigate();
-  const { items, removeFromCart, updateQuantity, getCartTotal, clearCart } = useCartStore();
+  const { items, getCartTotal, clearCart } = useCartStore();
   const { isAuthenticated, user } = useAuth();
 
   const [step, setStep] = useState(1);
@@ -63,6 +63,10 @@ function Carrito() {
   });
   const [addressError, setAddressError] = useState(null);
   const [addressSubmitting, setAddressSubmitting] = useState(false);
+
+  useEffect(() => {
+    scrollToTop();
+  }, [step])
 
   useEffect(() => {
     if (step === 2 && isAuthenticated) {
@@ -179,22 +183,7 @@ function Carrito() {
     <>
       <div className="checkout-items">
         {items.map(item => (
-          <div key={item.id} className="cart-item" style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-            <img src={item.imgUrl || "https://placehold.co/80x80"} alt={item.name} className="cart-item-image" />
-            <div className="cart-item-info" style={{ flex: 1 }}>
-              <h3>{item.name}</h3>
-              <p className="cart-item-price">{formatPrice(item.price)} c/u</p>
-            </div>
-            <div className="quantity-controls">
-              <button onClick={() => updateQuantity(item.id, item.quantity - 1)}><Minus size={14} /></button>
-              <span>{item.quantity}</span>
-              <button onClick={() => updateQuantity(item.id, item.quantity + 1)}><Plus size={14} /></button>
-            </div>
-            <p style={{ width: "6rem", textAlign: "right", fontWeight: 700, color: "var(--cyan)" }}>
-              {formatPrice(item.price * item.quantity)}
-            </p>
-            <button className="remove-btn" onClick={() => removeFromCart(item.id)}><Trash2 size={16} /></button>
-          </div>
+          <CartItem item={item}/>
         ))}
       </div>
 
@@ -403,7 +392,10 @@ function Carrito() {
 
   return (
     <div className="main-content" style={{ display: "block", maxWidth: "48rem" }}>
-      <h2 className="products-title" style={{ marginBottom: "1.5rem" }}>
+      <h2 className="products-title" style={{ 
+          marginBottom: "1.5rem", 
+          textAlign: step === 4 ? "center" : undefined
+        }}>
         {step === 4 ? "Compra confirmada" : "Checkout"}
       </h2>
 
